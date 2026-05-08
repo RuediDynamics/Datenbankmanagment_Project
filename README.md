@@ -6,7 +6,7 @@ Ein Teamproject zur praktischen Anwendung von Datenbankentwicklungsmethoden — 
 
 ---
 
-## 📋 Assignments
+## Assignments
 
 | # | Titel | Fokus | Status |
 |---|-------|-------|--------|
@@ -17,7 +17,7 @@ Ein Teamproject zur praktischen Anwendung von Datenbankentwicklungsmethoden — 
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 ```
 Assignment 1 (✅ Fertig)
@@ -46,7 +46,7 @@ Assignment 4 (Q4)
 
 ---
 
-## 👥 Team
+## Team
 
 | Rolle | Name |
 |-------|------|
@@ -55,7 +55,7 @@ Assignment 4 (Q4)
 
 ---
 
-## 📂 Struktur
+## Struktur
 
 ```
 ├─ aufgabe1_datenbank_entwickler_persona.md
