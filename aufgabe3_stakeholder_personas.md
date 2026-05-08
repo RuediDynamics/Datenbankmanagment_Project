@@ -8,7 +8,7 @@
 |---|---|
 | **Name & Foto** | Margarete Hofbauer <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Filialleiterin (Branch Manager), Standort Wien-Mitte |
-| **Hintergrund** | 48 Jahre alt, Studium der Betriebswirtschaft an der WU Wien, seit 18 Jahren in der Immobilienbranche tätig, davon 7 Jahre als Filialleiterin. Verantwortet drei Standorte mit insgesamt 22 Mitarbeitenden und einem Portfolio von rund 450 verwalteten Objekten. |
+| **Hintergrund** | 48 Jahre alt, Studium der Betriebswirtschaft an der WU Wien, seit 18 Jahren in der Immobilienbranche tätig, davon 7 Jahre als Filialleiterin. Verantwortet drei Standorte mit insgesamt 22 Mitarbeitenden und einem Portfolio von rund 450 verwalteten Projekten. |
 | **Hauptverantwortlichkeiten** | Strategische Steuerung der Filiale, Personalführung, Budget- und Umsatzverantwortung, Reporting an die Geschäftsleitung, Genehmigung von Sonderverträgen, Überwachung der Belegungsquoten und Schlichtung eskalierter Kundenfälle. |
 | **Daten, mit denen sie arbeitet** | Aggregierte Kennzahlen wie Auslastungsraten, Mieteinnahmen pro Quartal, Objektportfolio nach Region, Mitarbeiterperformance, Kündigungsraten, Leerstandszeiten, Kundenzufriedenheitsdaten. |
 | **Was sie von der Datenbank benötigt** | Übersichtliche Dashboards mit KPIs, Trend- und Vergleichsberichte über mehrere Filialen und Zeiträume, Drill-Down-Funktionalität von Aggregaten zu Einzeldaten, Exportmöglichkeiten für Berichte an die Geschäftsleitung sowie eine zuverlässige Datenkonsistenz. |
@@ -23,7 +23,7 @@
 |---|---|
 | **Name & Foto** | Daniel Krausser <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Senior Immobilienmakler |
-| **Hintergrund** | 34 Jahre alt, abgeschlossene Lehre als Immobilienkaufmann, zusätzliche Befähigungsprüfung zum Immobilientreuhänder. Seit 9 Jahren im Vertrieb, davon 5 Jahre im aktuellen Unternehmen. Betreut rund 60 aktive Objekte und führt monatlich etwa 40 Besichtigungen durch. |
+| **Hintergrund** | 34 Jahre alt, abgeschlossene Lehre als Immobilienkaufmann, zusätzliche Befähigungsprüfung zum Immobilientreuhänder. Seit 9 Jahren im Vertrieb, davon 5 Jahre im aktuellen Unternehmen. Betreut rund 60 aktive Projekte und führt monatlich etwa 40 Besichtigungen durch. |
 | **Hauptverantwortlichkeiten** | Akquise neuer Mietobjekte, Beratung von Eigentümern und Interessenten, Durchführung von Besichtigungen, Vertragsverhandlungen, Erstellung von Exposés, Pflege der Kundenbeziehungen sowie Übergabe und Rücknahme von Mietobjekten. |
 | **Daten, mit denen er arbeitet** | Detaillierte Objektdaten (Lage, Größe, Ausstattung, Fotos, Preis), Eigentümerinformationen, Interessentenprofile mit Suchkriterien, Besichtigungstermine, Vertragsentwürfe, Provisionsabrechnungen, Notizen zu Kundengesprächen. |
 | **Was er von der Datenbank benötigt** | Schnelle Suche und Filterung im Objektbestand nach Kriterien wie Lage, Preis und Größe, Matching zwischen Interessentenprofilen und verfügbaren Objekten, mobiler Zugriff während Außenterminen, Kalenderintegration für Besichtigungen, Verlauf der Kundeninteraktionen (CRM-ähnliche Funktionen). |
