@@ -1,12 +1,8 @@
 # Aufgabe 2: Identifikation der Stakeholder-Rollen
 
-
-
 ## Kontext
 
-Das Datenbankprojekt unterstützt ein Immobilienverwaltungsunternehmen, das Mietobjekte, Mieter, Besichtigungen und Mitarbeiter verwaltet.
-
-
+Das Datenbankprojekt hilft einem Immobilienunternehmen dabei, Mietwohnungen, Mieter, Besichtigungen und Mitarbeiter zu verwalten.
 
 ## Identifizierte Stakeholder-Rollen
 
@@ -17,27 +13,28 @@ Das Datenbankprojekt unterstützt ein Immobilienverwaltungsunternehmen, das Miet
 | Rezeptionist / Sachbearbeiter | Operative Dateneingabe, Terminverwaltung und Kundenanfragen |
 | Mieter | Einsicht in eigene Mietverträge, Zahlungen und Anfragen |
 
-
 ## Begründung der Rollenwahl
 
-**Filialleiter**
-Dieser Stakeholder benötigt aggregierte Berichte über Belegungsraten, Umsätze und Mitarbeiterleistung. Er trifft strategische Entscheidungen und braucht daher einen breiten, zusammenfassenden Zugriff auf alle Datenbereiche des Systems.
+**Filialleiter:**
+Der Filialleiter braucht Berichte über belegte Wohnungen, Einnahmen und die Arbeit der Mitarbeiter. Er trifft wichtige Entscheidungen und benötigt deshalb Zugriff auf viele Informationen im System.
 
-**Immobilienmakler**
-Der Makler arbeitet täglich mit Objektdaten, Kundenprofilen und Besichtigungsterminen. Er ist auf aktuelle, detaillierte Informationen zu einzelnen Objekten und Interessenten angewiesen.
+**Immobilienmakler:**
+Der Makler arbeitet jeden Tag mit Wohnungsdaten, Kundendaten und Besichtigungsterminen. Dafür braucht er aktuelle und genaue Informationen über Wohnungen und Interessenten.
 
-**Rezeptionist / Sachbearbeiter**
-Diese Rolle ist hauptsächlich für die Dateneingabe und -pflege zuständig – z. B. neue Mieter erfassen, Termine buchen und Anfragen weiterleiten. Die Datenbedürfnisse sind operational und wiederkehrend.
+**Rezeptionist / Sachbearbeiter:**
+Diese Person kümmert sich vor allem um die Eingabe und Pflege von Daten. Zum Beispiel werden neue Mieter eingetragen, Termine geplant und Anfragen weitergeleitet. Die Aufgaben wiederholen sich oft im Alltag.
 
-**Mieter**
-Mieter benötigen eingeschränkten, personalisierten Zugriff auf ihre eigenen Vertragsdetails, Zahlungshistorie und offene Anfragen. Ihre Datenbedürfnisse sind eng gefasst, aber sicherheitsrelevant.
-
-
+**Mieter:**
+Mieter sollen nur ihre eigenen Daten sehen können, zum Beispiel ihren Mietvertrag, Zahlungen oder offene Anfragen. Deshalb ist ein sicherer und eingeschränkter Zugriff wichtig.
 
 ## Einordnung der Datenbedürfnisse
 
 **Breiteste Datenbedürfnisse:**
-**Filialleiter** – Er benötigt systemweiten Zugriff auf alle Entitätsbereiche (Objekte, Mitarbeiter, Finanzen, Kunden) und nutzt das System primär für Auswertungen und Entscheidungsunterstützung.
+**Filialleiter** – Er braucht Zugriff auf fast alle Bereiche des Systems, zum Beispiel Wohnungen, Mitarbeiter, Finanzen und Kunden. Er nutzt die Daten vor allem für Auswertungen und Entscheidungen.
 
-**Meiste operative, alltägliche Datenbedürfnisse:**
-**Rezeptionist / Sachbearbeiter** – Er interagiert am häufigsten mit dem System, führt repetitive Transaktionen durch und ist auf schnellen, strukturierten Datenzugriff für die tägliche Arbeit angewiesen.
+**Meiste tägliche Datenarbeit:**
+**Rezeptionist / Sachbearbeiter** – Diese Rolle arbeitet am häufigsten mit dem System. Sie führt viele wiederkehrende Aufgaben aus und braucht schnellen Zugriff auf die Daten für die tägliche Arbeit.
+
+
+
+
