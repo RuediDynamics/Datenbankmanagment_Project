@@ -3,7 +3,7 @@
 ## Alex Rivera                  
 **Rollenbezeichnung:** Datenbankentwickler
 
-![Alex Rivera](./Assests/Alex_Persona.jpg)
+![Alex Rivera](./assets/Alex_Persona.jpg)
 
 ## Hintergrund
 

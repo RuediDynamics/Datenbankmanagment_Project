@@ -57,7 +57,7 @@ Assignment 4 (Q4)
 ├─ aufgabe1_datenbank_entwickler_persona.md
 ├─ aufgabe2_stakeholder_rollen.md
 ├─ aufgabe3_stakeholder_personas.md
-├─ Assests/
+├─ assets/
 │  ├─ Filialleiter_Stakeholder.png
 │  ├─ Immobilienmakler_Stakeholder.png
 │  ├─ Rezeptionist_Stakeholder.png
