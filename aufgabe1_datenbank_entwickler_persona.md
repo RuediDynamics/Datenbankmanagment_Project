@@ -54,7 +54,15 @@ Alex hat einen Bachelor-Abschluss in Wirtschaftsinformatik und verfügt über 4 
 
 ## Frustrationen / Herausforderungen
 
-- **Unklare Anforderungen:** Stakeholder beschreiben häufig *was sie tun*, anstatt welche Daten sie tatsächlich benötigen – das erschwert die frühzeitige Identifikation von Entitäten und Attributen
-- **Schleichende Anforderungsänderungen:** Kunden fügen nach der Einigung auf ein Schema regelmäßig neue Anforderungen hinzu, was kostspielige Überarbeitungen erzwingt
-- **Kommunikationslücken:** Die Brücke zwischen technischen Datenbankkonzepten und nicht-technischen Kunden erfordert ständige Geduld und Aufwand
-- **Inkonsistente Quelldaten:** Bei der Migration oder Integration bestehender Daten verursachen uneinheitliche Formate und Duplikate erheblichen Bereinigungsaufwand
+- **Unklare Anforderungen:** 
+  <br>
+  Stakeholder beschreiben häufig was sie tun, anstatt welche Daten sie tatsächlich benötigen – das erschwert die frühzeitige Identifikation von Entitäten und Attributen
+- **Schleichende Anforderungsänderungen:**
+  <br>
+  Kunden fügen nach der Einigung auf ein Schema regelmäßig neue Anforderungen hinzu, was kostspielige Überarbeitungen erzwingt
+- **Kommunikationslücken:** 
+  <br>
+  Die Brücke zwischen technischen Datenbankkonzepten und nicht-technischen Kunden erfordert ständige Geduld und Aufwand
+- **Inkonsistente Quelldaten:** 
+  <br>
+  Bei der Migration oder Integration bestehender Daten verursachen uneinheitliche Formate und Duplikate erheblichen Bereinigungsaufwand
