@@ -1,8 +1,6 @@
 # Aufgabe 3: Stakeholder-Personas
 
-Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 identifizierten Rollen im Immobilienverwaltungsunternehmen abbilden. Jede Persona repräsentiert eine unterschiedliche Perspektive auf das Datenbanksystem – von der strategischen Gesamtsicht bis hin zum eingeschränkten, personalisierten Zugriff der Endkunden.
 
----
 
 ## Persona 1: Filialleiterin
 
@@ -10,14 +8,14 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 |---|---|
 | **Name & Foto** | Margarete Hofbauer <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Filialleiterin (Branch Manager), Standort Wien-Mitte |
-| **Hintergrund** | 48 Jahre alt, Studium der Betriebswirtschaft an der WU Wien, seit 18 Jahren in der Immobilienbranche tätig, davon 7 Jahre als Filialleiterin. Verantwortet drei Standorte mit insgesamt 22 Mitarbeitenden und einem Portfolio von rund 450 verwalteten Objekten. |
+| **Hintergrund** | 48 Jahre alt, Studium der Betriebswirtschaft an der WU Wien, seit 18 Jahren in der Immobilienbranche tätig, davon 7 Jahre als Filialleiterin. Verantwortet drei Standorte mit insgesamt 22 Mitarbeitenden und einem Portfolio von rund 450 verwalteten Projekten. |
 | **Hauptverantwortlichkeiten** | Strategische Steuerung der Filiale, Personalführung, Budget- und Umsatzverantwortung, Reporting an die Geschäftsleitung, Genehmigung von Sonderverträgen, Überwachung der Belegungsquoten und Schlichtung eskalierter Kundenfälle. |
 | **Daten, mit denen sie arbeitet** | Aggregierte Kennzahlen wie Auslastungsraten, Mieteinnahmen pro Quartal, Objektportfolio nach Region, Mitarbeiterperformance, Kündigungsraten, Leerstandszeiten, Kundenzufriedenheitsdaten. |
 | **Was sie von der Datenbank benötigt** | Übersichtliche Dashboards mit KPIs, Trend- und Vergleichsberichte über mehrere Filialen und Zeiträume, Drill-Down-Funktionalität von Aggregaten zu Einzeldaten, Exportmöglichkeiten für Berichte an die Geschäftsleitung sowie eine zuverlässige Datenkonsistenz. |
 | **Bedenken / Vorbehalte** | Sorge, dass ein neues System die laufenden Geschäftsprozesse stört. Skepsis gegenüber Schulungsaufwand für ältere Mitarbeitende. Besteht auf einer revisionssicheren Dokumentation aller Datenänderungen aus Compliance-Gründen. |
 | **Bevorzugter Kommunikationsstil** | Sachlich, ergebnisorientiert, mit knappen Terminen. Bevorzugt strukturierte Interviews mit klarer Agenda und vorab versandten Fragen. Schätzt Visualisierungen (Diagramme, Mock-ups) statt langer Texte. |
 
----
+
 
 ## Persona 2: Immobilienmakler
 
@@ -25,14 +23,14 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 |---|---|
 | **Name & Foto** | Daniel Krausser <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Senior Immobilienmakler |
-| **Hintergrund** | 34 Jahre alt, abgeschlossene Lehre als Immobilienkaufmann, zusätzliche Befähigungsprüfung zum Immobilientreuhänder. Seit 9 Jahren im Vertrieb, davon 5 Jahre im aktuellen Unternehmen. Betreut rund 60 aktive Objekte und führt monatlich etwa 40 Besichtigungen durch. |
+| **Hintergrund** | 34 Jahre alt, abgeschlossene Lehre als Immobilienkaufmann, zusätzliche Befähigungsprüfung zum Immobilientreuhänder. Seit 9 Jahren im Vertrieb, davon 5 Jahre im aktuellen Unternehmen. Betreut rund 60 aktive Projekte und führt monatlich etwa 40 Besichtigungen durch. |
 | **Hauptverantwortlichkeiten** | Akquise neuer Mietobjekte, Beratung von Eigentümern und Interessenten, Durchführung von Besichtigungen, Vertragsverhandlungen, Erstellung von Exposés, Pflege der Kundenbeziehungen sowie Übergabe und Rücknahme von Mietobjekten. |
 | **Daten, mit denen er arbeitet** | Detaillierte Objektdaten (Lage, Größe, Ausstattung, Fotos, Preis), Eigentümerinformationen, Interessentenprofile mit Suchkriterien, Besichtigungstermine, Vertragsentwürfe, Provisionsabrechnungen, Notizen zu Kundengesprächen. |
 | **Was er von der Datenbank benötigt** | Schnelle Suche und Filterung im Objektbestand nach Kriterien wie Lage, Preis und Größe, Matching zwischen Interessentenprofilen und verfügbaren Objekten, mobiler Zugriff während Außenterminen, Kalenderintegration für Besichtigungen, Verlauf der Kundeninteraktionen (CRM-ähnliche Funktionen). |
 | **Bedenken / Vorbehalte** | Befürchtet, dass eine zu komplexe Eingabemaske den Arbeitsfluss verlangsamt. Möchte nicht, dass Kollegen seine persönlich gepflegten Kundenkontakte ohne Zustimmung übernehmen können. Wünscht sich Offline-Funktionalität bei schlechter Mobilfunkanbindung. |
 | **Bevorzugter Kommunikationsstil** | Pragmatisch, direkt, zeitlich flexibel aber begrenzt. Interviews am besten am späten Nachmittag im Büro. Bevorzugt konkrete Beispiele und reale Arbeitssituationen statt abstrakter Konzepte. |
 
----
+
 
 ## Persona 3: Rezeptionistin / Sachbearbeiterin
 
@@ -47,7 +45,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 | **Bedenken / Vorbehalte** | Hat Sorge, dass ein neues System komplizierter wird als das aktuelle. Befürchtet, durch Tippfehler ungewollt Daten zu beschädigen. Wünscht sich eine Undo-Funktion und eine klare Fehlermeldung statt kryptischer Codes. |
 | **Bevorzugter Kommunikationsstil** | Freundlich und gesprächig, offen für Rückfragen. Interviews idealerweise vormittags vor dem Hauptbesucherandrang. Profitiert von einem ruhigen, wertschätzenden Gesprächsklima, da sie ihre fachliche Expertise gelegentlich unterschätzt. |
 
----
+
 
 ## Persona 4: Mieter
 
@@ -62,4 +60,3 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 | **Bedenken / Vorbehalte** | Hohe Sensibilität gegenüber Datenschutz. Möchte sicher sein, dass nur er seine Daten einsehen kann und dass keine Mitarbeitenden ohne dienstlichen Anlass Zugriff haben. Erwartet DSGVO-Konformität, sichere Authentifizierung und transparente Information darüber, welche Daten gespeichert werden. |
 | **Bevorzugter Kommunikationsstil** | Knapp und digital. Bevorzugt schriftliche Kommunikation per E-Mail oder im Portal gegenüber Telefonaten. Für ein Interview kommt am ehesten ein Online-Termin per Videocall in Frage, mit klarer Zeitbegrenzung. |
 
----
