@@ -5,7 +5,7 @@
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Alexander Fischer <br> <img src="./Assests/Filialleiter_Stakeholder.png" alt="Filialleiter" width="220"/> |
+| **Name & Foto** | Alexander Fischer <br> <img src="./assets/Filialleiter_Stakeholder.png" alt="Filialleiter" width="220"/> |
 | **Rolle** | Filialleiter, Standort Wien-Mitte |
 | **Kurzprofil** | 38 Jahre, Betriebswirtschaft, 18 Jahre Erfahrung, leitet 3 Standorte mit 22 Mitarbeitenden. |
 | **Aufgaben** | Filiale führen, Personal leiten, Budget und Umsatz überwachen, Berichte an die Geschäftsleitung. |
@@ -19,7 +19,7 @@
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Daniela Krausser <br> <img src="./Assests/Immobilienmakler_Stakeholder.png" alt="Immobilienmaklerin" width="220"/> |
+| **Name & Foto** | Daniela Krausser <br> <img src="./assets/Immobilienmakler_Stakeholder.png" alt="Immobilienmaklerin" width="220"/> |
 | **Rolle** | Immobilienmaklerin (Vertrieb) |
 | **Kurzprofil** | 28 Jahre, Ausbildung im Immobilienbereich, 9 Jahre Vertriebserfahrung, betreut viele Objekte. |
 | **Aufgaben** | Objekte akquirieren, Besichtigungen durchführen, Verträge verhandeln, Kunden beraten. |
@@ -33,7 +33,7 @@
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Sebastian Wallner <br> <img src="./Assests/Rezeptionist_Stakeholder.png" alt="Rezeptionist" width="220"/> |
+| **Name & Foto** | Sebastian Wallner <br> <img src="./assets/Rezeptionist_Stakeholder.png" alt="Rezeptionist" width="220"/> |
 | **Rolle** | Rezeptionist und Sachbearbeiter im Front Office |
 | **Kurzprofil** | 57 Jahre, Erfahrung im Kundenservice, zuständig für Empfang und Termine. |
 | **Aufgaben** | Besucher empfangen, Anrufe weiterleiten, Daten eingeben, Termine buchen. |
@@ -47,7 +47,7 @@
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Jakob Reisinger <br> <img src="./Assests/Mieter_Stakeholder.png" alt="Mieter" width="220"/> |
+| **Name & Foto** | Jakob Reisinger <br> <img src="./assets/Mieter_Stakeholder.png" alt="Mieter" width="220"/> |
 | **Rolle** | Mieter (Nutzer des Mieterportals) |
 | **Kurzprofil** | 54 Jahre, Softwareentwickler, nutzt Online-Services gern. |
 | **Aufgaben** | Miete zahlen, Schäden melden, Dokumente herunterladen. |
