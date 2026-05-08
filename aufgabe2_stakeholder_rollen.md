@@ -16,13 +16,13 @@ Das Datenbankprojekt hilft einem Immobilienunternehmen dabei, Mietwohnungen, Mie
 ## Begründung der Rollenwahl
 
 **Filialleiter:**
-Der Filialleiter braucht Berichte über belegte Wohnungen, Einnahmen und die Arbeit der Mitarbeiter. Er trifft wichtige Entscheidungen und benötigt deshalb Zugriff auf viele Informationen im System.
+Der Filialleiter braucht Berichte über belegte Wohnungen, Einnahmen und die Arbeit der Mitarbeiter. Er trifft wichtige Entscheidungen und benötigt deshalb Zugriff auf die meisten Informationen im System.
 
 **Immobilienmakler:**
 Der Makler arbeitet jeden Tag mit Wohnungsdaten, Kundendaten und Besichtigungsterminen. Dafür braucht er aktuelle und genaue Informationen über Wohnungen und Interessenten.
 
 **Rezeptionist / Sachbearbeiter:**
-Diese Person kümmert sich vor allem um die Eingabe und Pflege von Daten. Zum Beispiel werden neue Mieter eingetragen, Termine geplant und Anfragen weitergeleitet. Die Aufgaben wiederholen sich oft im Alltag.
+Diese Person kümmert sich vor allem um die Eingabe und Organisation von Daten. Zum Beispiel werden neue Mieter eingetragen, Termine geplant und Anfragen weitergeleitet. Die Aufgaben wiederholen sich oft im Alltag.
 
 **Mieter:**
 Mieter sollen nur ihre eigenen Daten sehen können, zum Beispiel ihren Mietvertrag, Zahlungen oder offene Anfragen. Deshalb ist ein sicherer und eingeschränkter Zugriff wichtig.
