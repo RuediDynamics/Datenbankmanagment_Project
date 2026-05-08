@@ -2,8 +2,12 @@
 
 
 
-## Alex Rivera
+## Alex Rivera                  
 **Rollenbezeichnung:** Datenbankentwickler
+
+![Alex Rivera](./Assests/Alex_Persona.jpg)
+
+
 
 
 
