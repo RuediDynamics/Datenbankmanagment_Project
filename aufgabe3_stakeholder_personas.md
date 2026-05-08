@@ -2,7 +2,7 @@
 
 Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 identifizierten Rollen im Immobilienverwaltungsunternehmen abbilden. Jede Persona repräsentiert eine unterschiedliche Perspektive auf das Datenbanksystem – von der strategischen Gesamtsicht bis hin zum eingeschränkten, personalisierten Zugriff der Endkunden.
 
----
+
 
 ## Persona 1: Filialleiterin
 
@@ -17,7 +17,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 | **Bedenken / Vorbehalte** | Sorge, dass ein neues System die laufenden Geschäftsprozesse stört. Skepsis gegenüber Schulungsaufwand für ältere Mitarbeitende. Besteht auf einer revisionssicheren Dokumentation aller Datenänderungen aus Compliance-Gründen. |
 | **Bevorzugter Kommunikationsstil** | Sachlich, ergebnisorientiert, mit knappen Terminen. Bevorzugt strukturierte Interviews mit klarer Agenda und vorab versandten Fragen. Schätzt Visualisierungen (Diagramme, Mock-ups) statt langer Texte. |
 
----
+
 
 ## Persona 2: Immobilienmakler
 
@@ -32,7 +32,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 | **Bedenken / Vorbehalte** | Befürchtet, dass eine zu komplexe Eingabemaske den Arbeitsfluss verlangsamt. Möchte nicht, dass Kollegen seine persönlich gepflegten Kundenkontakte ohne Zustimmung übernehmen können. Wünscht sich Offline-Funktionalität bei schlechter Mobilfunkanbindung. |
 | **Bevorzugter Kommunikationsstil** | Pragmatisch, direkt, zeitlich flexibel aber begrenzt. Interviews am besten am späten Nachmittag im Büro. Bevorzugt konkrete Beispiele und reale Arbeitssituationen statt abstrakter Konzepte. |
 
----
+
 
 ## Persona 3: Rezeptionistin / Sachbearbeiterin
 
@@ -47,7 +47,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 | **Bedenken / Vorbehalte** | Hat Sorge, dass ein neues System komplizierter wird als das aktuelle. Befürchtet, durch Tippfehler ungewollt Daten zu beschädigen. Wünscht sich eine Undo-Funktion und eine klare Fehlermeldung statt kryptischer Codes. |
 | **Bevorzugter Kommunikationsstil** | Freundlich und gesprächig, offen für Rückfragen. Interviews idealerweise vormittags vor dem Hauptbesucherandrang. Profitiert von einem ruhigen, wertschätzenden Gesprächsklima, da sie ihre fachliche Expertise gelegentlich unterschätzt. |
 
----
+
 
 ## Persona 4: Mieter
 
@@ -62,4 +62,3 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 | **Bedenken / Vorbehalte** | Hohe Sensibilität gegenüber Datenschutz. Möchte sicher sein, dass nur er seine Daten einsehen kann und dass keine Mitarbeitenden ohne dienstlichen Anlass Zugriff haben. Erwartet DSGVO-Konformität, sichere Authentifizierung und transparente Information darüber, welche Daten gespeichert werden. |
 | **Bevorzugter Kommunikationsstil** | Knapp und digital. Bevorzugt schriftliche Kommunikation per E-Mail oder im Portal gegenüber Telefonaten. Für ein Interview kommt am ehesten ein Online-Termin per Videocall in Frage, mit klarer Zeitbegrenzung. |
 
----
