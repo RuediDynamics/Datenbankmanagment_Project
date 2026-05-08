@@ -7,51 +7,51 @@
 
 ## Hintergrund
 
-Alex hat einen Bachelor-Abschluss in Wirtschaftsinformatik und verfügt über 4 Jahre Berufserfahrung in Datenbankentwicklung. Er begann seine Karriere als Junior-Analyst in einem Logistikunternehmen, wo er seine ersten relationalen Datenbankschemata von Grund auf entwarf. Seitdem hat er an Projekten im Einzelhandel und im Gesundheitswesen mitgewirkt und dabei Erfahrungen mit transaktions- sowie berichtsorientierten Datenbanken gesammelt.
+Alex hat Wirtschaftsinformatik studiert und arbeitet seit 4 Jahren als Datenbankentwickler. Seine Karriere begann er als Junior-Analyst in einem Logistikunternehmen. Dort entwarf er seine ersten relationalen Datenbanken. Danach arbeitete er an Projekten im Einzelhandel und im Gesundheitswesen. Dabei sammelte er Erfahrung mit Datenbanken für tägliche Abläufe und Berichte.
 
 ## Kernaufgaben
 
-- Erhebung und Analyse von Kundenanforderungen
-- Erstellung von Entity-Relationship-Diagrammen und Übersetzung in physische Schemata
-- Schreiben und Optimieren von SQL-Abfragen, gespeicherten Prozeduren und Views
-- Zusammenarbeit mit Frontend-Entwicklern zur Sicherstellung passender Datenmodelle
-- Dokumentation von Datenbankstrukturen und Datenwörterbüchern für Übergabe und Wartung
+- Kundenanforderungen sammeln und analysieren
+- Entity-Relationship-Diagramme erstellen und daraus Datenbankstrukturen entwickeln
+- SQL-Abfragen, gespeicherte Prozeduren und Views schreiben und verbessern
+- Mit Frontend-Entwicklern zusammenarbeiten, damit die Datenmodelle passen
+- Datenbankstrukturen dokumentieren, damit andere das System später warten oder erweitern können
 
 ## Schlüsselkompetenzen
 
 **Technisch**
 - SQL
 - Datenmodellierung und Normalisierung 
-- ER-Diagramm-Tools 
-- Grundlegendes ETL-Pipeline-Design
-- Versionskontrolle für Skripte (Git)
+- Arbeiten mit ER-Diagramm-Programmen
+- Grundkenntnisse im ETL-Pipeline-Design
+- Nutzung von Git zur Versionskontrolle
 
 **Sozial**
-- Übersetzung nicht-technischer Kundensprache in präzise Datenanforderungen
+- Technische Anforderungen verständlich aus Kundengesprächen ableiten
 - Aktives Zuhören
 - Klare Kommunikation bei Teamarbeit
 
 ## Ziele
 
-- Lieferung eines sauberen, gut normalisierten Datenmodells, das reale Geschäftsprozesse präzise abbildet
-- Aufbau einer Datenbank, die auch für nicht-technische Stakeholder auf hohem Niveau verständlich ist
-- Erstellung vollständiger Dokumentation, damit das System ohne Schwierigkeiten gewartet oder erweitert werden kann
-- Weiterentwicklung der Kenntnisse in Performance-Optimierung mit dem langfristigen Ziel, Lead-Datenbankarchitekt zu werden
+- Eine saubere und gut strukturierte Datenbank entwickeln, die Geschäftsprozesse richtig darstellt
+- Eine Datenbank erstellen, die auch für nicht-technische Personen verständlich ist
+- Eine Dokumentation schreiben, damit das System leicht gewartet oder erweitert werden kann
+- Mehr über Performance-Optimierung lernen und später Lead-Datenbankarchitekt werden
 
 ## Frustrationen / Herausforderungen
 
 - **Unklare Anforderungen:** 
   <br>
-  Stakeholder beschreiben häufig was sie tun, anstatt was sie tatsächlich benötigen. Das erschwert die frühzeitige Identifikation von Entitäten und Attributen
+  Kunden erklären oft ihre Arbeitsweise, aber nicht genau, was sie wirklich brauchen. Dadurch wird es schwieriger, wichtige Daten und Eigenschaften früh zu erkennen.
 - **Schleichende Anforderungsänderungen:**
   <br>
-  Kunden fügen nach der Einigung auf ein Schema regelmäßig neue Anforderungen hinzu, was kostspielige Überarbeitungen erzwingt
+  Nach der Planung kommen oft neue Wünsche hinzu. Dadurch muss das Datenbankschema erneut angepasst werden, was viel Zeit kostet.
 - **Kommunikationslücken:** 
   <br>
-  Die Brücke zwischen technischen Datenbankkonzepten und nicht-technischen Kunden erfordert Geduld und hohen Aufwand
+  Technische Datenbankthemen einfach für Kunden zu erklären, die wenig Technikkenntnisse haben, ist oft schwierig und zeitaufwendig.
 - **Inkonsistente Quelldaten:** 
   <br>
-  Bei der Migration oder Integration bestehender Daten verursachen uneinheitliche Formate und Duplikate hohen Bereinigungsaufwand
+  Beim Übernehmen alter Daten gibt es oft verschiedene Formate oder doppelte Einträge. Diese Daten müssen zuerst bereinigt werden.
 
 
 
