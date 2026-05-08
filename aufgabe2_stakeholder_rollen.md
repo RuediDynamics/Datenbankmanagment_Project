@@ -4,7 +4,7 @@
 
 ## Kontext
 
-Das Datenbankprojekt unterstützt ein Immobilienverwaltungsunternehmen (angelehnt an DreamHome), das Mietobjekte, Mieter, Besichtigungen und Mitarbeiter verwaltet.
+Das Datenbankprojekt unterstützt ein Immobilienverwaltungsunternehmen, das Mietobjekte, Mieter, Besichtigungen und Mitarbeiter verwaltet.
 
 
 
