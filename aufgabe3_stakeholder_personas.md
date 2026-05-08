@@ -1,7 +1,5 @@
 # Aufgabe 3: Stakeholder-Personas
 
-Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 identifizierten Rollen im Immobilienverwaltungsunternehmen abbilden. Jede Persona repräsentiert eine unterschiedliche Perspektive auf das Datenbanksystem – von der strategischen Gesamtsicht bis hin zum eingeschränkten, personalisierten Zugriff der Endkunden.
-
 
 
 ## Persona 1: Filialleiterin
