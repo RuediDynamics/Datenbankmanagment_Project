@@ -8,7 +8,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Margarete Hofbauer *(Avatar: assets/persona-hofbauer.png)* |
+| **Name & Foto** | Margarete Hofbauer <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Filialleiterin (Branch Manager), Standort Wien-Mitte |
 | **Hintergrund** | 48 Jahre alt, Studium der Betriebswirtschaft an der WU Wien, seit 18 Jahren in der Immobilienbranche tätig, davon 7 Jahre als Filialleiterin. Verantwortet drei Standorte mit insgesamt 22 Mitarbeitenden und einem Portfolio von rund 450 verwalteten Objekten. |
 | **Hauptverantwortlichkeiten** | Strategische Steuerung der Filiale, Personalführung, Budget- und Umsatzverantwortung, Reporting an die Geschäftsleitung, Genehmigung von Sonderverträgen, Überwachung der Belegungsquoten und Schlichtung eskalierter Kundenfälle. |
@@ -23,7 +23,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Daniel Krausser *(Avatar: assets/persona-krausser.png)* |
+| **Name & Foto** | Daniel Krausser <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Senior Immobilienmakler |
 | **Hintergrund** | 34 Jahre alt, abgeschlossene Lehre als Immobilienkaufmann, zusätzliche Befähigungsprüfung zum Immobilientreuhänder. Seit 9 Jahren im Vertrieb, davon 5 Jahre im aktuellen Unternehmen. Betreut rund 60 aktive Objekte und führt monatlich etwa 40 Besichtigungen durch. |
 | **Hauptverantwortlichkeiten** | Akquise neuer Mietobjekte, Beratung von Eigentümern und Interessenten, Durchführung von Besichtigungen, Vertragsverhandlungen, Erstellung von Exposés, Pflege der Kundenbeziehungen sowie Übergabe und Rücknahme von Mietobjekten. |
@@ -38,7 +38,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Sabine Wallner *(Avatar: assets/persona-wallner.png)* |
+| **Name & Foto** | Sabine Wallner <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Rezeptionistin und Sachbearbeiterin im Front Office |
 | **Hintergrund** | 27 Jahre alt, Handelsschulabschluss, drei Jahre Berufserfahrung im Kundenservice einer Versicherung, seit zwei Jahren im aktuellen Unternehmen. Erste Anlaufstelle für Kundinnen und Kunden, sowohl persönlich als auch telefonisch und per E-Mail. |
 | **Hauptverantwortlichkeiten** | Empfang von Besuchern, Annahme und Weiterleitung von Telefonaten, Bearbeitung allgemeiner Anfragen, Eingabe neuer Interessenten- und Mieterdaten, Buchung von Besichtigungsterminen für die Maklerinnen und Makler, Erstellung einfacher Korrespondenz und Ablage. |
@@ -53,7 +53,7 @@ Im Folgenden werden vier Stakeholder-Personas vorgestellt, die die in Aufgabe 2 
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Jakob Reisinger *(Avatar: assets/persona-reisinger.png)* |
+| **Name & Foto** | Jakob Reisinger <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
 | **Rollenbezeichnung** | Mieter (Endkunde mit Online-Zugang zum Mieterportal) |
 | **Hintergrund** | 31 Jahre alt, Softwareentwickler in einem mittelständischen Unternehmen, seit drei Jahren Mieter einer Zweizimmerwohnung im verwalteten Bestand. Technikaffin, nutzt Online-Services intensiv und erwartet ein modernes Self-Service-Angebot. |
 | **Hauptverantwortlichkeiten** | Pünktliche Mietzahlung, Meldung von Schäden oder Anliegen, Einhaltung der Hausordnung, gelegentliche Kommunikation mit der Hausverwaltung. Keine berufliche Rolle im Unternehmen – er ist Konsument der Dienstleistung. |
