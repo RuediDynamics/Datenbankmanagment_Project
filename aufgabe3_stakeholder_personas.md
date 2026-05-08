@@ -52,11 +52,11 @@
 | Element | Beschreibung |
 |---|---|
 | **Name & Foto** | Jakob Reisinger <br> ![Alex Rivera](./Assests/Alex_Persona.jpg) |
-| **Rollenbezeichnung** | Mieter (Endkunde mit Online-Zugang zum Mieterportal) |
-| **Hintergrund** | 31 Jahre alt, Softwareentwickler in einem mittelständischen Unternehmen, seit drei Jahren Mieter einer Zweizimmerwohnung im verwalteten Bestand. Technikaffin, nutzt Online-Services intensiv und erwartet ein modernes Self-Service-Angebot. |
-| **Hauptverantwortlichkeiten** | Pünktliche Mietzahlung, Meldung von Schäden oder Anliegen, Einhaltung der Hausordnung, gelegentliche Kommunikation mit der Hausverwaltung. Keine berufliche Rolle im Unternehmen – er ist Konsument der Dienstleistung. |
+| **Rollenbezeichnung** | Mieter |
+| **Hintergrund** | 31 Jahre alt, Softwareentwickler in einem mittelständischen Unternehmen, seit drei Jahren Mieter einer Zweizimmerwohnung. Technikaffin, nutzt Online-Services intensiv und erwartet ein modernes Self-Service-Angebot. |
+| **Hauptverantwortlichkeiten** | Pünktliche Mietzahlung, Meldung von Schäden oder Anliegen, Einhaltung der Hausordnung, gelegentliche Kommunikation mit der Hausverwaltung. Keine berufliche Rolle im Unternehmen. |
 | **Daten, mit denen er arbeitet** | Eigener Mietvertrag, Zahlungshistorie, Nebenkostenabrechnungen, eingereichte Schadensmeldungen und deren Bearbeitungsstatus, Kontaktdaten der zuständigen Ansprechperson. |
 | **Was er von der Datenbank benötigt** | Sicheren Login-Bereich mit Einsicht in den eigenen Vertrag, Übersicht über offene und beglichene Zahlungen, Möglichkeit zur Online-Schadensmeldung mit Fotoupload, Statusverfolgung seiner Anliegen, Download von Dokumenten wie Abrechnungen oder Bestätigungen. |
-| **Bedenken / Vorbehalte** | Hohe Sensibilität gegenüber Datenschutz. Möchte sicher sein, dass nur er seine Daten einsehen kann und dass keine Mitarbeitenden ohne dienstlichen Anlass Zugriff haben. Erwartet DSGVO-Konformität, sichere Authentifizierung und transparente Information darüber, welche Daten gespeichert werden. |
+| **Bedenken / Vorbehalte** | Hohe Sensibilität gegenüber Datenschutz. Möchte sicher sein, dass nur er seine Daten einsehen kann und dass keine Mitarbeitenden ohne dienstlichen Anlass Zugriff haben. Erwartet sichere Authentifizierung und transparente Information darüber, welche Daten gespeichert werden. |
 | **Bevorzugter Kommunikationsstil** | Knapp und digital. Bevorzugt schriftliche Kommunikation per E-Mail oder im Portal gegenüber Telefonaten. Für ein Interview kommt am ehesten ein Online-Termin per Videocall in Frage, mit klarer Zeitbegrenzung. |
 
