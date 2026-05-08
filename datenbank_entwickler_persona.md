@@ -1,17 +1,21 @@
 # Datenbank-Entwickler-Persona
 
----
 
-## 👤 Alex Rivera
-**Rollenbezeichnung:** Datenbankentwickler (mittleres Niveau)
 
----
+## Alex Rivera                  
+**Rollenbezeichnung:** Datenbankentwickler
+
+![Alex Rivera](./Assests/Alex_Persona.jpg)
+
+
+
+
 
 ## Hintergrund
 
 Alex hat einen Bachelor-Abschluss in Wirtschaftsinformatik und verfügt über 4 Jahre Berufserfahrung in der Datenbankentwicklung. Er begann seine Karriere als Junior-Analyst in einem Logistikunternehmen, wo er seine ersten relationalen Datenbankschemata von Grund auf entwarf. Seitdem hat er an Projekten im Einzelhandel und im Gesundheitswesen mitgewirkt und dabei Erfahrungen mit transaktions- sowie berichtsorientierten Datenbanken gesammelt.
 
----
+
 
 ## Kernaufgaben
 
@@ -21,14 +25,14 @@ Alex hat einen Bachelor-Abschluss in Wirtschaftsinformatik und verfügt über 4 
 - Zusammenarbeit mit Frontend-Entwicklern und Business-Analysten zur Sicherstellung passender Datenmodelle
 - Dokumentation von Datenbankstrukturen und Datenwörterbüchern für Übergabe und Wartung
 
----
+
 
 ## Schlüsselkompetenzen
 
 **Technisch**
 - SQL (PostgreSQL, MySQL, SQL Server)
-- Datenmodellierung und Normalisierung (1NF–3NF/BCNF)
-- ER-Diagramm-Tools (Lucidchart, draw.io)
+- Datenmodellierung und Normalisierung 
+- ER-Diagramm-Tools 
 - Grundlegendes ETL-Pipeline-Design
 - Versionskontrolle für Skripte (Git)
 
@@ -37,7 +41,7 @@ Alex hat einen Bachelor-Abschluss in Wirtschaftsinformatik und verfügt über 4 
 - Aktives Zuhören bei Stakeholder-Interviews
 - Klare schriftliche und mündliche Kommunikation in gemischten Teams
 
----
+
 
 ## Ziele
 
@@ -46,7 +50,7 @@ Alex hat einen Bachelor-Abschluss in Wirtschaftsinformatik und verfügt über 4 
 - Erstellung vollständiger Dokumentation, damit das System ohne Schwierigkeiten gewartet oder erweitert werden kann
 - Weiterentwicklung der Kenntnisse in Performance-Optimierung mit dem langfristigen Ziel, Lead-Datenbankarchitekt zu werden
 
----
+
 
 ## Frustrationen / Herausforderungen
 

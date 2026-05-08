@@ -36,8 +36,8 @@ Mieter benötigen eingeschränkten, personalisierten Zugriff auf ihre eigenen Ve
 
 ## Einordnung der Datenbedürfnisse
 
-> **Breiteste Datenbedürfnisse (analog zum Director in DreamHome):**
->  **Filialleiter** – Er benötigt systemweiten Zugriff auf alle Entitätsbereiche (Objekte, Mitarbeiter, Finanzen, Kunden) und nutzt das System primär für Auswertungen und Entscheidungsunterstützung.
+**Breiteste Datenbedürfnisse:**
+**Filialleiter** – Er benötigt systemweiten Zugriff auf alle Entitätsbereiche (Objekte, Mitarbeiter, Finanzen, Kunden) und nutzt das System primär für Auswertungen und Entscheidungsunterstützung.
 
-> **Meiste operative, alltägliche Datenbedürfnisse (analog zum Assistant in DreamHome):**
-> **Rezeptionist / Sachbearbeiter** – Er interagiert am häufigsten mit dem System, führt repetitive Transaktionen durch und ist auf schnellen, strukturierten Datenzugriff für die tägliche Arbeit angewiesen.
+**Meiste operative, alltägliche Datenbedürfnisse:**
+**Rezeptionist / Sachbearbeiter** – Er interagiert am häufigsten mit dem System, führt repetitive Transaktionen durch und ist auf schnellen, strukturierten Datenzugriff für die tägliche Arbeit angewiesen.
