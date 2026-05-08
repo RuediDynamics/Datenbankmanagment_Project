@@ -8,10 +8,10 @@ Das Datenbankprojekt hilft einem Immobilienunternehmen dabei, Mietwohnungen, Mie
 
 | Rolle | Kurzbeschreibung |
 |---|---|
-| Filialleiter | Strategische Übersicht über alle Objekte, Mitarbeiter und Leistungskennzahlen |
-| Immobilienmakler | Tägliche Verwaltung von Objekten, Kundenkontakt und Besichtigungen |
-| Rezeptionist / Sachbearbeiter | Operative Dateneingabe, Terminverwaltung und Kundenanfragen |
-| Mieter | Einsicht in eigene Mietverträge, Zahlungen und Anfragen |
+| Filialleiter | Hat den Überblick über Wohnungen, Mitarbeiter und wichtige Zahlen |
+| Immobilienmakler | Verwaltet Wohnungen, spricht mit Kunden und organisiert Besichtigungen |
+| Rezeptionist / Sachbearbeiter | Gibt Daten ein, plant Termine und beantwortet Kundenanfragen |
+| Mieter | Kann eigene Mietverträge, Zahlungen und Anfragen ansehen |
 
 ## Begründung der Rollenwahl
 
