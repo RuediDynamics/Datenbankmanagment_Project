@@ -1,12 +1,12 @@
 # Aufgabe 2: Identifikation der Stakeholder-Rollen
 
----
+
 
 ## Kontext
 
-Das Datenbankprojekt unterstützt ein **Immobilienverwaltungsunternehmen** (angelehnt an DreamHome), das Mietobjekte, Mieter, Besichtigungen und Mitarbeiter verwaltet.
+Das Datenbankprojekt unterstützt ein Immobilienverwaltungsunternehmen (angelehnt an DreamHome), das Mietobjekte, Mieter, Besichtigungen und Mitarbeiter verwaltet.
 
----
+
 
 ## Identifizierte Stakeholder-Rollen
 
@@ -17,7 +17,6 @@ Das Datenbankprojekt unterstützt ein **Immobilienverwaltungsunternehmen** (ange
 | Rezeptionist / Sachbearbeiter | Operative Dateneingabe, Terminverwaltung und Kundenanfragen |
 | Mieter | Einsicht in eigene Mietverträge, Zahlungen und Anfragen |
 
----
 
 ## Begründung der Rollenwahl
 
@@ -33,12 +32,12 @@ Diese Rolle ist hauptsächlich für die Dateneingabe und -pflege zuständig – 
 **Mieter**
 Mieter benötigen eingeschränkten, personalisierten Zugriff auf ihre eigenen Vertragsdetails, Zahlungshistorie und offene Anfragen. Ihre Datenbedürfnisse sind eng gefasst, aber sicherheitsrelevant.
 
----
+
 
 ## Einordnung der Datenbedürfnisse
 
 > **Breiteste Datenbedürfnisse (analog zum Director in DreamHome):**
-> 🏆 **Filialleiter** – Er benötigt systemweiten Zugriff auf alle Entitätsbereiche (Objekte, Mitarbeiter, Finanzen, Kunden) und nutzt das System primär für Auswertungen und Entscheidungsunterstützung.
+>  **Filialleiter** – Er benötigt systemweiten Zugriff auf alle Entitätsbereiche (Objekte, Mitarbeiter, Finanzen, Kunden) und nutzt das System primär für Auswertungen und Entscheidungsunterstützung.
 
 > **Meiste operative, alltägliche Datenbedürfnisse (analog zum Assistant in DreamHome):**
-> ⚙️ **Rezeptionist / Sachbearbeiter** – Er interagiert am häufigsten mit dem System, führt repetitive Transaktionen durch und ist auf schnellen, strukturierten Datenzugriff für die tägliche Arbeit angewiesen.
+> **Rezeptionist / Sachbearbeiter** – Er interagiert am häufigsten mit dem System, führt repetitive Transaktionen durch und ist auf schnellen, strukturierten Datenzugriff für die tägliche Arbeit angewiesen.
