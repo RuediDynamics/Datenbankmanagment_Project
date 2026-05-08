@@ -21,11 +21,7 @@ Ein Teamproject zur praktischen Anwendung von Datenbankentwicklungsmethoden — 
 
 ```
 Assignment 1 (✅ Fertig)
-└─ Personas & Interviews
-   ├─ aufgabe1_datenbank_entwickler_persona.md ✓
-   ├─ aufgabe2_stakeholder_rollen.md ✓
-   ├─ aufgabe3_stakeholder_personas.md ✓
-   └─ Interview-Guides & Reflection ✓
+└─ assignment-01-personas-stakeholder-interviews-and-reflection.md ✓
 
 Assignment 2 (Q2)
 └─ Conceptual Model
