@@ -2,7 +2,7 @@
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Maria Weiss <br> <img src="assignment-01-submission/assets/images/stakeholder-3-avatar.png" alt="Bogenschützin" width="220"/> |
+| **Name & Foto** | Maria Weiss <br> <img src="{{< meta assignment1_assets >}}/images/stakeholder-3-avatar.png" alt="Bogenschützin" width="220"/> |
 | **Rolle** | Teilnehmerin WBHC 2027, Adult Female Bowhunter Compound (AFBH-C) |
 | **Kurzprofil** | 34 Jahre, Mitglied eines österreichischen IFAA-Vereins, nimmt regelmäßig an internationalen 3D-Turnieren teil. Besitzt eine aktuelle IFAA-Klassifizierungskarte (Klasse A, Bowhunter Compound). |
 | **Aufgaben** | Anmeldung zum Turnier, Equipment-Check vor dem Start, tägliches Schießen auf der zugewiesenen Strecke in der zugewiesenen Gruppe, Überprüfung der eigenen Ergebnisse. |

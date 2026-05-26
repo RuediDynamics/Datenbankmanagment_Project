@@ -1,3 +1,14 @@
+---
+title: "Projekt-Dokumentation: IFAA WBHC 2027"
+assignment1_assets: "assignment-01-submission/assets"
+assignment2_assets: "assignment-02-submission/assets"
+resource-path:
+  - "."
+  - "assignment-01-submission"
+  - "assignment-02-submission"
+embed-resources: true
+---
+
 # Project Documentation / Projekt-Dokumentation
 
 Dieses Hauptdokument im Root-Verzeichnis bettet die einzelnen Dokumentationen der Projektphasen via Quarto-Includes ein.
@@ -8,4 +19,4 @@ Dieses Hauptdokument im Root-Verzeichnis bettet die einzelnen Dokumentationen de
 
 ---
 
-<!-- {{< include assignment-02-submission/project-documentation.md >}} -->
+{{< include assignment-02-submission/project-documentation.qmd >}}

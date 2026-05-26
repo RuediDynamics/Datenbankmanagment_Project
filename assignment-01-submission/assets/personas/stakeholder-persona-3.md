@@ -2,7 +2,7 @@
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Sandra Klein <br> <img src="assignment-01-submission/assets/images/stakeholder-2-avatar.png" alt="Ergebnisbeauftragte" width="220"/> |
+| **Name & Foto** | Sandra Klein <br> <img src="{{< meta assignment1_assets >}}/images/stakeholder-2-avatar.png" alt="Ergebnisbeauftragte" width="220"/> |
 | **Rolle** | Ergebnisbeauftragte und Registrierungsleiterin, WBHC 2027 |
 | **Kurzprofil** | 39 Jahre, arbeitet beim DFBV als Veranstaltungskoordinatorin. Hat bereits bei mehreren nationalen Meisterschaften die Ergebniserfassung geleitet und kennt die IFAA-Klassifizierungsregeln gut. |
 | **Aufgaben** | Entgegennehmen und Prüfen von Anmeldungen, Verifikation der Klassifizierungskarten (Klasse A/B/C je Stil), Eingabe der täglichen Schussergebnisse, Berechnung von Tages- und Gesamtranglisten, Verwaltung von Gleichständen (Tie-Breaks), Ausgabe offizieller Ergebnislisten. |

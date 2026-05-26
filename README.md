@@ -25,9 +25,9 @@ Hier finden Sie die direkten Verknüpfungen zu den jeweiligen Abgaben und deren 
 *   **Beschreibung:** Ermittlung von Anforderungen, Definition von Stakeholder-Personas und Durchführung strukturierter Interviews zur Vorbereitung der Datenbankentwicklung (WBHC 2027 in Bad Waldsee).
 *   **Hauptdokument:** [project-documentation.qmd](./assignment-01-submission/project-documentation.qmd)
 
-### [Assignment 02 (Zukünftige Aufgabe)](./assignment-02-submission/)
-*   **Beschreibung:** Platzhalter für das darauffolgende Assignment.
-*   **Hauptdokument:** Noch ausstehend (siehe [assignment-02-submission/](./assignment-02-submission/))
+### [Assignment 02: Conceptual Data Modeling](./assignment-02-submission/project-documentation.qmd)
+*   **Beschreibung:** Erstellung eines konzeptuellen Datenmodells (UML in PlantUML), Datenwörterbuch, Transaktionsvalidierung und Reflexion.
+*   **Hauptdokument:** [project-documentation.qmd](./assignment-02-submission/project-documentation.qmd)
 
 ---
 
@@ -57,5 +57,15 @@ Die Ordnerstruktur des Projekts ist wie folgt aufgebaut:
 │       │   └── stakeholder-3-avatar.png
 │       └── readme.md                  # Reviewer-Anleitung für die Assets
 └── assignment-02-submission/          # Abgabeordner für Assignment 02
-    └── test.txt
+    ├── project-documentation.qmd       # Hauptabgabedokument (Aufgabenübersicht)
+    └── assets/                        # Ergänzende Ressourcen
+        ├── diagrams/                  # UML-Klassendiagramme (PlantUML)
+        │   ├── conceptual-model-initial.puml
+        │   ├── conceptual-model-initial.svg
+        │   ├── conceptual-model-final.puml
+        │   ├── conceptual-model-final.svg
+        │   ├── T1_T2_Pathways.puml
+        │   ├── T1_T2_Pathways.svg
+        │   └── ...
+        └── readme.md                  # Reviewer-Anleitung für die Assets
 ```

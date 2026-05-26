@@ -1,0 +1,1024 @@
+
+# Assignment 02: Conceptual Data Modeling
+
+From Stakeholder Interview Results to a Validated Conceptual Data Model
+
+---
+
+## Task 1: Consolidate and Prioritize Data Requirements
+
+### 1. Stakeholder Roles
+
+
+| # | Rolle | Persona | Primärer Systembezug |
+|---|---|---|---|
+| 1 | **Turnierdirektor** | Klaus Brenner, DFBV | Strategische Planung, Regelkonformität, Gesamtübersicht |
+| 2 | **Bogenschütze / Teilnehmer** | Maria Weiss, Österreich (AFBH-C) | Persönliche Anmeldung, Startinformation, eigene Ergebnisse |
+| 3 | **Ergebnisbeauftragte / Registrierung** | Sandra Klein, DFBV | Tägliche Dateneingabe, Klassifizierungsprüfung, Ranglistenberechnung |
+
+---
+
+### 2. Key Data Needs per Role
+
+### 2.1 Turnierdirektor (Klaus Brenner)
+
+Der Turnierdirektor benötigt **strukturierte Übersichten** über alle zentralen Turnierbereiche. Er arbeitet nicht mit Einzeldatensätzen, sondern mit aggregierten Sichten zur Entscheidungsunterstützung.
+
+| Datenobjekt | Konkrete Datenanforderungen |
+|---|---|
+| Veranstaltung | Event-ID, Name, Datum, Austragungsort, Veranstalter, IFAA-Referenz |
+| Runde | Runden-ID, Rundentyp (Unmarked Animal 3-Pfeil / 3D Standard 2-Pfeil / 3D Hunting 1-Pfeil), Datum, zugewiesene Range |
+| Range / Strecke | Range-ID, Bezeichnung, Anzahl Ziele (28 pro Runde), zugewiesene Divisionen/Stile |
+| Ziel / Target Station | Ziel-ID, Ziel-Nummer (1–28), Zielgruppe (1–4), maximale Schussdistanz je Division |
+| Offizieller | Offizielle-ID, Name, Funktion (TCO etc.), zugewiesene Range |
+| Protest / Regelentscheid | Protest-ID, betroffener Schütze, Datum, Beschreibung, Entscheidung, entscheidender Offizieller |
+| Gesamtrangliste | Aktuelle Ranglisten je Division, Stil und Klasse (A/B/C) |
+| Teilnehmerliste | Auflistung nach Nation, Stil, Division für Schießplanaufstellung |
+
+**Benötigte Operationen:** überwiegend R (Read), selektiv C/U bei Veranstaltungs- und Rundenplanung sowie C bei Protests.
+
+---
+
+### 2.2 Bogenschütze / Teilnehmer (Maria Weiss)
+
+Der Schütze benötigt **ausschließlich lesenden Zugriff** auf eigene Daten. Schreibzugriff ist nur im Rahmen der eigenen Anmeldung oder Fehlerkorrektur vorgesehen.
+
+| Datenobjekt | Konkrete Datenanforderungen |
+|---|---|
+| Eigenes Profil | Teilnehmer-ID, Vorname, Nachname, Geburtsdatum, Nation, Verein, Schießstil, Division, Klasse (A/B/C) |
+| Klassifizierungskarte | Score-Record-ID, Datum, Veranstaltung, Runde, Ergebnis, Klasse, Verifikationsstatus |
+| Startgruppe | Gruppen-ID, Mitglieder (Schützen-IDs), zugewiesene Range, Starttarget, Datum |
+| Eigene Schussergebnisse | Ergebnis-ID, Runde, Ziel-Nummer, Pfeil-Nummer (1/2/3), Trefferzone (Kill/Vital/Wound/Miss), Punktwert |
+| Taggesamt / Gesamtergebnis | Tagesergebnis, Gesamtpunkte über alle Runden, Ranglistenposition je Stil/Division/Klasse |
+| Zeitplan | Rundendatum, Startzeit, Range-Bezeichnung |
+
+**Benötigte Operationen:** R (Read) dominant; C/U nur bei Anmeldung und Fehlerkorrektur.
+
+---
+
+### 2.3 Ergebnisbeauftragte / Registrierung (Sandra Klein)
+
+Die Ergebnisbeauftragte hat **den intensivsten und breitesten Schreibzugriff**. Sie führt alle operativen Datenpflegeaufgaben täglich durch und trägt die größte Fehlerverantwortung.
+
+| Datenobjekt | Konkrete Datenanforderungen |
+|---|---|
+| Anmeldung | Anmelde-ID, Teilnehmer-Referenz, Stil, Division, Klasse, Nation, Verein, Startgebühr bezahlt, Ausrüstung geprüft |
+| Scorekarte | Karten-ID, Teilnehmer-Referenz, Runde, Ziel-Nr. (1–28), Pfeil-Nr. (1/2/3), Trefferzone, Punktwert, Target Captain (Unterzeichner) |
+| Rundengesamtergebnis | Teilnehmer-Referenz, Runde, Gesamtpunkte je Runde (berechnet) |
+| Turnierergebnis | Teilnehmer-Referenz, Summenpunkte aller Runden, Ranglistenposition (je Stil/Division/Klasse), Gleichstandsmarkierung |
+| Tie-Break | Tie-Break-ID, beteiligte Schützen, 3D-Ziel-Gruppe, Pfeilresultat je Schuss, Endresultat |
+| Klassifizierung | Teilnehmer-Referenz, Stil, gültige Klasse, Grundlage (zwei Scores im 12-Monats-Zeitraum), Prüfstatus |
+
+**Benötigte Operationen:** C, R, U für Anmeldung, Scorekarte und Tie-Break; R für berechnete Ranglisten.
+
+---
+
+### 3. Overlaps and Conflicts
+
+### 3.1 Überschneidungen (Overlaps)
+
+Mehrere Datenobjekte und Anforderungen werden von mehr als einer Stakeholder-Rolle benötigt:
+
+| Überschneidung | Beteiligte Rollen | Anmerkung |
+|---|---|---|
+| Teilnehmerstammdaten (Name, Nation, Stil, Division, Klasse) | Alle drei | Zentrale Entität; wird von allen Rollen verwendet, jedoch mit unterschiedlichen Zugriffsrechten |
+| Ranglisten je Stil/Division/Klasse | Alle drei | Turnierdirektor und Ergebnisbeauftragte brauchen vollständige Sichten; Schütze nur die eigene Position |
+| Startgruppen und Range-Zuweisung | Turnierdirektor + Schütze | Turnierdirektor plant, Schütze konsumiert |
+| Schussergebnisse | Schütze + Ergebnisbeauftragte | Ergebnisbeauftragte erfasst, Schütze liest; beide benötigen Darstellung auf Zielebene |
+| Klassifizierungsprüfung | Schütze + Ergebnisbeauftragte | Schütze bringt Karte mit; Ergebnisbeauftragte prüft und vermerkt Ergebnis |
+| Exportfunktion (PDF/CSV) | Turnierdirektor + Ergebnisbeauftragte | Beide benötigen offizielle Ergebnisexporte für IFAA und Aushänge |
+
+### 3.2 Konflikte (Conflicts)
+
+| Konflikt | Beteiligte Rollen | Beschreibung |
+|---|---|---|
+| **Granularität vs. Aufwand** | Ergebnisbeauftragte vs. Systemdesign | Die korrekte IFAA-Punktelogik (Pfeilnummer entscheidet über Punktwert) erfordert Erfassung auf Pfeil-Ebene. Das macht die Eingabe für die Ergebnisbeauftragte aufwendiger; ein einfaches Tagesgesamtscore würde nicht reichen. |
+| **Klassifizierungshistorie vs. Praktikabilität** | Turnierdirektor + Ergebnisbeauftragte vs. Machbarkeit | Vollständige Verwaltung der IFAA-Klassifizierungshistorie (zwei Scores in 12 Monaten) für 1.200 Schützen ist im Rahmen der WBHC nicht realistisch; die Praxis sieht vor, dass Schützen ihre Karte mitbringen und nur der aktuelle Status geprüft wird. |
+| **Datenschutz / öffentliche Sichtbarkeit** | Schütze vs. Turnierdirektor | Der Schütze möchte kontrollieren, welche Daten öffentlich sichtbar sind (z. B. nur Name und Nation, nicht Geburtsdatum). Der Turnierdirektor und die Ergebnisbeauftragte brauchen vollständige, interne Dateneinsicht. |
+| **Fehlerkorrektur** | Schütze vs. Ergebnisbeauftragte | Schussergebnisse sind nach Eingabe schwer rückgängig zu machen; ein Schütze kann eine Korrektur anfragen, aber nur die Ergebnisbeauftragte darf Änderungen vornehmen. Prozess und Berechtigungen müssen klar definiert sein. |
+
+---
+
+### 4. Preliminary Scope
+
+### In Scope
+
+Das konzeptuelle Datenmodell deckt folgende Bereiche ab:
+
+- **Teilnehmerverwaltung:** Profildaten, Stil/Divisions/Klassen-Kombination, Nation, Verein, Geburtsdatum (Altersvalidierung für Altersklassen)
+- **Veranstaltungs- und Rundenverwaltung:** Vier Runden der WBHC (2× Unmarked Animal Round, 1× 3D Standard Round, 1× 3D Hunting Round) mit je eigenem Punktesystem
+- **Range- und Zielstationsverwaltung:** 28 Targets pro Runde, Gruppen (1–4), Distanzangaben je Division
+- **Startgruppenzuweisung:** Tägliche Zuweisung von Schützen zu Gruppen, Ranges und Starttargets; Score-Seeding ab Tag 2
+- **Schussergebniserfassung:** Auf Ebene einzelner Pfeile (Ziel-Nr., Pfeil-Nr., Trefferzone, Punktwert) inkl. Target Captain
+- **Ranglistenberechnung:** Getrennt nach Stil, Division und Klasse (A/B/C); Tie-Break-Verfahren (Shoot-off über 3D-Ziele)
+- **Offizielle und Funktionen:** Turnierdirektor, TCOs und weitere Offizielle mit Range-Zuweisungen
+- **Protest- und Regelentscheiddokumentation:** Strukturierte Protokollierung mit Entscheidung und verantwortlichem Offiziellen
+- **Klassifizierungsprüfung:** Vermerken des geprüften Klassifizierungsstatus bei der Anmeldung (kein vollständiges Historienmanagement)
+- **Anmeldungsverwaltung:** Inkl. Status Startgebühr bezahlt und Ausrüstung geprüft
+
+### Out of Scope
+
+- Vollständige IFAA-Klassifizierungshistorie aller Teilnehmer (historische Turnierdaten anderer Veranstaltungen)
+- Online-Anmeldesystem mit Bezahlabwicklung (Payment-Gateway)
+- Hotelbuchungen, Reiseplanung, Akkreditierung
+- Detaillierte Equipment-Spezifikationen (nur Prüfstatus „geprüft / nicht geprüft")
+- Ergebnisse anderer (Nicht-WBHC) Turniere als eigenständige Datenverwaltung
+- Echtzeitkommunikation / Push-Benachrichtigungen an Teilnehmer
+- Benutzerverwaltung und Authentifizierungssystem (Login-Management)
+
+---
+
+### 5. Core Transactions
+
+Die folgenden **acht Kerntransaktionen** decken die operativen und manageriellen Anforderungen aller drei Stakeholder-Rollen ab:
+
+| # | Transaktionsname | Typ | Primäre Rolle | Beteiligte Datenobjekte |
+|---|---|---|---|---|
+| T1 | **Teilnehmer anlegen und einer Stil/Divisions/Klassen-Kombination zuweisen** | Operational – Create/Update | Ergebnisbeauftragte | Teilnehmer, Anmeldung, Nation, Verein |
+| T2 | **Klassifizierungskarte prüfen und Startzulassung erteilen** | Operational – Read/Update | Ergebnisbeauftragte | Anmeldung, Klassifizierung, Teilnehmer |
+| T3 | **Startgruppen für eine Runde erstellen und Schützen auf Ranges/Targets zuweisen** | Operational – Create/Update | Turnierdirektor | Startgruppe, Runde, Range, Ziel, Teilnehmer |
+| T4 | **Schussergebnisse einer Scorekarte (28 Ziele × Pfeilanzahl) erfassen und Punkte berechnen** | Operational – Create | Ergebnisbeauftragte | Scorekarte, Schussergebnis, Rundengesamtergebnis, Rundentyp |
+| T5 | **Tagesergebnisse und Gesamtrangliste je Stil/Division/Klasse anzeigen** | Managerial – Read (calculated) | Alle drei Rollen | Turnierergebnis, Teilnehmer, Stil, Division, Klasse |
+| T6 | **Tie-Break-Shoot-off erfassen und Gewinner bestimmen** | Operational – Create/Read | Ergebnisbeauftragte | Tie-Break, Schussergebnis, Teilnehmer |
+| T7 | **Protest / Regelentscheid dokumentieren und einem Offiziellen zuordnen** | Operational – Create | Turnierdirektor | Protest, Offizieller, Teilnehmer |
+| T8 | **Offizielle Ergebnisliste (nach IFAA-Format) für eine Runde oder das Gesamtturnier exportieren** | Managerial – Read/Report | Turnierdirektor + Ergebnisbeauftragte | Turnierergebnis, Runde, Teilnehmer, Stil, Division, Klasse |
+
+### Zuordnung zu Stakeholder-Anforderungen
+
+| Transaktion | Turnierdirektor | Bogenschütze | Ergebnisbeauftragte |
+|---|:---:|:---:|:---:|
+| T1 – Teilnehmer anlegen | | | ✓ |
+| T2 – Klassifizierung prüfen | | | ✓ |
+| T3 – Startgruppen erstellen | ✓ | (konsumiert) | |
+| T4 – Scorekarte erfassen | | | ✓ |
+| T5 – Rangliste anzeigen | ✓ | ✓ | ✓ |
+| T6 – Tie-Break erfassen | | | ✓ |
+| T7 – Protest dokumentieren | ✓ | | |
+| T8 – Ergebnisliste exportieren | ✓ | | ✓ |
+
+
+
+---
+
+## Task 2: Build the Conceptual Data Model
+
+### Step 1.1 – Entity Types
+
+| # | Entität | Beschreibung |
+|---|---|---|
+| 1 | Event | Die WBHC 2027 selbst. |
+| 2 | Round | Eine der vier Turnierrunden. |
+| 3 | Range | Eine physische Strecke mit 28 Zielen. |
+| 4 | TargetStation | Eines der 28 Ziele einer Range. |
+| 5 | Participant | Ein einzelner Bogenschütze. |
+| 6 | Nation | Das Land, das ein Teilnehmer vertritt. |
+| 7 | Club | Verein, dem ein Teilnehmer angehört. |
+| 8 | Official | Schiedsrichter, Target Captain oder Turnierdirektor. |
+| 9 | Registration | Anmeldung eines Teilnehmers zum Event. |
+| 10 | CompetitionCategory | Kombination aus Style, Division und Class. |
+| 11 | StartGroup | Gruppe von 3–6 Schützen, die gemeinsam schießen. |
+| 12 | ScoreCard | Scorekarte eines Teilnehmers für eine Runde. |
+| 13 | ShotResult | Ergebnis eines einzelnen Pfeils. |
+| 14 | TournamentResult | Aggregiertes Gesamtergebnis eines Teilnehmers. |
+| 15 | TieBreak | Stechen zwischen punktgleichen Teilnehmern. |
+| 16 | Protest | Formelle Regelentscheidung. |
+
+---
+
+### Step 1.2 – Relationship Types
+
+| # | Beziehung | Entität 1 | Entität 2 | Multiplizität |
+|---|---|---|---|---|
+| R1 | consistsOf | Event | Round | 1 : 1..4 |
+| R2 | uses | Round | Range | 1..* : 1..* |
+| R3 | contains | Range | TargetStation | 1 : 28 |
+| R4 | submits | Participant | Registration | 1 : 0..* |
+| R5 | forEvent | Registration | Event | * : 1 |
+| R6 | categorisedAs | Registration | CompetitionCategory | * : 1 |
+| R7 | representsNation | Participant | Nation | * : 1 |
+| R8 | memberOf | Participant | Club | 0..* : 0..1 |
+| R9 | forRound | StartGroup | Round | * : 1 |
+| R10 | assignedToRange | StartGroup | Range | * : 1 |
+| R11 | includes | StartGroup | Registration | 1 : 3..6 |
+| R12 | recordsFor | ScoreCard | Registration | * : 1 |
+| R13 | forRound | ScoreCard | Round | * : 1 |
+| R14 | contains | ScoreCard | ShotResult | 1 : 28..84 |
+| R15 | atTarget | ShotResult | TargetStation | * : 1 |
+| R16 | signedBy | ScoreCard | Official | * : 1 |
+| R17 | summarises | TournamentResult | Registration | 1 : 1 |
+| R18 | resolvesTie | TieBreak | Registration | * : 2..* |
+| R19 | uses | TieBreak | ShotResult | 1 : 1..* |
+| R20 | assignedToRange | Official | Range | 1 : 0..* |
+| R21 | decides | Official | Protest | 1 : 0..* |
+| R22 | concerns | Protest | Registration | * : 1 |
+
+---
+
+### Step 1.3 – Attribute Classification
+
+| Attribut | Entität | Typ |
+|---|---|---|
+| age | Participant | abgeleitet (aus birthDate) |
+| pointValue | ShotResult | abgeleitet (roundType + hitZone + arrowNumber) |
+| roundTotal | ScoreCard | abgeleitet (Summe pointValue) |
+| totalPoints | TournamentResult | abgeleitet (Summe roundTotal) |
+| rankPosition | TournamentResult | abgeleitet (Rang in CompetitionCategory) |
+| numberOfTargets | Range | abgeleitet (Anzahl TargetStation) |
+| firstName + lastName | Person | zusammengesetzt (atomare Namensbestandteile) |
+
+Alle übrigen Attribute sind einfach, einwertig und nicht abgeleitet. Mehrwertige Attribute wurden nicht identifiziert.
+
+---
+
+### Step 1.4 – Attribute Domains
+
+| Attribut | Wertebereich |
+|---|---|
+| roundType | {UnmarkedAnimal_3Arrow, Standard3D_2Arrow, Hunting3D_1Arrow} |
+| hitZone | {Kill, Vital, Wound, Miss} |
+| targetNumber | Integer [1..28] |
+| arrowNumber | Integer [1..3] |
+| targetGroup | Integer [1..4] |
+| style | {BB, BBR, BHR, BL, BU, FS, FSR, FU, LB, TR} |
+| division | {Adult, Veteran, Senior, YoungAdult, Junior, Cub} |
+| classLevel | {A, B, C} |
+| nationCode | Text[3] (ISO 3-Buchstaben) |
+| pointValue | Integer [0..20] |
+| Alle Datumsangaben | ISO 8601 (YYYY-MM-DD) |
+| Alle Booleans | {true, false} |
+
+---
+
+### Step 1.5 – Keys
+
+| Entität | Primärschlüssel | Alternativer Schlüssel | Typ |
+|---|---|---|---|
+| Event | eventId | (name, startDate) | stark |
+| Round | roundId | (eventId, roundNumber) | stark |
+| Range | rangeId | rangeName | stark |
+| TargetStation | (rangeId, targetNumber) | – | **schwach** |
+| Participant | participantId | – | stark |
+| Nation | nationCode | nationName | stark |
+| Club | clubId | clubName | stark |
+| Official | officialId | – | stark |
+| Registration | registrationId | (eventId, participantId) | stark |
+| CompetitionCategory | categoryId | (style, division, classLevel) | stark |
+| StartGroup | groupId | (roundId, groupNumber) | stark |
+| ScoreCard | scoreCardId | (registrationId, roundId) | stark |
+| ShotResult | (scoreCardId, targetNumber, arrowNumber) | – | **schwach** |
+| TournamentResult | resultId | registrationId | stark |
+| TieBreak | tieBreakId | – | stark |
+| Protest | protestId | – | stark |
+
+---
+
+### Step 1.6 – Enhanced Modeling
+
+**Übernommen:** Generalisierung `Person` über `Participant` und `Official` (gemeinsame Attribute `firstName`, `lastName`).
+
+**Verworfen:** Subtypen je `roundType` — als Aufzählungsattribut belassen, da der Unterschied datengetrieben ist (Pfeile pro Ziel), nicht strukturell.
+
+---
+
+### Step 1.7 – Redundancy Check
+
+| # | Befund | Maßnahme |
+|---|---|---|
+| 1 | (style, division, class) mehrfach über Registrations | Zu Entität `CompetitionCategory` erhoben |
+| 2 | `maxDistance` von Kategorie abhängig (wäre mehrwertig) | In Assoziationsklasse `TargetDistance` ausgelagert |
+| 3 | Keine redundanten Beziehungen vorhanden | – |
+| 4 | Zeitdimension bei Nation/Club für Einzelevent nicht nötig | – |
+
+---
+
+### Step 1.8 – Validation Against Transactions
+
+Erste Prüfung der Transaktionen T1–T8 (aus Aufgabe 1) ergab drei Lücken, die zu den obigen Anpassungen führten. Die vollständige Transaktions-Modell-Matrix folgt in Aufgabe 4.
+
+| Transaktion | Initiales Modell | Maßnahme |
+|---|---|---|
+| T1 – Teilnehmer anlegen | ✓ | – |
+| T2 – Klassifizierung prüfen | ✓ | – |
+| T3 – Startgruppen erstellen | Lücke | `CompetitionCategory` ergänzt |
+| T4 – Scorekarte erfassen | ✓ | – |
+| T5 – Rangliste anzeigen | Lücke | `CompetitionCategory` ergänzt |
+| T6 – Tie-Break erfassen | ✓ | – |
+| T7 – Protest dokumentieren | Lücke | Verknüpfung mit Registration (nicht Participant) |
+| T8 – Ergebnisliste exportieren | Lücke | `TargetDistance` ergänzt |
+
+Nach der Überarbeitung: **alle 8 Transaktionen werden durch das finale Modell unterstützt.**
+
+---
+
+### Step 1.9 – User Review
+
+Das finale Modell wird den drei Personas aus Aufgabe 1 (Klaus Brenner, Maria Weiss, Sandra Klein) zur Abnahme vorgelegt. Offene Klärungspunkte sind in Aufgabe 5 dokumentiert.
+
+---
+
+### Initiales konzeptuelles Datenmodell
+
+Quelle: [`assets/diagrams/conceptual-model-initial.puml`](assets/diagrams/conceptual-model-initial.puml)
+
+![Initiales konzeptuelles Datenmodell]({{< meta assignment2_assets >}}/diagrams/conceptual-model-initial.svg)
+
+---
+
+### Finales konzeptuelles Datenmodell
+
+Quelle: [`assets/diagrams/conceptual-model-final.puml`](assets/diagrams/conceptual-model-final.puml)
+
+![Finales konzeptuelles Datenmodell]({{< meta assignment2_assets >}}/diagrams/conceptual-model-final.svg)
+
+---
+
+### Änderungen zwischen initialem und finalem Modell
+
+| # | Änderung | Begründung | Schritt |
+|---|---|---|---|
+| 1 | `CompetitionCategory` ergänzt | Redundanz von (style, division, class) entfernt | 1.7 |
+| 2 | Assoziationsklasse `TargetDistance` ergänzt | Distanz abhängig von (Ziel, Kategorie) | 1.7 |
+| 3 | Supertyp `Person` ergänzt | Vermeidet doppelte Namensattribute | 1.6 |
+| 4 | `Protest` jetzt mit Registration verknüpft | Protest betrifft konkrete Anmeldung | 1.8 |
+| 5 | Beziehung `signedBy` ergänzt | Bildet Unterschrift des Target Captains ab | 1.8 |
+| 6 | Multiplizität `28..84` auf ScoreCard → ShotResult | Spiegelt rundentyp-abhängige Pfeilanzahl | 1.2 |
+| 7 | Schwache Entitäten explizit markiert | Existenzabhängig vom Eltern­objekt | 1.5 |
+
+---
+
+## Task 3: Data Dictionary and Attribute Domains
+
+### Entity Dictionary
+
+| Entity name | Aliases | Description | Expected no. of occurrences |
+|---|---|---|---|
+| `Event` | Veranstaltung, Tournament | Die WBHC 2027 selbst – ein einmaliges Turniermeisterschaftsevent nach IFAA-Regeln | ~1 |
+| `Round` | Runde, Competition Round | Eine der vier Turnierrunden mit eigenem Punktesystem (Unmarked Animal 3-Pfeil, Standard 3D 2-Pfeil, Hunting 3D 1-Pfeil) | 4 |
+| `Range` | Strecke, Course | Eine physische Strecke mit standardmäßig 28 Zielen, die in einer oder mehreren Runden verwendet wird | ~4–8 |
+| `TargetStation` | Ziel, Target, Goal Post | Ein einzelnes Ziel (1–28) auf einer Range mit Zielgruppe (1–4) und rundentyp-abhängiger maximaler Schussdistanz | ~112–224 |
+| `Participant` | Schütze, Archer, Competitor | Ein einzelner Bogenschütze, der sich zum Event anmeldet; mit Profildaten wie Name, Geburtsdatum, Nationalität, Verein | ~1.200 |
+| `Nation` | Land, Country | Das Land, das ein Teilnehmer vertritt (IFAA-Zugehörigkeit nach Ländercode ISO-3) | ~60 |
+| `Club` | Verein, Organization | Verein oder Sportorganisation, dem ein Teilnehmer angehört (optional) | ~150–200 |
+| `Official` | Offizieller, Schiedsrichter, Turnierdirektor | Person mit Funktion im Turnier (Turnierdirektor, Target Captain, Ranger); kann mehrere Ranges betreuen | ~30–50 |
+| `Registration` | Anmeldung, Entry | Die formale Anmeldung eines Teilnehmers zum Event; bindet Teilnehmer an Style/Division/Class und erfasst Gebührenstatus und Ausrüstungsprüfung | ~1.200 |
+| `CompetitionCategory` | Wettkampfkategorie, Score Category | Eindeutige Kombination aus Style (z. B. BB, FSR, LB), Division (Adult, Veteran, Junior), und Class (A, B, C); definiert Regeln und Scoring | ~60–80 |
+| `StartGroup` | Startgruppe, Flight, Group | Eine Gruppe von 3–6 Schützen, die an einer Runde gemeinsam eine Range schießen; mit eindeutiger Gruppe-Nummer pro Runde | ~200–400 |
+| `ScoreCard` | Scorekarte, Score Sheet | Die Ergebniskarte eines Teilnehmers für eine Runde; erfasst alle 28 Ziele × Pfeile und wird vom Target Captain unterschrieben | ~4.800 |
+| `ShotResult` | Schussergebnis, Arrow Result | Das Ergebnis eines einzelnen Pfeils (Trefferzone, Punktwert) an einem bestimmten Ziel; 28–84 pro Scorekarte je nach Rundentyp | ~86.400–201.600 |
+| `TournamentResult` | Turnierergebnis, Final Result | Aggregiertes Gesamtergebnis eines Teilnehmers über alle Runden; enthält Gesamtpunkte, Rangposition je Category und Tiebreak-Status | ~1.200 |
+| `TieBreak` | Stechen, Shoot-off | Entscheidungsrunde zwischen zwei oder mehr punktgleichen Teilnehmern über 3D-Zielgruppe mit je 3 Pfeilen pro Teilnehmer | ~20–100 |
+| `Protest` | Regelentscheid, Dispute | Formelle Einspruchsdokumentation gegen Entscheidung oder Regelauslegung; mit Entscheidung und verantwortlichem Offiziellen | ~5–50 |
+| `Person` | – | **Supertyp** für gemeinsame Attribute (`firstName`, `lastName`) von Participant und Official | – |
+
+
+---
+
+### Relationship Dictionary
+
+| Relationship name | Entity 1 | Entity 2 | Multiplicity | Mandatory? | Description |
+|---|---|---|---|---|---|
+| `consistsOf` | Event | Round | 1 : 1..4 | Yes | Ein Event besteht aus 1–4 Runden (WBHC: genau 4 Runden) |
+| `uses` | Round | Range | 1..* : 1..* | Yes | Eine Runde nutzt eine oder mehrere Ranges (z. B. zwei Tage, zwei Ranges parallel) |
+| `contains` | Range | TargetStation | 1 : 28 | Yes | Eine Range enthält genau 28 standardisierte Zielstationen (TargetStations 1–28) |
+| `submits` | Participant | Registration | 1 : 0..* | No | Ein Teilnehmer reicht 0–* Anmeldungen ein (Mehrfachstart in verschiedenen Events möglich, aber für WBHC: 0–1) |
+| `forEvent` | Registration | Event | * : 1 | Yes | Jede Anmeldung bezieht sich auf genau ein Event |
+| `categorisedAs` | Registration | CompetitionCategory | * : 1 | Yes | Jede Anmeldung wird in genau eine CompetitionCategory (Style/Division/Class) eingeordnet |
+| `representsNation` | Participant | Nation | * : 1 | Yes | Jeder Teilnehmer repräsentiert genau eine Nation |
+| `memberOf` | Participant | Club | 0..* : 0..1 | No | Ein Teilnehmer kann optional Mitglied eines Clubs sein; ein Club kann viele Mitglieder haben |
+| `forRound` | StartGroup | Round | * : 1 | Yes | Jede StartGroup gehört zu genau einer Runde |
+| `assignedToRange` (StartGroup–Range) | StartGroup | Range | * : 1 | Yes | Jede StartGroup wird genau einer Range zugewiesen |
+| `includes` | StartGroup | Registration | 1 : 3..6 | Yes | Eine StartGroup umfasst 3–6 Anmeldungen (Registrations) |
+| `recordsFor` | ScoreCard | Registration | * : 1 | Yes | Eine ScoreCard dokumentiert die Ergebnisse genau einer Anmeldung (Registration) |
+| `forRound` (ScoreCard–Round) | ScoreCard | Round | * : 1 | Yes | Eine ScoreCard gehört zu genau einer Runde |
+| `contains` (ScoreCard–ShotResult) | ScoreCard | ShotResult | 1 : 28..84 | Yes | Eine ScoreCard enthält 28–84 ShotResults je nach Rundentyp (3 Pfeile pro Ziel oder weniger) |
+| `atTarget` | ShotResult | TargetStation | * : 1 | Yes | Jedes ShotResult bezieht sich auf genau ein TargetStation |
+| `signedBy` | ScoreCard | Official | * : 1 | No | Eine ScoreCard wird (optional) vom Target Captain (Official) unterzeichnet/validiert |
+| `summarises` | TournamentResult | Registration | 1 : 1 | Yes | Jedes TournamentResult fasst die Ergebnisse genau einer Registration zusammen (1:1 Assoziation) |
+| `resolvesTie` | TieBreak | Registration | * : 2..* | Yes | Ein TieBreak bezieht 2–* Anmeldungen (punktgleiche Kandidaten) ein |
+| `uses` (TieBreak–ShotResult) | TieBreak | ShotResult | 1 : 1..* | Yes | Ein TieBreak referenziert 1–* ShotResults (Ergebnisse der Shoot-off-Pfeile) |
+| `assignedToRange` (Official–Range) | Official | Range | 1 : 0..* | No | Ein Official ist optionally einer oder mehreren Ranges zugewiesen |
+| `decides` | Official | Protest | 1 : 0..* | No | Ein Official trifft optionally 0–* Protestentscheidungen |
+| `concerns` | Protest | Registration | * : 1 | Yes | Ein Protest betrifft genau eine Anmeldung (Registration) |
+| `isA` (Person–Participant) | Person | Participant | 1 : 1 | Yes | **Generalisierung:** Participant ist eine Spezialisierung von Person |
+| `isA` (Person–Official) | Person | Official | 1 : 1 | Yes | **Generalisierung:** Official ist eine Spezialisierung von Person |
+
+
+---
+
+### Attribute Dictionary
+
+| Attribute name | Entity / Relationship | Description | Domain / Data type | Composite? | Multi-valued? | Derived? | Required? |
+|---|---|---|---|---|---|---|---|
+| `eventId` | Event | Eindeutige Event-ID | UUID/Integer | No | No | No | Yes |
+| `name` | Event | Name der Veranstaltung (z. B. "IFAA WBHC 2027") | varchar(100) | No | No | No | Yes |
+| `startDate` | Event | Turnier-Startdatum | ISO 8601 (YYYY-MM-DD) | No | No | No | Yes |
+| `endDate` | Event | Turnier-Enddatum | ISO 8601 (YYYY-MM-DD) | No | No | No | Yes |
+| `location` | Event | Austragungsort | varchar(100) | No | No | No | Yes |
+| `organizer` | Event | Veranstalter (z. B. DFBV) | varchar(100) | No | No | No | No |
+| `ifaaReference` | Event | IFAA-Referenznummer oder Lizenz | varchar(20) | No | No | No | No |
+| `roundId` | Round | Eindeutige Runden-ID | UUID/Integer | No | No | No | Yes |
+| `roundNumber` | Round | Sequenz-Nummer der Runde (1, 2, 3, 4) | Integer [1..4] | No | No | No | Yes |
+| `roundType` | Round | Rundentyp mit eigenem Pfeilvorgabe-Schema | Enum: {UnmarkedAnimal_3Arrow, Standard3D_2Arrow, Hunting3D_1Arrow} | No | No | No | Yes |
+| `roundDate` | Round | Datum der Runde | ISO 8601 (YYYY-MM-DD) | No | No | No | Yes |
+| `rangeId` | Range | Eindeutige Range-ID | UUID/Integer | No | No | No | Yes |
+| `rangeName` | Range | Bezeichnung der Strecke (z. B. "Range A", "Wiese Nord") | varchar(50) | No | No | No | Yes |
+| `numberOfTargets` | Range | Anzahl der Ziele auf dieser Range | Integer = 28 | No | No | Yes: COUNT(TargetStation) | Yes |
+| `targetNumber` | TargetStation | Ziel-Nummer im Bereich 1–28 | Integer [1..28] | No | No | No | Yes |
+| `targetGroup` | TargetStation | Zielgruppe-Nummer (1–4) für Tie-Break-Shoot-off | Integer [1..4] | No | No | No | Yes |
+| `participantId` | Participant | Eindeutige Teilnehmer-ID | UUID/Integer | No | No | No | Yes |
+| `firstName` | Person | Vorname (geerbt von Supertyp Person) | varchar(50) | No | No | No | Yes |
+| `lastName` | Person | Nachname (geerbt von Supertyp Person) | varchar(50) | No | No | No | Yes |
+| `birthDate` | Participant | Geburtsdatum für Altersklassen-Validierung | ISO 8601 (YYYY-MM-DD) | No | No | No | Yes |
+| `age` | Participant | Berechnetes Alter des Schützen | Integer | No | No | Yes: YEAR(NOW()) - YEAR(birthDate) | No |
+| `nationCode` | Nation | ISO-3-Ländercode (z. B. "AUT", "GER") | varchar(3) | No | No | No | Yes |
+| `nationName` | Nation | Vollständiger Name des Landes | varchar(100) | No | No | No | Yes |
+| `clubId` | Club | Eindeutige Club-ID | UUID/Integer | No | No | No | Yes |
+| `clubName` | Club | Name des Clubs/Verbands | varchar(100) | No | No | No | Yes |
+| `officialId` | Official | Eindeutige Offizielle-ID | UUID/Integer | No | No | No | Yes |
+| `officialFunction` | Official | Funktion im Turnier | Enum: {TournamentDirector, TargetCaptain, Ranger, ...} | No | No | No | Yes |
+| `registrationId` | Registration | Eindeutige Anmelde-ID | UUID/Integer | No | No | No | Yes |
+| `entryFeeStatus` | Registration | Gebührenstatus | Enum: {Paid, Unpaid, Exempted} | No | No | No | Yes |
+| `equipmentStatus` | Registration | Ausrüstungsprüfung | Enum: {Checked, NotChecked, Failed} | No | No | No | Yes |
+| `categoryId` | CompetitionCategory | Eindeutige Kategorie-ID | UUID/Integer | No | No | No | Yes |
+| `style` | CompetitionCategory | Schießstil (z. B. BB, FSR, LB, BU, FS, TR, ...) | Enum: {BB, BBR, BHR, BL, BU, FS, FSR, FU, LB, TR} | No | No | No | Yes |
+| `division` | CompetitionCategory | Altersklasse | Enum: {Adult, Veteran, Senior, YoungAdult, Junior, Cub} | No | No | No | Yes |
+| `classLevel` | CompetitionCategory | Leistungsklasse | Enum: {A, B, C} | No | No | No | Yes |
+| `groupId` | StartGroup | Eindeutige StartGroup-ID | UUID/Integer | No | No | No | Yes |
+| `groupNumber` | StartGroup | Gruppen-Nummer pro Runde (1, 2, 3, ...) | Integer [1..n] | No | No | No | Yes |
+| `startTarget` | StartGroup | Erstes zu schießendes Ziel (1–28) | Integer [1..28] | No | No | No | Yes |
+| `scoreCardId` | ScoreCard | Eindeutige ScoreCard-ID | UUID/Integer | No | No | No | Yes |
+| `roundTotal` | ScoreCard | Gesamtpunkte dieser Runde | Integer [0..20*28] | No | No | Yes: SUM(pointValue) | Yes |
+| `shotResultId` | ShotResult | Eindeutige Schussergebnis-ID (Composite: scoreCardId + targetNumber + arrowNumber) | UUID/Integer | No | No | No | Yes |
+| `arrowNumber` | ShotResult | Pfeilvorgabe pro Ziel (1, 2, oder 3) | Integer [1..3] | No | No | No | Yes |
+| `hitZone` | ShotResult | Trefferzone des Pfeils | Enum: {Kill, Vital, Wound, Miss} | No | No | No | Yes |
+| `pointValue` | ShotResult | Punktwert des Pfeils abhängig von Ziel, Zone und Rundentyp | Integer [0..20] | No | No | Yes: LOOKUP(roundType, hitZone, arrowNumber) | Yes |
+| `resultId` | TournamentResult | Eindeutige Ergebnis-ID | UUID/Integer | No | No | No | Yes |
+| `totalPoints` | TournamentResult | Summe aller Rundenpunkte | Integer [0..20*28*4] | No | No | Yes: SUM(roundTotal) | Yes |
+| `rankPosition` | TournamentResult | Rangplatzierung in der Kategorie | Integer [1..n] | No | No | Yes: RANK() OVER (PARTITION BY categoryId ORDER BY totalPoints DESC) | Yes |
+| `tieBreakStatus` | TournamentResult | Status im Falle von Punktegleichstand | Enum: {NotApplicable, Pending, Resolved, Winner} | No | No | No | No |
+| `tieBreakId` | TieBreak | Eindeutige TieBreak-ID | UUID/Integer | No | No | No | Yes |
+| `tieBreakRound` | TieBreak | Welche Zielgruppe wurde zum Stechen genutzt | Integer [1..4] | No | No | No | Yes |
+| `protestId` | Protest | Eindeutige Protest-ID | UUID/Integer | No | No | No | Yes |
+| `protestDate` | Protest | Datum des Protests | ISO 8601 (YYYY-MM-DD) | No | No | No | Yes |
+| `protestDescription` | Protest | Beschreibung des Regelkonfikts | Text | No | No | No | Yes |
+| `protestDecision` | Protest | Entscheidung des Officials | Text (oder strukturiertes Enum) | No | No | No | Yes |
+
+
+---
+
+### Key Documentation
+
+| Entity name | Candidate key(s) | Selected identifier | Alternate keys | Key type |
+|---|---|---|---|---|
+| `Event` | `eventId`, `(name, startDate)` | `eventId` | `(name, startDate)` | Strong |
+| `Round` | `roundId`, `(eventId, roundNumber)` | `roundId` | `(eventId, roundNumber)` | Strong |
+| `Range` | `rangeId`, `rangeName` | `rangeId` | `rangeName` | Strong |
+| `TargetStation` | `(rangeId, targetNumber)` | `(rangeId, targetNumber)` | – | **Weak** (existential dependency on Range) |
+| `Participant` | `participantId` | `participantId` | – | Strong |
+| `Nation` | `nationCode`, `nationName` | `nationCode` | `nationName` | Strong |
+| `Club` | `clubId`, `clubName` | `clubId` | `clubName` | Strong |
+| `Official` | `officialId` | `officialId` | – | Strong |
+| `Registration` | `registrationId`, `(eventId, participantId)` | `registrationId` | `(eventId, participantId)` | Strong |
+| `CompetitionCategory` | `categoryId`, `(style, division, classLevel)` | `categoryId` | `(style, division, classLevel)` | Strong |
+| `StartGroup` | `groupId`, `(roundId, groupNumber)` | `groupId` | `(roundId, groupNumber)` | Strong |
+| `ScoreCard` | `scoreCardId`, `(registrationId, roundId)` | `scoreCardId` | `(registrationId, roundId)` | Strong |
+| `ShotResult` | `(scoreCardId, targetNumber, arrowNumber)` | `(scoreCardId, targetNumber, arrowNumber)` | – | **Weak** (existential dependency on ScoreCard) |
+| `TournamentResult` | `resultId`, `registrationId` | `resultId` | `registrationId` | Strong (1:1 with Registration) |
+| `TieBreak` | `tieBreakId` | `tieBreakId` | – | Strong |
+| `Protest` | `protestId` | `protestId` | – | Strong |
+| `Person` | – | – | – | **Supertyp** (Abstract) |
+
+
+---
+
+### Normalisierungsanmerkungen
+
+### Prüfung auf Redundanzen
+
+| # | Befund | Maßnahme | Normalform |
+|---|---|---|---|
+| 1 | `(style, division, classLevel)` redundant über Registrations | Zu Entität `CompetitionCategory` erhoben | 3NF |
+| 2 | `age` aus `birthDate` ableitbar | Attribut als *derived* markiert; wird bei Bedarf berechnet | 2NF |
+| 3 | `roundTotal` aus `ShotResult.pointValue` summierbar | Attribut als *derived* markiert; wird bei Bedarf berechnet | 2NF |
+| 4 | `totalPoints` aus `ScoreCard.roundTotal` summierbar | Attribut als *derived* markiert; wird bei Bedarf berechnet | 2NF |
+| 5 | `rankPosition` aus Ranking-Funktion ableitbar | Attribut als *derived* markiert; wird bei Bedarf berechnet | 2NF |
+| 6 | `numberOfTargets` immer 28 (konstant) | Redundanzfreie Modellierung über Constraint | 3NF |
+
+---
+
+### Kardinalitätsüberblick
+
+| Entity | Estimated count | Basis |
+|---|---|---|
+| Event | ~1 | WBHC 2027 (Einzelveranstaltung) |
+| Round | 4 | IFAA-Regeln (2× Unmarked Animal, 1× Standard 3D, 1× Hunting 3D) |
+| Range | ~4–8 | Austragungsort Bad Waldsee; 2–4 Ranges parallel pro Runde |
+| TargetStation | ~112–224 | 28 Targets × 4–8 Ranges |
+| Participant | ~1.200 | Tyische WBHC-Teilnehmerzahl |
+| Nation | ~60 | IFAA-Mitgliedsländer |
+| Club | ~150–200 | Grobe Schätzung; Deutschland + Ausland |
+| Official | ~30–50 | Turnierdirektor + TCOs pro Range + Ranger |
+| Registration | ~1.200 | 1 pro Participant (Mehrfach-Starts unwahrscheinlich in WBHC) |
+| CompetitionCategory | ~60–80 | Styles (10) × Divisions (6) × Classes (3) = 180 theoretisch, aber viele Kombinationen nicht besetzt |
+| StartGroup | ~200–400 | Abhängig von Ranges und Schützen pro Gruppe (3–6) |
+| ScoreCard | ~4.800 | Participants (1.200) × Rounds (4) |
+| ShotResult | ~86.400–201.600 | 28 Targets × 3 Pfeile pro ScoreCard × 4.800 ScoreCards = 403.200 (maximal 3 Pfeile bei Hunting/Standard, 1 bei Animal) |
+| TournamentResult | ~1.200 | 1 pro Registration |
+| TieBreak | ~20–100 | Grobe Schätzung; stark abhängig von Punkteverteilung |
+| Protest | ~5–50 | Gering (Annahme: <1% aller Schützen) |
+
+---
+
+### Datenschutz und Integritätszwänge
+
+### Referenzielle Integrität
+
+- Alle Foreign Keys müssen auf existierende Parent Entities verweisen (z. B. `registrationId` in `ScoreCard` muss existierende `Registration.registrationId` referenzieren)
+- Löschen von Parent-Entitäten (z. B. `Registration`) erfordert Löschen oder Neupositionierung abhängiger Child-Entitäten (z. B. `ScoreCard`)
+
+### Domain-Constraints
+
+- `pointValue` in `ShotResult`: Integer [0..20] je nach IFAA-Regeln für hitZone und arrowNumber
+- `targetNumber` in `TargetStation` und `ShotResult`: Integer [1..28]
+- `arrowNumber` in `ShotResult`: Integer [1..3] (maximal 3 Pfeile pro Ziel)
+- `roundNumber` in `Round`: Integer [1..4] (genau 4 Runden in WBHC)
+- `roundType` in `Round`: Enum {UnmarkedAnimal_3Arrow, Standard3D_2Arrow, Hunting3D_1Arrow} – bestimmt Pfeilzahl pro Ziel
+
+### Sperren gegen doppelte Einträge
+
+- Eindeutigkeit von `(eventId, participantId)` in `Registration` verhindert Mehrfach-Anmeldung
+- Eindeutigkeit von `(registrationId, roundId)` in `ScoreCard` verhindert mehrfache Scorekaerträge pro Teilnehmer und Runde
+
+---
+
+### Glossar und Domain-spezifische Begriffe
+
+| Term | Definition |
+|---|---|
+| **WBHC** | World Bowhunter Championships – internationales 3D-Bogenschießen-Turnier |
+| **IFAA** | International Field Archery Association – Regelwerk und Mitgliedsorganisationen |
+| **3D-Bogenschießen** | Disziplin mit 3D-Tierfiguren als Ziele (im Gegensatz zu Standard-Scheibenschießen) |
+| **Roundtype** | Rundentyp bestimmt Pfeilzahl pro Ziel und Punktesystem (Unmarked Animal 3, Standard 3D 2, Hunting 3D 1) |
+| **Division** | Altersklasse (Adult, Veteran, Senior, YoungAdult, Junior, Cub) |
+| **Style** | Ausrüstungskategorie (z. B. BB = Bare Bow, FS = Freie Schussweise, LB = Langbogen, ...) |
+| **Class** | Leistungsklasse (A = Anfänger, B = Mittelstufe, C = Fortgeschrittene); oft auch Handicap-System |
+| **Startgruppe** | 3–6 Schützen, die gemeinsam eine Range schießen |
+| **StartTarget** | Erstes Ziel, bei dem eine Startgruppe beginnt |
+| **Target Captain (TCO)** | Offizieller auf der Range, der Scorekaarten unterzeichnet und Regeln durchsetzt |
+| **Scorekarte** | Erfassungsdokument für 28 Ziele × max. 3 Pfeile pro Ziel |
+| **Tie-Break / Shoot-off** | Entscheidungsrunde zwischen punktgleichen Schützen über eine 3D-Zielgruppe |
+| **Protest** | Formale Regelentscheid-Anfrage gegen eine Entscheidung durch den Turnierdirektor |
+
+
+
+
+---
+
+## Task 4: Validate Conceptual Model Against Stakeholder Transactions
+
+### Part 1: Transaction-to-Model Matrix (Initial Model)
+
+| Transaction | Entities involved | Relationships involved | Attributes required | Fully supported? | Notes |
+|---|---|---|---|---|---|
+| **T1: Teilnehmer anlegen + Stil/Div/Class zuweisen** | Participant, Registration, CompetitionCategory, Nation, Club | submits (P→Reg), forEvent (Reg→Event), categorisedAs (Reg→CC), representsNation (P→Nation), memberOf (P→Club) | P: firstName, lastName, birthDate; N: nationCode; C: clubName; CC: style, division, classLevel | JA | Alle erforderlichen Entities und Relationships vorhanden; Attribute complete. Keine Lücken. |
+| **T2: Klassifizierungskarte prüfen + Startzulassung** | Participant, Registration, CompetitionCategory | submits (P→Reg), categorisedAs (Reg→CC), representsNation (P→Nation) | Registration: entryFeeStatus, equipmentStatus, classificationVerified(?) | PARTIELL | Attribute `classificationVerified` und `classificationDate` fehlen in Registration. Modell-Update erforderlich. |
+| **T3: Startgruppen erstellen + Schützen auf Ranges/Targets zuweisen** | StartGroup, Registration, Round, Range, TargetStation | forRound (SG→Round), includes (SG→Reg), assignedToRange (SG→Range), assignedToRange (SG→TargetStation?) | Round: roundDate; Range: rangeId; TargetStation: targetNumber; StartGroup: groupNumber, startTarget | PARTIELL | Relationship zwischen StartGroup und TargetStation fehlt. Aktuell nur assignedToRange (SG→Range) vorhanden; muss auch Start-Target (1–28) spezifizieren. Update erforderlich. |
+| **T4: Schussergebnisse erfassen + Punkte berechnen** | ScoreCard, ShotResult, Registration, Round, TargetStation | recordsFor (SC→Reg), forRound (SC→Round), contains (SC→SR), atTarget (SR→TargetStation) | ScoreCard: scoreCardId, registrationId, roundId; ShotResult: arrowNumber, hitZone, pointValue; TargetStation: targetNumber | JA | Alle Entities und Relationships vorhanden; pointValue ist abgeleitet und wird berechnet. Fully supported. |
+| **T5: Tagesergebnisse + Gesamtrangliste anzeigen** | TournamentResult, Registration, CompetitionCategory, ScoreCard, Participant | summarises (TR→Reg), recordsFor (SC→Reg), categorisedAs (Reg→CC), submits (P→Reg) | TR: totalPoints, rankPosition (abgeleitet); Reg: registrationId, participantId; CC: style, division, classLevel; SC: roundTotal | JA | Alle erforderlichen Entities vorhanden; abgeleitete Attribute (rankPosition, totalPoints) unterstützen Ranking. Fully supported. |
+| **T6: Tie-Break erfassen + Gewinner bestimmen** | TieBreak, Registration, ShotResult, TargetStation | resolvesTie (TB→Reg), uses (TB→SR), atTarget (SR→TargetStation) | TieBreak: tieBreakId, tieBreakRound; ShotResult: pointValue, hitZone; TargetStation: targetGroup | JA | Alle Entities und Relationships vorhanden; targetGroup auf TargetStation ermöglicht Zielgruppe-Auswahl. Fully supported. |
+| **T7: Protest dokumentieren + Offiziellen zuordnen** | Protest, Official, Registration, Participant | decides (Off→Protest), concerns (Protest→Reg), submits (P→Reg) | Protest: protestId, protestDate, protestDescription, protestDecision; Official: officialId, officialFunction | JA | Alle Entities und Relationships vorhanden. Protest mit Registration (nicht direkt mit Participant) verknüpft ist semantisch korrekt. Fully supported. |
+| **T8: Ergebnisliste exportieren (IFAA-Format)** | TournamentResult, Registration, ScoreCard, Participant, CompetitionCategory, Round | summarises (TR→Reg), recordsFor (SC→Reg), submits (P→Reg), categorisedAs (Reg→CC), forRound (SC→Round) | All key attributes: P: firstName, lastName; Reg: registrationId; CC: style, division, classLevel; TR: totalPoints, rankPosition; SR: roundTotal | JA | Alle erforderlichen Entities und deren Attribute vorhanden; Export kann über TournamentResult mit JOIN über Reg→P→N erstellt werden. Fully supported. |
+
+: Transaction-to-Model Matrix (Initial) {#tbl-transaction-matrix-initial}
+
+---
+
+### Part 2: Gap Analysis
+
+### Kritische Lücken
+
+| # | Lücke | Entities betroffen | Severity | Lösung |
+|---|---|---|---|---|
+| 1 | **T2:** Klassifizierungsprüfung-Attribute fehlen | Registration | Medium | Attribute `classificationVerified: Boolean`, `classificationDate: ISO 8601` zu Registration hinzufügen |
+| 2 | **T3:** Start-Target Zuordnung ungenau | StartGroup → TargetStation | Medium | Direkte Relationship oder Attribut `startTarget` auf StartGroup ergänzen (bereits in Modell, aber nicht explizit in Dokumentation) |
+
+### Weitere Beobachtungen
+
+| # | Befund | Bewertung |
+|---|---|---|
+| 1 | Alle 8 Transaktionen können mit dem finalen Modell aus Assignment 02 durchgeführt werden | Bestätigt |
+| 2 | 6 von 8 Transaktionen sind **fully supported** | Strong foundation |
+| 3 | 2 Transaktionen (T2, T3) erfordern **Minor Model Adjustments** | Handhabbar |
+| 4 | Keine existenziellen Lücken (z. B. fehlende Entities) identifiziert | Gut |
+
+---
+
+### Part 3: Modell-Updates (Revision 1)
+
+Basierend auf der Gap Analysis werden folgende Anpassungen am Modell vorgenommen:
+
+### Update 1: Registration – Klassifizierungsprüfung erweitern
+
+**Entität:** `Registration`  
+**Neue Attribute:**
+
+```
+classificationVerified: Boolean
+  Description: Gibt an, ob die Klassifizierungskarte des Teilnehmers geprüft und validiert wurde
+  Domain: {true, false}
+  Required: Yes
+  Derived: No
+
+classificationDate: ISO 8601 (YYYY-MM-DD)
+  Description: Datum, an dem die Klassifizierung geprüft wurde
+  Domain: ISO 8601
+  Required: Yes (wenn classificationVerified = true)
+  Derived: No
+```
+
+**Begründung:** T2 benötigt Tracking des Klassifizierungsstatus zur Startzulassung. Aktuell gibt es keine Mechanik zum Dokumentieren, dass eine Klassifizierungskarte geprüft wurde.
+
+---
+
+### Update 2: StartGroup – Start-Target explizit dokumentieren
+
+**Entität:** `StartGroup`  
+**Attribut bereits vorhanden, aber in Relationship-Dokumentation präzisieren:**
+
+Das Attribut `startTarget: Integer [1..28]` war bereits in Assignment 02 definiert und ist ausreichend zur Adressierung des Start-Ziels einer Startgruppe. Keine zusätzliche Relationship nötig, da dies über das Attribut abgedeckt ist.
+
+**Dokumentation:** In T3 (Startgruppen-Erstellung) wird `startTarget` von der Range-Zuweisung abgeleitet oder manuell gesetzt. Die aktuelle Modellierung ist ausreichend.
+
+---
+
+### Part 4: Revised Transaction-to-Model Matrix (Nach Updates)
+
+| Transaction | Entities involved | Relationships involved | Attributes required | Fully supported? | Status |
+|---|---|---|---|---|---|
+| **T1: Teilnehmer anlegen** | Participant, Registration, CompetitionCategory, Nation, Club | submits, forEvent, categorisedAs, representsNation, memberOf | firstName, lastName, birthDate, nationCode, style, division, classLevel | JA | No changes |
+| **T2: Klassifizierungskarte prüfen** | Participant, Registration, CompetitionCategory | submits, categorisedAs, representsNation | entryFeeStatus, equipmentStatus, **classificationVerified, classificationDate** | JA | Updated |
+| **T3: Startgruppen erstellen** | StartGroup, Registration, Round, Range, TargetStation | forRound, includes, assignedToRange | roundDate, groupNumber, **startTarget**, targetNumber | JA | Clarified |
+| **T4: Schussergebnisse erfassen** | ScoreCard, ShotResult, Registration, Round, TargetStation | recordsFor, forRound, contains, atTarget | scoreCardId, arrowNumber, hitZone, pointValue, targetNumber | JA | No changes |
+| **T5: Tagesergebnisse anzeigen** | TournamentResult, Registration, CompetitionCategory, ScoreCard, Participant | summarises, recordsFor, categorisedAs, submits | totalPoints, rankPosition, roundTotal, style, division, classLevel | JA | No changes |
+| **T6: Tie-Break erfassen** | TieBreak, Registration, ShotResult, TargetStation | resolvesTie, uses, atTarget | tieBreakId, tieBreakRound, pointValue, hitZone, targetGroup | JA | No changes |
+| **T7: Protest dokumentieren** | Protest, Official, Registration, Participant | decides, concerns, submits | protestId, protestDate, protestDescription, protestDecision, officialId | JA | No changes |
+| **T8: Ergebnisliste exportieren** | TournamentResult, Registration, ScoreCard, Participant, CompetitionCategory, Round | summarises, recordsFor, submits, categorisedAs, forRound | firstName, lastName, totalPoints, rankPosition, roundTotal, style, division, classLevel | JA | No changes |
+
+: Transaction-to-Model Matrix (Revised) {#tbl-transaction-matrix-revised}
+
+---
+
+### Part 5: Transaction Pathways – Entity Traversal
+
+Für jede Transaktion werden die Entities und Relationships dokumentiert, die durchquert werden. Siehe auch PlantUML-Diagramme (*.puml-Dateien).
+
+### T1: Teilnehmer anlegen und einer Stil/Divisions/Klassen-Kombination zuweisen
+
+**Transaktion Typ:** Operational – Create/Update  
+**Primäre Rolle:** Ergebnisbeauftragte (Sandra Klein)
+
+**Entity Pathway:**
+```
+1. START: Participant (CREATE)
+   - Attribute: firstName, lastName, birthDate, participantId (PK)
+2. representsNation -> Nation
+   - Attribute: nationCode (FK), nationName
+3. memberOf -> Club (optional)
+   - Attribute: clubId (FK), clubName
+4. CREATE: Registration
+   - Attribute: registrationId (PK), entryFeeStatus, equipmentStatus
+   - FK: participantId (to Participant)
+   - FK: eventId (to Event)
+5. categorisedAs -> CompetitionCategory
+   - Attribute: categoryId (FK), style, division, classLevel
+END: Participant fully registered in system
+```
+
+**Validation Status:** FULLY SUPPORTED – No changes needed.
+
+---
+
+### T2: Klassifizierungskarte prüfen und Startzulassung erteilen
+
+**Transaktion Typ:** Operational – Read/Update  
+**Primäre Rolle:** Ergebnisbeauftragte (Sandra Klein)
+
+**Entity Pathway:**
+```
+1. START: Registration (LOOKUP by participantId, eventId)
+   - Attribute: registrationId, entryFeeStatus, equipmentStatus
+2. submits <- Participant
+   - Lookup: Prior tournament scores (external data)
+3. categorisedAs -> CompetitionCategory
+   - Verify classification rule (2 scores within 12 months)
+4. UPDATE: Registration
+   - SET: classificationVerified = true (NEW)
+   - SET: classificationDate = TODAY (NEW)
+   - SET: entryFeeStatus, equipmentStatus
+END: Participant marked as approved
+```
+
+**Validation Status:** PARTIELL -> FULLY SUPPORTED (After Update 1)
+
+---
+
+### T3: Startgruppen für eine Runde erstellen und auf Ranges/Targets zuweisen
+
+**Transaktion Typ:** Operational – Create/Update  
+**Primäre Rolle:** Turnierdirektor (Klaus Brenner)
+
+**Entity Pathway:**
+```
+1. START: Round (LOOKUP by eventId, roundNumber)
+2. uses -> Range(s) (SELECT available, 1..*)
+3. ALLOCATE: 3-6 Participants from Registrations
+4. CREATE: StartGroup (for each Range)
+   - groupId, groupNumber, startTarget [1..28] (CLARIFIED)
+5. includes -> Registration (3..6 per group)
+6. contains -> TargetStation (verify 28 per range)
+END: StartGroup populated and assigned
+```
+
+**Validation Status:** PARTIELL -> FULLY SUPPORTED (After Clarification)
+
+---
+
+### T4: Schussergebnisse einer Scorekarte erfassen und Punkte berechnen
+
+**Transaktion Typ:** Operational – Create  
+**Primäre Rolle:** Ergebnisbeauftragte (Sandra Klein)
+
+**Entity Pathway:**
+```
+1. START: ScoreCard (CREATE/LOOKUP for Registration + Round)
+2. FOR EACH target (1..28):
+   - atTarget -> TargetStation
+   - FOR EACH arrow (1..3 depending on roundType):
+     - INPUT: hitZone (Kill/Vital/Wound/Miss)
+     - COMPUTE: pointValue (DERIVED)
+     - INSERT: ShotResult
+3. COMPUTE: roundTotal = SUM(pointValue)
+4. UPDATE: ScoreCard SET roundTotal
+5. SIGN: ScoreCard by Official (Target Captain)
+END: All shot results recorded
+```
+
+**Validation Status:** FULLY SUPPORTED – No changes needed.
+
+---
+
+### T5: Tagesergebnisse und Gesamtrangliste anzeigen
+
+**Transaktion Typ:** Managerial – Read (Calculated)  
+**Primäre Rolle:** Alle drei Roles
+
+**Entity Pathway:**
+```
+1. SELECT: CompetitionCategory (style, division, classLevel)
+2. FOR EACH Registration in category:
+   - submits <- Participant (get name)
+   - representsNation -> Nation
+   - AGGREGATE: ScoreCards (1..4 per registration)
+   - COMPUTE: totalPoints (DERIVED) = SUM(roundTotal)
+   - COMPUTE: rankPosition (DERIVED) = RANK() OVER (...)
+3. DISPLAY: Leaderboard sorted by totalPoints DESC
+END: Category ranking displayed
+```
+
+**Validation Status:** FULLY SUPPORTED – No changes needed.
+
+---
+
+### T6: Tie-Break-Shoot-off erfassen und Gewinner bestimmen
+
+**Transaktion Typ:** Operational – Create/Read  
+**Primäre Rolle:** Ergebnisbeauftragte (Sandra Klein)
+
+**Entity Pathway:**
+```
+1. IDENTIFY: Tied participants (same totalPoints in category)
+2. SELECT: TargetGroup [1..4] for shoot-off
+3. CREATE: TieBreak record
+4. FOR EACH tied participant:
+   - RECORD: 3 shots (arrows 1-3)
+   - INSERT: ShotResults (via uses relationship)
+   - COMPUTE: tie-break total
+5. DETERMINE: Winner (highest 3-shot total)
+6. UPDATE: TournamentResult
+   - SET: rankPosition = final_rank
+   - SET: tieBreakStatus = 'Resolved'
+END: Tie-break resolved
+```
+
+**Validation Status:** FULLY SUPPORTED – No changes needed.
+
+---
+
+### T7: Protest / Regelentscheid dokumentieren und Offiziellen zuordnen
+
+**Transaktion Typ:** Operational – Create  
+**Primäre Rolle:** Turnierdirektor (Klaus Brenner)
+
+**Entity Pathway:**
+```
+1. INCIDENT: Participant contests decision
+2. IDENTIFY: Affected Registration
+3. CREATE: Protest
+   - protestId, protestDate, protestDescription
+4. concerns -> Registration
+5. decides <- Official (decision-maker)
+6. Official REVIEWS: Evidence and rulebook (manual)
+7. UPDATE: Protest
+   - SET: protestDecision (formal text)
+END: Protest documented and resolved
+```
+
+**Validation Status:** FULLY SUPPORTED – No changes needed.
+
+---
+
+### T8: Offizielle Ergebnisliste exportieren (IFAA-Format)
+
+**Transaktion Typ:** Managerial – Read/Report  
+**Primäre Rolle:** Turnierdirektor + Ergebnisbeauftragte
+
+**Entity Pathway:**
+```
+1. SELECT: Event
+2. SELECT: Round(s) to export
+3. FOR EACH CompetitionCategory:
+   - SELECT: TournamentResults (sorted by rankPosition)
+   - FOR EACH result:
+     - Participant (firstName, lastName)
+     - Nation (nationCode)
+     - Club (optional)
+     - AGGREGATE: ScoreCards per round
+     - DISPLAY: R1, R2, R3, R4, Total scores
+     - tieBreakStatus
+4. CONSTRUCT: Result rows
+5. FORMAT: IFAA standard (PDF or CSV)
+6. EXPORT: With timestamp and DFBV seal
+END: Official result list exported
+```
+
+**Validation Status:** FULLY SUPPORTED – No changes needed.
+
+---
+
+### Part 6: Summary: Transaction Validation Results
+
+### Overall Assessment
+
+| Aspect | Result | Notes |
+|---|---|---|
+| **Transactions fully supported** | 6 / 8 (initial) -> 8/8 (revised) | Complete coverage |
+| **Transactions with minor updates** | 2 / 8 (initial) -> 0/8 (revised) | All resolved |
+| **Critical gaps** | 0 | No missing entities |
+| **Data model revision needed** | Yes | Minor updates only |
+| **Model re-validation after updates** | Passed | All 8/8 fully supported |
+
+---
+
+### Part 7: Design Iteration Summary
+
+### Iteration 1: Initial Model (Assignment 02 – Final)
+
+**Status:** 6/8 transactions fully supported; 2/8 with gaps
+
+**Identified Gaps:**
+- **T2:** Missing Classification tracking attributes (`classificationVerified`, `classificationDate`)
+- **T3:** Start-Target assignment ambiguous in relationship documentation
+
+---
+
+### Iteration 2: Revised Model (Current – Assignment 04)
+
+**Updates Applied:**
+
+1. **Registration Entity:** Added attributes
+   - `classificationVerified: Boolean` – tracks whether classification card was verified
+   - `classificationDate: ISO 8601` – tracks when classification was verified
+
+2. **StartGroup Entity:** Clarified existing attribute
+   - `startTarget: Integer [1..28]` – already in model, now properly documented for T3 pathway
+
+**Result:** All 8/8 transactions now fully supported
+
+---
+
+### Part 8: Transaction Pathway Diagrams
+
+Vier Diagramme visualisieren die Entity-Traversals für alle 8 Transaktionen:
+
+### T1 & T2 Pathway Diagram
+![T1 & T2 Pathways]({{< meta assignment2_assets >}}/diagrams/T1_T2_Pathways.svg)
+
+### T3 & T4 Pathway Diagram
+![T3 & T4 Pathways]({{< meta assignment2_assets >}}/diagrams/T3_T4_Pathways.svg)
+
+### T5 & T6 Pathway Diagram
+![T5 & T6 Pathways]({{< meta assignment2_assets >}}/diagrams/T5_T6_Pathways.svg)
+
+### T7 & T8 Pathway Diagram
+![T7 & T8 Pathways]({{< meta assignment2_assets >}}/diagrams/T7_T8_Pathways.svg)
+
+
+Vier PlantUML-Diagramme visualisieren die Entity-Traversals für alle 8 Transaktionen:
+
+| Diagram | Transaktionen | Focus | Visualisiert |
+|---|---|---|---|
+| `T1_T2_Pathways.puml` | T1, T2 | Participant registration & classification | Entity creation, lookups, updates |
+| `T3_T4_Pathways.puml` | T3, T4 | Start groups & shot recording | Range assignment, result entry |
+| `T5_T6_Pathways.puml` | T5, T6 | Rankings & tie-breaks | Aggregations, derived attributes, winner determination |
+| `T7_T8_Pathways.puml` | T7, T8 | Protests & exports | Dispute handling, comprehensive reporting |
+
+**Verwendung:** Die Diagramme zeigen visuell, wie Transaktionen durch das Modell navigieren, welche Relationships traversiert werden, und wo abgeleitete Attribute berechnet werden.
+
+---
+
+### Part 9: Recommendations for Next Phase (Logical Model)
+
+1. **Implement derived attributes** efficiently:
+   - pointValue: stored procedure or formula in business logic
+   - roundTotal: database view or computed column
+   - totalPoints: TournamentResult pre-computed, updated after each round
+   - rankPosition: computed query or materialized view
+
+2. **Add integrity constraints:**
+   - Unique constraints: (eventId, participantId) on Registration
+   - Unique constraints: (registrationId, roundId) on ScoreCard
+   - Foreign key constraints on all relationships
+   - Check constraint: arrowNumber must match roundType
+
+3. **Index strategy:**
+   - Cluster: Registration (eventId, categoryId)
+   - Regular: ScoreCard (registrationId, roundId)
+   - Regular: ShotResult (scoreCardId, targetNumber)
+   - Regular: TournamentResult (rankPosition, tieBreakStatus)
+
+4. **Tie-break data model:**
+   - Decide: separate TieBreak_ShotResult junction table or embed ShotResult usage pattern
+   - Clarify: whether TieBreak ShotResults are stored separately or linked to existing ScoreCard ShotResults
+
+---
+
+## Task 5: Assumptions, Design Rationale, and Team Reflection
+
+### 1. Assumptions Made
+
+Mehrere Anforderungen waren unvollständig oder unklar und mussten deshalb durch klare Annahmen ergänzt werden.
+
+**Begrenzung auf eine einzelne Veranstaltung.** Die IFAA-Regeln gelten zwar weltweit für Meisterschaften, das System bezieht sich jedoch nur auf die WBHC 2027 als einzelne `Event`-Instanz. Es wurde angenommen, dass frühere Ergebnisse anderer Turniere nicht berücksichtigt werden müssen. Dadurch war keine vollständige Historie der Klassifizierungen nötig. Stattdessen wird nur der bei der Anmeldung geprüfte Klassenstatus gespeichert.
+
+**Teilnehmer bringen ihre Klassifizierungskarte selbst mit.** Es gab kein zentrales IFAA-Register für Teilnehmer. Deshalb wurde angenommen, dass Schützen ihre Klasse (A/B/C) selbst mit einer Klassifizierungskarte nachweisen. Die Aufgabe von Sandra Kleins besteht darin, diesen Status zu kontrollieren und zu dokumentieren — nicht ihn anhand alter Ergebnisse zu berechnen. Dadurch konnten die Entitäten `Registration` und `CompetitionCategory` einfacher gehalten werden.
+
+**Mehrfache Nutzung von Ranges über mehrere Runden.** Die genaue Anzahl der verfügbaren Ranges in Bad Waldsee war nicht bekannt. Deshalb wurde angenommen, dass 4–8 Ranges in mehreren Runden erneut verwendet werden können. Dadurch entstand eine Viele-zu-viele-Beziehung zwischen `Round` und `Range` statt einer festen 1:1-Zuordnung.
+
+**Score-Seeding ab Tag 2.** Im Stakeholder-Interview wurde erwähnt, dass ab Runde 2 die Startgruppen anhand der bisherigen Ergebnisse eingeteilt werden. Ein genauer Algorithmus wurde jedoch nicht beschrieben. Deshalb wurde `StartGroup` nur als einfache Datenstruktur modelliert, während die eigentliche Seeding-Logik in die Anwendungsschicht ausgelagert wurde.
+
+---
+
+### 2. Key Modeling Decisions
+
+**`CompetitionCategory` als eigene Entität statt als Attributgruppe.** Die Kombination `(style, division, classLevel)` war zuerst Teil von `Registration` und führte bei ungefähr 1.200 Datensätzen zu vielen Wiederholungen. Durch die Modellierung als eigene Entität wird Redundanz vermieden und Abfragen nach Kategorien (z. B. Ranglisten) werden einfacher.
+
+**`TargetStation` und `ShotResult` als schwache Entitäten.** Beide existieren nur zusammen mit ihrer übergeordneten Entität — eine `TargetStation` ohne `Range` und ein `ShotResult` ohne `ScoreCard` haben keine Bedeutung. Zusammengesetzte Schlüssel wie `(rangeId, targetNumber)` oder `(scoreCardId, targetNumber, arrowNumber)` machen diese Abhängigkeit deutlich und vermeiden unnötige künstliche IDs.
+
+**`Person` als gemeinsamer Supertyp.** Sowohl `Participant` als auch `Official` besitzen die Attribute `firstName` und `lastName`. Statt diese mehrfach zu speichern, wurde der gemeinsame Supertyp `Person` eingeführt. Dadurch bleibt das Modell übersichtlich und passt gut zu einer späteren gemeinsamen `Person`-Tabelle im logischen Design.
+
+**`TargetDistance` als Assoziationsklasse.** Die maximale Schussdistanz hängt sowohl von der `TargetStation` als auch von der `CompetitionCategory` ab. Sie gehört daher zur Beziehung zwischen beiden Entitäten und nicht zu einer einzelnen Entität. Die Modellierung als eigene Assoziationsklasse verhindert komplizierte mehrwertige Attribute.
+
+**Abgeleitete Attribute bleiben im Modell enthalten.** Werte wie `age`, `roundTotal`, `totalPoints` und `rankPosition` können zwar aus anderen Daten berechnet werden, wurden aber trotzdem im Datenwörterbuch beibehalten. Sie spiegeln wichtige Informationsbedürfnisse der Stakeholder wider und können später entweder gespeichert oder bei Bedarf berechnet werden.
+
+---
+
+### 3. Stakeholder Conflicts and Resolution
+
+**Genauigkeit vs. Aufwand bei der Datenerfassung.** Die IFAA-Regeln verlangen die Erfassung jedes einzelnen Pfeils, da die Reihenfolge der Treffer den Punktwert beeinflusst. Für die Ergebnisbeauftragte bedeutet dies jedoch einen hohen Eingabeaufwand. Der Konflikt wurde zugunsten der Regelkonformität gelöst: `ShotResult` speichert jeden Pfeil einzeln. Das spätere Interface sollte den Aufwand durch eine benutzerfreundliche Oberfläche reduzieren.
+
+**Vollständige Klassifizierungshistorie vs. praktische Umsetzbarkeit.** Der Turnierdirektor wollte eine komplette IFAA-Klassifizierungshistorie für etwa 1.200 Schützen speichern. Die Ergebnisbeauftragte hielt dies für eine einzelne Veranstaltung jedoch für nicht praktikabel. Deshalb speichert das System nur den überprüften Klassenstatus bei der Anmeldung und keine historischen Ergebnisse. Ein Flag in `Registration` (`classificationStatus`) zeigt an, ob die Karte geprüft wurde.
+
+**Datenschutz vs. betriebliche Anforderungen.** Teilnehmer wollten kontrollieren können, welche persönlichen Daten öffentlich sichtbar sind, zum Beispiel das Geburtsdatum. Turnierdirektor und Ergebnisbeauftragte benötigen dagegen vollständigen Zugriff auf die Daten. Die Lösung war, alle Informationen vollständig im Modell zu speichern und die Zugriffsrechte später in der logischen oder Anwendungsschicht zu regeln.
+
+**`Protest` wird mit `Registration` statt mit `Participant` verbunden.** Ein Protest bezieht sich auf eine konkrete Turnierteilnahme und nicht allgemein auf eine Person. Deshalb wurde `Protest` mit `Registration` verknüpft. Diese Lösung passt besser zur tatsächlichen Bedeutung der Daten.
+
+---
+
+### 4. Risks and Open Questions
+
+- **Punktwert-Tabelle.** Die genaue IFAA-Bewertungsmatrix (hitZone × arrowNumber × roundType → pointValue) wurde noch nicht vollständig bereitgestellt. Vor dem logischen Design muss diese Tabelle dokumentiert und mit dem offiziellen IFAA-Regelwerk abgeglichen werden.
+- **Tie-Break-Regeln im Detail.** Das Modell unterstützt Stechen, legt aber noch nicht fest, ob mehrere Shoot-off-Runden möglich sind oder wie genau der Sieger bestimmt wird. Dies muss noch mit dem Turnierdirektor geklärt werden.
+- **Zugriffskontrolle.** Die Datenschutzanforderungen aus Abschnitt 3 sind noch nicht vollständig definiert. Vor der Fertigstellung des logischen Schemas muss ein rollenbasiertes Zugriffssystem ausgearbeitet werden.
+- **Range-Zuweisung bei parallelen Runden.** Wenn mehrere Runden gleichzeitig stattfinden, muss verhindert werden, dass dieselbe `Range` doppelt vergeben wird. Dafür fehlt im aktuellen Modell noch ein passender Constraint.
+
+---
+
+## Team Members and Division of Work
+
+| Full Name | Team Role | Division of Work |
+|---|---|---|
+| Noah M. (Notschge) | Maintainer | Task 1 (Consolidate Requirements) + Task 5 (Reflection) |
+| Niklas R. (Rüdi) | Maintainer | Task 2 (Build Conceptual Model - Initial/Final) + Validation Pathways |
+| Jan S. (Jan) | Worker | Task 3 (Data Dictionary) - Entities and Relationships |
+| Niklas K. (Katz) | Worker | Task 3 (Data Dictionary) - Attributes and Keys + Task 4 (Validation Matrix) |
+
