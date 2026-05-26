@@ -15,7 +15,7 @@ package "T5: Display Day Scores and Leaderboard" {
     rectangle "3b. GET Nation\n(nationCode)" as T5_3b #E6F3FF
     rectangle "3c. AGGREGATE ScoreCards\nbyRound (R1, R2, R3, R4)" as T5_3c #FFE6E6
     rectangle "3d. COMPUTE roundTotal\n(SUM of ShotResults)" as T5_3d #FFE6E6
-    rectangle "4. LOOKUP TournamentResult\n(totalPoints✅DERIVED,\nrankPosition✅DERIVED)" as T5_4 #E6F3FF
+    rectangle "4. LOOKUP TournamentResult\n(totalPoints DERIVED,\nrankPosition DERIVED)" as T5_4 #E6F3FF
     rectangle "5. RANK participants\nORDER BY totalPoints DESC" as T5_5 #FFE6E6
     rectangle "6. DISPLAY leaderboard\nfor category" as T5_6 #FFE6E6
 }
@@ -47,7 +47,7 @@ T6_1 --> T6_2 : SELECT from\nTargetStation\n(targetGroup)
 T6_2 --> T6_3 : CREATE\nfor resolution
 T6_3 --> T6_4 : FOR each\ntied participant
 T6_4 --> T6_4a : RECORD\n3 arrows
-T6_4a --> T6_4b : uses\n(TieBreak→ShotResult)
+T6_4a --> T6_4b : uses\n(TieBreak ShotResult)
 T6_4b --> T6_4c : SUM\n3 shots
 T6_4c --> T6_5 : COMPARE\ntotals
 T6_5 --> T6_6 : resolvesTie\nUPDATE ranks

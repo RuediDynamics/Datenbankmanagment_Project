@@ -11,7 +11,7 @@ package "T3: Create StartGroups and Assign Participants to Ranges" {
     rectangle "1. LOOKUP Round\n(roundId, roundType)" as T3_1 #FFE6E6
     rectangle "2. SELECT Ranges\nfor this Round" as T3_2 #E6F3FF
     rectangle "3. Allocate 3-6 Participants\nper StartGroup" as T3_3 #FFE6E6
-    rectangle "4. INSERT StartGroup\n(groupId, roundId, rangeId,\ngroupNumber, startTarget✅)\nNOTE: startTarget already in model" as T3_4 #FFE6E6
+    rectangle "4. INSERT StartGroup\n(groupId, roundId, rangeId,\ngroupNumber, startTarget)\nNOTE: startTarget already in model" as T3_4 #FFE6E6
     rectangle "5. Link Registrations\nvia 'includes' relationship\n(3..6 per group)" as T3_5 #E6F3FF
     rectangle "6. VERIFY TargetStations\n(28 per Range)" as T3_6 #E6F3FF
 }
@@ -20,7 +20,7 @@ package "T4: Record Shot Results and Calculate Points" {
     rectangle "1. LOOKUP ScoreCard\nor CREATE new\n(scoreCardId, registrationId, roundId)" as T4_1 #FFE6E6
     rectangle "2. FOR each Target (1..28):" as T4_2 #FFF9E6
     rectangle "3a. GET TargetStation\n(targetNumber, roundType)" as T4_3a #E6F3FF
-    rectangle "3b. INSERT ShotResult\n(scoreCardId, targetNumber, arrowNumber,\nhitZone, pointValue✅DERIVED)" as T4_3b #FFE6E6
+    rectangle "3b. INSERT ShotResult\n(scoreCardId, targetNumber, arrowNumber,\nhitZone, pointValue DERIVED)" as T4_3b #FFE6E6
     rectangle "4. COMPUTE roundTotal\n(SUM of pointValue)\nSET in ScoreCard" as T4_4 #FFE6E6
     rectangle "5. SIGN ScoreCard\nby Official (Target Captain)" as T4_5 #FFE6E6
 }

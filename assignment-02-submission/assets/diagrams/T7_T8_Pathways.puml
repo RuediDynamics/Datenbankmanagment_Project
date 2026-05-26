@@ -34,8 +34,8 @@ package "T8: Export Official Results List (IFAA Format)" {
 }
 
 T7_1 --> T7_2 : IDENTIFY
-T7_2 --> T7_3 : concerns\n(Protest→Registration)
-T7_3 --> T7_4 : decides\n(Official→Protest)
+T7_2 --> T7_3 : concerns\n(Protest Registration)
+T7_3 --> T7_4 : decides\n(Official Protest)
 T7_4 --> T7_5 : Manual review\n(off-model)
 T7_5 --> T7_6 : UPDATE
 T7_6 --> T7_7 : AUDIT TRAIL
@@ -43,13 +43,13 @@ T7_6 --> T7_7 : AUDIT TRAIL
 T8_1 --> T8_2 : consistsOf\n(1..4 rounds)
 T8_2 --> T8_3 : FOR each\nround-category pair
 T8_3 --> T8_3a : SELECT category
-T8_3a --> T8_3b : summarises\n(TournamentResult→Registration)
+T8_3a --> T8_3b : summarises\n(TournamentResult Registration)
 T8_3b --> T8_3c : FOR each result\n(ranked)
-T8_3c --> T8_3c_i : submits\n(Registration→Participant)
+T8_3c --> T8_3c_i : submits\n(Registration Participant)
 T8_3c --> T8_3c_ii : representsNation\n(Participant→Nation)
 T8_3c --> T8_3c_iii : memberOf\n(Participant→Club, optional)
-T8_3c --> T8_3c_iv : recordsFor\n(Registration→ScoreCards)\nAggregate roundTotal
-T8_3c --> T8_3c_v : totalPoints✅DERIVED,\ntieBreakStatus
+T8_3c --> T8_3c_iv : recordsFor\n(Registration ScoreCards)\nAggregate roundTotal
+T8_3c --> T8_3c_v : totalPoints DERIVED,\ntieBreakStatus
 T8_3c_v --> T8_4 : CONSTRUCT\nresult rows
 T8_4 --> T8_5 : WRITE file
 

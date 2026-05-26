@@ -22,7 +22,7 @@ package "T2: Verify Classification & Grant Start Permission" {
     rectangle "1. LOOKUP Registration\nby participantId, eventId" as T2_1 #E6FFFF
     rectangle "2. READ Participant data\n(age, prior scores)" as T2_2 #E6F3FF
     rectangle "3. VERIFY Classification Status\n(2 scores in 12 months)" as T2_3 #FFE6E6
-    rectangle "4. UPDATE Registration\nSET classificationVerified=true ✅ NEW\nSET classificationDate=TODAY ✅ NEW" as T2_4 #FFE6E6
+    rectangle "4. UPDATE Registration\nSET classificationVerified=true NEW\nSET classificationDate=TODAY NEW" as T2_4 #FFE6E6
     rectangle "5. UPDATE Registration\nSET entryFeeStatus, equipmentStatus" as T2_5 #FFE6E6
 }
 
