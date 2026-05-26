@@ -28,7 +28,6 @@
 | `Protest` | Regelentscheid, Dispute | Formelle Einspruchsdokumentation gegen Entscheidung oder Regelauslegung; mit Entscheidung und verantwortlichem Offiziellen | ~5–50 |
 | `Person` | – | **Supertyp** für gemeinsame Attribute (`firstName`, `lastName`) von Participant und Official | – |
 
-: Entity dictionary {#tbl-entity-dictionary}
 
 ---
 
@@ -61,7 +60,6 @@
 | `isA` (Person–Participant) | Person | Participant | 1 : 1 | Yes | **Generalisierung:** Participant ist eine Spezialisierung von Person |
 | `isA` (Person–Official) | Person | Official | 1 : 1 | Yes | **Generalisierung:** Official ist eine Spezialisierung von Person |
 
-: Relationship dictionary {#tbl-relationship-dictionary}
 
 ---
 
@@ -123,7 +121,6 @@
 | `protestDescription` | Protest | Beschreibung des Regelkonfikts | Text | No | No | No | Yes |
 | `protestDecision` | Protest | Entscheidung des Officials | Text (oder strukturiertes Enum) | No | No | No | Yes |
 
-: Attribute dictionary {#tbl-attribute-dictionary}
 
 ---
 
@@ -149,7 +146,6 @@
 | `Protest` | `protestId` | `protestId` | – | Strong |
 | `Person` | – | – | – | **Supertyp** (Abstract) |
 
-: Key documentation {#tbl-key-documentation}
 
 ---
 
