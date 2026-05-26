@@ -1,37 +1,37 @@
-# Assignment 02 – Exercise 2: Build the Conceptual Data Model
+# Assignment 02 – Aufgabe 2: Erstellung des konzeptuellen Datenmodells
 
-**Domain:** IFAA World Bowhunter Championships (WBHC) 2027, Bad Waldsee
-**Notation:** UML Data Model Profile · **Tool:** PlantUML
-**Method:** Connolly & Begg (2015), Chapter 16, Step 1.1–1.9
+**Domäne:** IFAA World Bowhunter Championships (WBHC) 2027, Bad Waldsee
+**Notation:** UML Data Model Profile · **Werkzeug:** PlantUML
+**Methodik:** Connolly & Begg (2015), Kapitel 16, Schritte 1.1–1.9
 
 ---
 
-## Step 1.1 – Entity Types
+## Schritt 1.1 – Entitätstypen
 
-| # | Entity | Description |
+| # | Entität | Beschreibung |
 |---|---|---|
-| 1 | Event | The WBHC 2027 itself. |
-| 2 | Round | One of the four tournament rounds. |
-| 3 | Range | A physical 28-target course. |
-| 4 | TargetStation | One of the 28 targets on a range. |
-| 5 | Participant | An individual archer. |
-| 6 | Nation | The country a participant represents. |
-| 7 | Club | A sport club a participant belongs to. |
-| 8 | Official | A judge, target captain or director. |
-| 9 | Registration | A participant's entry to the event. |
-| 10 | CompetitionCategory | Style + Division + Class combination. |
-| 11 | StartGroup | A group of 3–6 archers shooting together. |
-| 12 | ScoreCard | A participant's card for one round. |
-| 13 | ShotResult | A single arrow shot. |
-| 14 | TournamentResult | A participant's aggregated total. |
-| 15 | TieBreak | A shoot-off between tied participants. |
-| 16 | Protest | A formal rule decision. |
+| 1 | Event | Die WBHC 2027 selbst. |
+| 2 | Round | Eine der vier Turnierrunden. |
+| 3 | Range | Eine physische Strecke mit 28 Zielen. |
+| 4 | TargetStation | Eines der 28 Ziele einer Range. |
+| 5 | Participant | Ein einzelner Bogenschütze. |
+| 6 | Nation | Das Land, das ein Teilnehmer vertritt. |
+| 7 | Club | Verein, dem ein Teilnehmer angehört. |
+| 8 | Official | Schiedsrichter, Target Captain oder Turnierdirektor. |
+| 9 | Registration | Anmeldung eines Teilnehmers zum Event. |
+| 10 | CompetitionCategory | Kombination aus Style, Division und Class. |
+| 11 | StartGroup | Gruppe von 3–6 Schützen, die gemeinsam schießen. |
+| 12 | ScoreCard | Scorekarte eines Teilnehmers für eine Runde. |
+| 13 | ShotResult | Ergebnis eines einzelnen Pfeils. |
+| 14 | TournamentResult | Aggregiertes Gesamtergebnis eines Teilnehmers. |
+| 15 | TieBreak | Stechen zwischen punktgleichen Teilnehmern. |
+| 16 | Protest | Formelle Regelentscheidung. |
 
 ---
 
-## Step 1.2 – Relationship Types
+## Schritt 1.2 – Beziehungstypen
 
-| # | Relationship | Entity 1 | Entity 2 | Multiplicity |
+| # | Beziehung | Entität 1 | Entität 2 | Multiplizität |
 |---|---|---|---|---|
 | R1 | consistsOf | Event | Round | 1 : 1..4 |
 | R2 | uses | Round | Range | 1..* : 1..* |
@@ -58,25 +58,25 @@
 
 ---
 
-## Step 1.3 – Attribute Classification
+## Schritt 1.3 – Klassifizierung der Attribute
 
-| Attribute | Entity | Type |
+| Attribut | Entität | Typ |
 |---|---|---|
-| age | Participant | derived (from birthDate) |
-| pointValue | ShotResult | derived (roundType + hitZone + arrowNumber) |
-| roundTotal | ScoreCard | derived (sum of pointValue) |
-| totalPoints | TournamentResult | derived (sum of roundTotal) |
-| rankPosition | TournamentResult | derived (rank in CompetitionCategory) |
-| numberOfTargets | Range | derived (count of TargetStation) |
-| firstName + lastName | Person | composite (atomic name parts) |
+| age | Participant | abgeleitet (aus birthDate) |
+| pointValue | ShotResult | abgeleitet (roundType + hitZone + arrowNumber) |
+| roundTotal | ScoreCard | abgeleitet (Summe pointValue) |
+| totalPoints | TournamentResult | abgeleitet (Summe roundTotal) |
+| rankPosition | TournamentResult | abgeleitet (Rang in CompetitionCategory) |
+| numberOfTargets | Range | abgeleitet (Anzahl TargetStation) |
+| firstName + lastName | Person | zusammengesetzt (atomare Namensbestandteile) |
 
-All other attributes are simple, single-valued and non-derived. No multi-valued attributes were identified.
+Alle übrigen Attribute sind einfach, einwertig und nicht abgeleitet. Mehrwertige Attribute wurden nicht identifiziert.
 
 ---
 
-## Step 1.4 – Attribute Domains
+## Schritt 1.4 – Wertebereiche der Attribute
 
-| Attribute | Domain |
+| Attribut | Wertebereich |
 |---|---|
 | roundType | {UnmarkedAnimal_3Arrow, Standard3D_2Arrow, Hunting3D_1Arrow} |
 | hitZone | {Kill, Vital, Wound, Miss} |
@@ -86,104 +86,104 @@ All other attributes are simple, single-valued and non-derived. No multi-valued 
 | style | {BB, BBR, BHR, BL, BU, FS, FSR, FU, LB, TR} |
 | division | {Adult, Veteran, Senior, YoungAdult, Junior, Cub} |
 | classLevel | {A, B, C} |
-| nationCode | Text[3] (ISO 3-letter) |
+| nationCode | Text[3] (ISO 3-Buchstaben) |
 | pointValue | Integer [0..20] |
-| All dates | ISO 8601 (YYYY-MM-DD) |
-| All Booleans | {true, false} |
+| Alle Datumsangaben | ISO 8601 (YYYY-MM-DD) |
+| Alle Booleans | {true, false} |
 
 ---
 
-## Step 1.5 – Keys
+## Schritt 1.5 – Schlüssel
 
-| Entity | Primary Key | Alternate Key | Type |
+| Entität | Primärschlüssel | Alternativer Schlüssel | Typ |
 |---|---|---|---|
-| Event | eventId | (name, startDate) | strong |
-| Round | roundId | (eventId, roundNumber) | strong |
-| Range | rangeId | rangeName | strong |
-| TargetStation | (rangeId, targetNumber) | – | **weak** |
-| Participant | participantId | – | strong |
-| Nation | nationCode | nationName | strong |
-| Club | clubId | clubName | strong |
-| Official | officialId | – | strong |
-| Registration | registrationId | (eventId, participantId) | strong |
-| CompetitionCategory | categoryId | (style, division, classLevel) | strong |
-| StartGroup | groupId | (roundId, groupNumber) | strong |
-| ScoreCard | scoreCardId | (registrationId, roundId) | strong |
-| ShotResult | (scoreCardId, targetNumber, arrowNumber) | – | **weak** |
-| TournamentResult | resultId | registrationId | strong |
-| TieBreak | tieBreakId | – | strong |
-| Protest | protestId | – | strong |
+| Event | eventId | (name, startDate) | stark |
+| Round | roundId | (eventId, roundNumber) | stark |
+| Range | rangeId | rangeName | stark |
+| TargetStation | (rangeId, targetNumber) | – | **schwach** |
+| Participant | participantId | – | stark |
+| Nation | nationCode | nationName | stark |
+| Club | clubId | clubName | stark |
+| Official | officialId | – | stark |
+| Registration | registrationId | (eventId, participantId) | stark |
+| CompetitionCategory | categoryId | (style, division, classLevel) | stark |
+| StartGroup | groupId | (roundId, groupNumber) | stark |
+| ScoreCard | scoreCardId | (registrationId, roundId) | stark |
+| ShotResult | (scoreCardId, targetNumber, arrowNumber) | – | **schwach** |
+| TournamentResult | resultId | registrationId | stark |
+| TieBreak | tieBreakId | – | stark |
+| Protest | protestId | – | stark |
 
 ---
 
-## Step 1.6 – Enhanced Modeling
+## Schritt 1.6 – Erweiterte Modellierung
 
-**Adopted:** Generalization `Person` over `Participant` and `Official` (shared attributes `firstName`, `lastName`).
+**Übernommen:** Generalisierung `Person` über `Participant` und `Official` (gemeinsame Attribute `firstName`, `lastName`).
 
-**Rejected:** Subtypes per `roundType` — kept as enumerated attribute since the variation is data-driven (arrows per target), not structural.
+**Verworfen:** Subtypen je `roundType` — als Aufzählungsattribut belassen, da der Unterschied datengetrieben ist (Pfeile pro Ziel), nicht strukturell.
 
 ---
 
-## Step 1.7 – Redundancy Check
+## Schritt 1.7 – Redundanzprüfung
 
-| # | Finding | Action |
+| # | Befund | Maßnahme |
 |---|---|---|
-| 1 | (style, division, class) duplicated across Registrations | Promoted to entity `CompetitionCategory` |
-| 2 | `maxDistance` depended on category (would be multi-valued) | Moved to association class `TargetDistance` |
-| 3 | No redundant relationships found | – |
-| 4 | Time dimension on Nation/Club not required for single event | – |
+| 1 | (style, division, class) mehrfach über Registrations | Zu Entität `CompetitionCategory` erhoben |
+| 2 | `maxDistance` von Kategorie abhängig (wäre mehrwertig) | In Assoziationsklasse `TargetDistance` ausgelagert |
+| 3 | Keine redundanten Beziehungen vorhanden | – |
+| 4 | Zeitdimension bei Nation/Club für Einzelevent nicht nötig | – |
 
 ---
 
-## Step 1.8 – Validation Against Transactions
+## Schritt 1.8 – Validierung gegen Transaktionen
 
-Initial trace of T1–T8 (from Exercise 1) revealed three gaps that triggered the revisions above. Full transaction-to-model matrix follows in Exercise 4.
+Erste Prüfung der Transaktionen T1–T8 (aus Aufgabe 1) ergab drei Lücken, die zu den obigen Anpassungen führten. Die vollständige Transaktions-Modell-Matrix folgt in Aufgabe 4.
 
-| Transaction | Initial Model | Action |
+| Transaktion | Initiales Modell | Maßnahme |
 |---|---|---|
-| T1 – Create participant | ✓ | – |
-| T2 – Verify classification | ✓ | – |
-| T3 – Build start groups | gap | `CompetitionCategory` added |
-| T4 – Capture scorecard | ✓ | – |
-| T5 – Display ranking | gap | `CompetitionCategory` added |
-| T6 – Record tie-break | ✓ | – |
-| T7 – Document protest | gap | linked to Registration (not Participant) |
-| T8 – Export results | gap | `TargetDistance` added |
+| T1 – Teilnehmer anlegen | ✓ | – |
+| T2 – Klassifizierung prüfen | ✓ | – |
+| T3 – Startgruppen erstellen | Lücke | `CompetitionCategory` ergänzt |
+| T4 – Scorekarte erfassen | ✓ | – |
+| T5 – Rangliste anzeigen | Lücke | `CompetitionCategory` ergänzt |
+| T6 – Tie-Break erfassen | ✓ | – |
+| T7 – Protest dokumentieren | Lücke | Verknüpfung mit Registration (nicht Participant) |
+| T8 – Ergebnisliste exportieren | Lücke | `TargetDistance` ergänzt |
 
-After revision: **all 8 transactions supported by the final model.**
-
----
-
-## Step 1.9 – User Review
-
-Final model will be presented to the three Exercise 1 personas (Klaus Brenner, Maria Weiss, Sandra Klein). Open clarifications are listed in Exercise 5.
+Nach der Überarbeitung: **alle 8 Transaktionen werden durch das finale Modell unterstützt.**
 
 ---
 
-## Initial Conceptual Model
+## Schritt 1.9 – Review mit Anwendern
 
-Source: [`assets/diagrams/conceptual-model-initial.puml`](assets/diagrams/conceptual-model-initial.puml)
-
-![Initial Conceptual Model](assets/diagrams/conceptual-model-initial.svg)
+Das finale Modell wird den drei Personas aus Aufgabe 1 (Klaus Brenner, Maria Weiss, Sandra Klein) zur Abnahme vorgelegt. Offene Klärungspunkte sind in Aufgabe 5 dokumentiert.
 
 ---
 
-## Final Conceptual Model
+## Initiales konzeptuelles Datenmodell
 
-Source: [`assets/diagrams/conceptual-model-final.puml`](assets/diagrams/conceptual-model-final.puml)
+Quelle: [`assets/diagrams/conceptual-model-initial.puml`](assets/diagrams/conceptual-model-initial.puml)
 
-![Final Conceptual Model](assets/diagrams/conceptual-model-final.svg)
+![Initiales konzeptuelles Datenmodell](assets/diagrams/conceptual-model-initial.svg)
 
 ---
 
-## Changes Between Initial and Final Model
+## Finales konzeptuelles Datenmodell
 
-| # | Change | Reason | Step |
+Quelle: [`assets/diagrams/conceptual-model-final.puml`](assets/diagrams/conceptual-model-final.puml)
+
+![Finales konzeptuelles Datenmodell](assets/diagrams/conceptual-model-final.svg)
+
+---
+
+## Änderungen zwischen initialem und finalem Modell
+
+| # | Änderung | Begründung | Schritt |
 |---|---|---|---|
-| 1 | Added `CompetitionCategory` | Removed redundancy of (style, division, class) | 1.7 |
-| 2 | Added `TargetDistance` association class | Distance depends on (target, category) | 1.7 |
-| 3 | Added `Person` supertype | Avoids duplicated name attributes | 1.6 |
-| 4 | `Protest` now linked to Registration | A protest concerns a specific entry | 1.8 |
-| 5 | Added `signedBy` relationship | Captures Target Captain signature | 1.8 |
-| 6 | Set `28..84` on ScoreCard → ShotResult | Reflects round-type arrow count | 1.2 |
-| 7 | Marked weak entities explicitly | Existence-dependent on parent | 1.5 |
+| 1 | `CompetitionCategory` ergänzt | Redundanz von (style, division, class) entfernt | 1.7 |
+| 2 | Assoziationsklasse `TargetDistance` ergänzt | Distanz abhängig von (Ziel, Kategorie) | 1.7 |
+| 3 | Supertyp `Person` ergänzt | Vermeidet doppelte Namensattribute | 1.6 |
+| 4 | `Protest` jetzt mit Registration verknüpft | Protest betrifft konkrete Anmeldung | 1.8 |
+| 5 | Beziehung `signedBy` ergänzt | Bildet Unterschrift des Target Captains ab | 1.8 |
+| 6 | Multiplizität `28..84` auf ScoreCard → ShotResult | Spiegelt rundentyp-abhängige Pfeilanzahl | 1.2 |
+| 7 | Schwache Entitäten explizit markiert | Existenzabhängig vom Eltern­objekt | 1.5 |
