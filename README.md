@@ -17,10 +17,9 @@ Dieses Repository enthält die zusammengefasste Abgabe für Assignment 01 sowie 
 ```
 ├─ assignment-01-personas-stakeholder-interviews-and-reflection.md
 ├─ assets/
-│  ├─ Alex_Persona.jpg
+│  ├─ Alex_Persona.png
 │  ├─ Filialleiter_Stakeholder.png
 │  ├─ Immobilienmakler_Stakeholder.png
-│  ├─ Mieter_Stakeholder.png
-│  └─ Rezeptionist_Stakeholder.png
+│  └─ Mieter_Stakeholder.png
 └─ README.md
 ```

@@ -73,7 +73,6 @@ Das Datenbankprojekt unterstützt die Organisation und Durchführung der IFAA Wo
 |---|---|
 | Turnierdirektor | Verantwortet die Gesamtorganisation, genehmigt Schießpläne und trägt die finale Verantwortung für Regelkonformität |
 | Bogenschütze / Teilnehmer | Meldet sich an, schießt in einer festen Stil- und Divisionskombination und benötigt Zugriff auf eigene Ergebnisse und Startinformationen |
-| Feldkapitän / Streckenmarshall | Teilt Gruppen ein, überwacht die Strecken, entscheidet bei Regelfragen vor Ort und verwaltet den Ablauf auf der Range |
 | Ergebnisbeauftragter / Registrierung | Nimmt Anmeldungen entgegen, prüft Klassifizierungskarten, erfasst Schussergebnisse und berechnet Ranglisten |
 
 ### Begründung der Rollenwahl
@@ -83,9 +82,6 @@ Der Turnierdirektor hat die höchste Entscheidungsbefugnis. Er genehmigt Rundenp
 
 **Bogenschütze / Teilnehmer:**
 Der Schütze ist der zentrale Nutzer der Veranstaltung. Alle Kernfunktionen des Systems – Anmeldung, Startgruppenzuweisung, Ergebniserfassung und Rangliste – drehen sich um seine Daten. Mit rund 1.200 erwarteten Teilnehmern ist diese Rolle die volumenmäßig größte.
-
-**Feldkapitän / Streckenmarshall:**
-Der Feldkapitän übernimmt operative Aufgaben auf den Ranges: Gruppenzuteilung, Starttarget-Festlegung und Kontrolle des Schießablaufs. Er braucht vor allem aktuelle Gruppen- und Ablaufinformationen.
 
 **Ergebnisbeauftragter / Registrierung:**
 Diese Rolle arbeitet am häufigsten mit dem System. Sie erfasst Anmeldedaten, prüft Klassifizierungen, trägt Schussergebnisse ein und erstellt Ranglisten. Fehler in dieser Rolle wirken sich direkt auf die Turnierauswertung aus.
@@ -109,7 +105,7 @@ Diese Rolle arbeitet am häufigsten mit dem System. Sie erfasst Anmeldedaten, pr
 | **Name & Foto** | Klaus Brenner <br> <img src="./assets/Filialleiter_Stakeholder.png" alt="Turnierdirektor" width="220"/> |
 | **Rolle** | Turnierdirektor WBHC 2027, DFBV |
 | **Kurzprofil** | 53 Jahre, langjähriger Funktionär des DFBV, hat bereits mehrere nationale und internationale IFAA-Turniere geleitet. Kennt die IFAA-Regeln sehr gut und ist verantwortlich für die Einhaltung aller Vorschriften gegenüber der IFAA. |
-| **Aufgaben** | Gesamtkoordination der Veranstaltung, Genehmigung von Schießplänen und Streckenaufbauten, Benennung und Beaufsichtigung aller Turnieroffizielle (Feldkapitäne, TCO, Streckenmarshalls), Entscheidung bei Regelkonflikten, Kommunikation mit der IFAA. |
+| **Aufgaben** | Gesamtkoordination der Veranstaltung, Genehmigung von Schießplänen und Streckenaufbauten, Benennung und Beaufsichtigung aller Turnieroffizielle (TCO, etc.), Entscheidung bei Regelkonflikten, Kommunikation mit der IFAA. |
 | **Daten, die er nutzt** | Teilnehmerliste nach Nation und Stil, Rundenplan und Streckenzuteilung, Tagesergebnisse und Gesamtranglisten, Status der Ausrüstungskontrollen, Statistiken über Gruppen und Starts. |
 | **Was er braucht** | Gesamtübersicht aller aktiven Runden und Gruppen, aktuelle Ranglisten je Division und Stil, Exportfunktion für offizielle Ergebnislisten, Protokolle zu Regelentscheidungen und Protests. |
 | **Sorgen** | Das System darf den Turnierablauf nicht verzögern. Falsch erfasste Stile oder Divisionen können zur Disqualifikation führen. Regelverstöße müssen nachvollziehbar dokumentiert sein. |
@@ -128,20 +124,7 @@ Diese Rolle arbeitet am häufigsten mit dem System. Sie erfasst Anmeldedaten, pr
 | **Sorgen** | Falsch erfasster Schießstil führt zu Disqualifikation. Fehlende oder falsche Klassifizierung verhindert den Start. Unklare Informationen über Startzeiten und Gruppenaufteilung. |
 | **Kommunikation** | Direkt und praktisch, nutzt bevorzugt digitale Kanäle und Aushänge am Turniergelände. |
 
-### Persona 3: Feldkapitän / Streckenmarshall
-
-| Element | Beschreibung |
-|---|---|
-| **Name & Foto** | Thomas Gruber <br> <img src="./assets/Rezeptionist_Stakeholder.png" alt="Feldkapitän" width="220"/> |
-| **Rolle** | Feldkapitän Range 2, WBHC 2027 |
-| **Kurzprofil** | 47 Jahre, erfahrener Bogenschütze und seit 12 Jahren als Turnieroffiziant tätig. Kennt die IFAA-Schießregeln aus der Praxis und ist verantwortlich für den reibungslosen Ablauf auf seiner zugewiesenen Range. |
-| **Aufgaben** | Gruppenaufstellung am ersten Tag, Starttarget-Zuteilung, Score-Seeding ab Tag 2, Überwachung des Schießablaufs, Entscheidung bei Zielzuweisungsproblemen, Koordination der Streckenmarshalls. |
-| **Daten, die er nutzt** | Teilnehmerliste mit Divisionszuordnung, aktuelle Gruppenaufteilung mit Namen und Scores, Starttarget je Gruppe, Tagesergebnisse zur Neuseeding-Berechnung. |
-| **Was er braucht** | Aktuelle Gruppenübersicht (druckbar und digital), klare Darstellung der Scorereihenfolge für das Seeding, schnelle Suche nach einzelnen Schützen und ihrer Gruppe, Möglichkeit, Gruppenänderungen einzutragen. |
-| **Sorgen** | Schützen starten auf der falschen Range oder am falschen Target. Score-Seeding-Fehler führen zu falschen Gruppenaufteilungen. Zu langsame Informationsweitergabe bei kurzfristigen Änderungen. |
-| **Kommunikation** | Kurz und direkt, bevorzugt gedruckte Listen als Backup. Gespräche am Morgen vor dem Schießbetrieb sind ideal. |
-
-### Persona 4: Ergebnisbeauftragter / Registrierung
+### Persona 3: Ergebnisbeauftragter / Registrierung
 
 | Element | Beschreibung |
 |---|---|
@@ -193,7 +176,7 @@ Diese Rolle arbeitet am häufigsten mit dem System. Sie erfasst Anmeldedaten, pr
 | Runde | Runden-ID, Rundenttyp (Unmarked Animal 3-Pfeil / 3D Standard 2-Pfeil / 3D Hunting 1-Pfeil), Datum, zugewiesene Range | C, R, U |
 | Range / Strecke | Range-ID, Bezeichnung, Anzahl Ziele (28 pro Runde), zugewiesene Divisionen | C, R, U |
 | Ziel / Target Station | Ziel-ID, Ziel-Nummer (1–28), Gruppe (1–4), maximale Schussdistanz je Division | C, R, U |
-| Offizieller | Offizielle-ID, Name, Funktion (Turnierdirektor / Feldkapitän / TCO / Streckenmarshall), zugewiesene Range | C, R, U, D |
+| Offizieller | Offizielle-ID, Name, Funktion (Turnierdirektor / TCO etc.), zugewiesene Range | C, R, U, D |
 | Protest / Regelentscheid | Protest-ID, Schütze, Datum, Beschreibung, Entscheidung, entscheidender Offizieller | C, R |
 
 #### Interview Summary
@@ -349,7 +332,7 @@ Die IFAA-Klassifizierungsregeln (zwei Scores im 12-Monatszeitraum, dynamischer A
 | Noah M. (Notschge) | Maintainer | Task 1 (Database Developer Persona), Task 5 (Reflection) |
 | Niklas R. (Rüdi) | Maintainer | Task 2 (Stakeholder Role Identification), Task 4 (Interview 1 – Turnierdirektor) |
 | Jan S. (Jan) | Worker | Task 3 (Stakeholder Personas 1–2), Task 4 (Interview 2 – Bogenschütze) |
-| Niklas K. (Katz) | Worker | Task 3 (Stakeholder Personas 3–4), Task 4 (Interview 3 – Ergebnisbeauftragte) |
+| Niklas K. (Katz) | Worker | Task 3 (Stakeholder Persona 3), Task 4 (Interview 3 – Ergebnisbeauftragte) |
 
 
 
