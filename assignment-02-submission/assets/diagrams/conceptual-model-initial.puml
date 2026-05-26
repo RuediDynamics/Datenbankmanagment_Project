@@ -1,0 +1,188 @@
+@startuml conceptual-model-initial
+' =====================================================
+' WBHC 2027 - Conceptual Data Model (INITIAL VERSION)
+' UML Data Model Profile (Connolly & Begg / Ambler)
+' =====================================================
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam classBackgroundColor #FEFEFE
+skinparam classBorderColor #444444
+skinparam shadowing false
+skinparam linetype ortho
+hide circle
+
+title WBHC 2027 - Conceptual Data Model (Initial Iteration)
+
+' -----------------------------
+' Core entities
+' -----------------------------
+
+class Event <<entity>> {
+  {field} +eventId : Identifier
+  name : Text
+  startDate : Date
+  endDate : Date
+  location : Text
+  organizer : Text
+  ifaaReference : Text
+}
+
+class Round <<entity>> {
+  {field} +roundId : Identifier
+  roundNumber : Integer
+  roundType : Enum {UnmarkedAnimal3, Standard3D2, Hunting3D1}
+  date : Date
+  startTime : Time
+}
+
+class Range <<entity>> {
+  {field} +rangeId : Identifier
+  rangeName : Text
+  numberOfTargets : Integer = 28
+  description : Text
+}
+
+class TargetStation <<entity>> {
+  {field} +targetId : Identifier
+  targetNumber : Integer  '/* 1..28 */
+  targetGroup : Integer  '/* 1..4 */
+  animalFigure : Text
+  maxDistance : Decimal
+}
+
+class Participant <<entity>> {
+  {field} +participantId : Identifier
+  firstName : Text
+  lastName : Text
+  birthDate : Date
+  gender : Enum {M, F}
+  /age : Integer
+}
+
+class Nation <<entity>> {
+  {field} +nationCode : Identifier  '/* ISO 3-letter */
+  nationName : Text
+}
+
+class Club <<entity>> {
+  {field} +clubId : Identifier
+  clubName : Text
+}
+
+class Registration <<entity>> {
+  {field} +registrationId : Identifier
+  registrationDate : Date
+  shootingStyle : Enum {BB, BBR, BHR, BL, BU, FS, FSR, FU, LB, TR}
+  division : Enum {Adult, Veteran, Senior, YoungAdult, Junior, Cub}
+  classification : Enum {A, B, C}
+  feePaid : Boolean
+  equipmentChecked : Boolean
+  classificationVerified : Boolean
+}
+
+class StartGroup <<entity>> {
+  {field} +groupId : Identifier
+  groupNumber : Integer
+  startTargetNumber : Integer
+  date : Date
+}
+
+class ScoreCard <<entity>> {
+  {field} +scoreCardId : Identifier
+  cardDate : Date
+  signedByCaptain : Boolean
+  /roundTotal : Integer
+}
+
+class ShotResult <<entity>> {
+  {field} +shotId : Identifier
+  arrowNumber : Integer  '/* 1, 2 or 3 */
+  hitZone : Enum {Kill, Vital, Wound, Miss}
+  pointValue : Integer
+}
+
+class Official <<entity>> {
+  {field} +officialId : Identifier
+  firstName : Text
+  lastName : Text
+  function : Enum {TournamentDirector, TCO, RangeOfficial, Judge}
+}
+
+class Protest <<entity>> {
+  {field} +protestId : Identifier
+  date : Date
+  description : Text
+  decision : Text
+  decisionDate : Date
+}
+
+class TieBreak <<entity>> {
+  {field} +tieBreakId : Identifier
+  date : Date
+  category : Text  '/* Style/Division/Class */
+  resolution : Text
+}
+
+class TournamentResult <<entity>> {
+  {field} +resultId : Identifier
+  /totalPoints : Integer
+  /rankPosition : Integer
+}
+
+' -----------------------------
+' Relationships
+' -----------------------------
+
+Event "1" -- "1..*" Round : consistsOf >
+Round "1" -- "1..*" Range : usesRange >
+Range "1" *-- "28" TargetStation : contains >
+
+Participant "1" -- "1..*" Registration : submits >
+Registration "*" -- "1" Event : forEvent >
+Nation "1" -- "*" Participant : isFromNation >
+Club "1" -- "*" Participant : isMemberOf >
+
+StartGroup "*" -- "1" Round : forRound >
+StartGroup "*" -- "1" Range : assignedToRange >
+StartGroup "*" -- "1..*" Registration : includes >
+
+ScoreCard "*" -- "1" Registration : recordsFor >
+ScoreCard "*" -- "1" Round : forRound >
+ScoreCard "1" *-- "*" ShotResult : contains >
+ShotResult "*" -- "1" TargetStation : atTarget >
+
+Official "*" -- "0..*" Range : assignedTo >
+Official "1" -- "*" Protest : decides >
+Protest "*" -- "1" Participant : concerns >
+
+TieBreak "*" -- "2..*" Registration : involves >
+TieBreak "*" -- "0..*" ShotResult : usesShots >
+
+TournamentResult "1" -- "1" Registration : forRegistration >
+TournamentResult "*" -- "1" Event : inEvent >
+
+' -----------------------------
+' Notes
+' -----------------------------
+
+note right of ShotResult
+  Pfeil-Nummer entscheidet
+  ueber Punktwert (IFAA-Regel).
+  Erfassung auf Pfeilebene
+  noetig (T4).
+end note
+
+note bottom of Registration
+  Kombination aus Style +
+  Division + Class definiert
+  Wertungskategorie (T5).
+end note
+
+note right of TargetStation
+  28 Targets pro Range,
+  Gruppen 1..4,
+  Distanz abhaengig von Division.
+end note
+
+@enduml

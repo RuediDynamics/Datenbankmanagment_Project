@@ -1,0 +1,268 @@
+@startuml conceptual-model-final
+' =====================================================
+' WBHC 2027 - Conceptual Data Model (FINAL VERSION)
+' UML Data Model Profile (Connolly & Begg / Ambler)
+' Revised after redundancy check and transaction validation
+' =====================================================
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam classBackgroundColor #FEFEFE
+skinparam classBorderColor #2C3E50
+skinparam classBorderThickness 1
+skinparam shadowing false
+skinparam linetype ortho
+skinparam packageStyle rectangle
+hide circle
+
+title WBHC 2027 - Conceptual Data Model (Final / Revised Iteration)
+
+' =====================================================
+' PACKAGE 1: Event Structure
+' =====================================================
+package "Event & Venue" #E8F4F8 {
+
+  class Event <<entity>> {
+    {field} <<PK>> eventId : Identifier
+    name : Text [1..60]
+    startDate : Date
+    endDate : Date
+    location : Text
+    organizer : Text
+    ifaaReference : Text
+  }
+
+  class Round <<entity>> {
+    {field} <<PK>> roundId : Identifier
+    {field} <<AK>> alternateKey : eventId, roundNumber
+    roundNumber : Integer [1..4]
+    roundType : Enum {UnmarkedAnimal_3Arrow, Standard3D_2Arrow, Hunting3D_1Arrow}
+    date : Date
+    startTime : Time
+  }
+
+  class Range <<entity>> {
+    {field} <<PK>> rangeId : Identifier
+    rangeName : Text
+    description : Text
+    /numberOfTargets : Integer
+  }
+
+  class TargetStation <<weak entity>> {
+    {field} <<partial key>> targetNumber : Integer [1..28]
+    targetGroup : Integer [1..4]
+    animalFigure : Text
+  }
+
+  class TargetDistance <<association class>> {
+    maxDistance : Decimal
+    unit : Enum {m, yd}
+  }
+}
+
+' =====================================================
+' PACKAGE 2: People & Categories
+' =====================================================
+package "Participants & Officials" #FDF2E9 {
+
+  class Person <<abstract>> {
+    {field} <<PK>> personId : Identifier
+    firstName : Text [1..40]
+    lastName : Text [1..40]
+  }
+
+  class Participant <<entity>> {
+    birthDate : Date
+    gender : Enum {M, F}
+    /age : Integer
+  }
+
+  class Official <<entity>> {
+    function : Enum {TournamentDirector, TCO, RangeOfficial, Judge}
+    contactEmail : Text
+  }
+
+  class Nation <<entity>> {
+    {field} <<PK>> nationCode : Text [3]
+    nationName : Text [50]
+  }
+
+  class Club <<entity>> {
+    {field} <<PK>> clubId : Identifier
+    clubName : Text
+  }
+}
+
+' =====================================================
+' PACKAGE 3: Registration & Categorisation
+' =====================================================
+package "Registration" #F4ECF7 {
+
+  class Registration <<entity>> {
+    {field} <<PK>> registrationId : Identifier
+    {field} <<AK>> alternateKey : eventId, participantId
+    registrationDate : Date
+    feePaid : Boolean
+    equipmentChecked : Boolean
+    classificationVerified : Boolean
+  }
+
+  class CompetitionCategory <<entity>> {
+    {field} <<PK>> categoryId : Identifier
+    {field} <<AK>> alternateKey : style, division, classLevel
+    style : Enum {BB, BBR, BHR, BL, BU, FS, FSR, FU, LB, TR}
+    division : Enum {Adult, Veteran, Senior, YoungAdult, Junior, Cub}
+    classLevel : Enum {A, B, C}
+  }
+}
+
+' =====================================================
+' PACKAGE 4: Scoring & Results
+' =====================================================
+package "Scoring & Results" #EAFAF1 {
+
+  class StartGroup <<entity>> {
+    {field} <<PK>> groupId : Identifier
+    groupNumber : Integer
+    startTargetNumber : Integer [1..28]
+    date : Date
+  }
+
+  class ScoreCard <<entity>> {
+    {field} <<PK>> scoreCardId : Identifier
+    {field} <<AK>> alternateKey : registrationId, roundId
+    cardDate : Date
+    signedByCaptain : Boolean
+    /roundTotal : Integer
+  }
+
+  class ShotResult <<weak entity>> {
+    {field} <<partial key>> arrowNumber : Integer [1..3]
+    hitZone : Enum {Kill, Vital, Wound, Miss}
+    /pointValue : Integer
+  }
+
+  class TournamentResult <<entity>> {
+    {field} <<PK>> resultId : Identifier
+    /totalPoints : Integer
+    /rankPosition : Integer
+    tieFlag : Boolean
+  }
+
+  class TieBreak <<entity>> {
+    {field} <<PK>> tieBreakId : Identifier
+    date : Date
+    resolution : Text
+  }
+}
+
+' =====================================================
+' PACKAGE 5: Governance
+' =====================================================
+package "Governance" #FDEDEC {
+
+  class Protest <<entity>> {
+    {field} <<PK>> protestId : Identifier
+    submissionDate : Date
+    description : Text
+    decision : Text
+    decisionDate : Date
+  }
+}
+
+' =====================================================
+' Generalization / Specialization
+' =====================================================
+Person <|-- Participant
+Person <|-- Official
+
+' =====================================================
+' Event structure relationships
+' =====================================================
+Event "1" *-- "1..4" Round : "consists of >"
+Round "1..*" -- "1..*" Range : "uses >"
+Range "1" *-- "28" TargetStation : "contains >"
+
+' Association class TargetDistance links the (Range, TargetStation)
+' association with CompetitionCategory.
+Range "1" -- "*" TargetDistance : ""
+TargetStation "1" -- "*" TargetDistance : ""
+TargetDistance "*" -- "1" CompetitionCategory : "appliesTo >"
+
+' =====================================================
+' Participant relationships
+' =====================================================
+Participant "*" -- "1" Nation : "representsNation >"
+Participant "0..*" -- "0..1" Club : "memberOf >"
+
+' =====================================================
+' Registration relationships
+' =====================================================
+Participant "1" -- "0..*" Registration : "submits >"
+Registration "*" -- "1" Event : "forEvent >"
+Registration "*" -- "1" CompetitionCategory : "categorisedAs >"
+
+' =====================================================
+' Start group relationships
+' =====================================================
+StartGroup "*" -- "1" Round : "forRound >"
+StartGroup "*" -- "1" Range : "assignedToRange >"
+StartGroup "*" -- "3..6" Registration : "includes >"
+
+' =====================================================
+' Scoring relationships
+' =====================================================
+ScoreCard "*" -- "1" Registration : "recordsFor >"
+ScoreCard "*" -- "1" Round : "forRound >"
+ScoreCard "1" *-- "28..84" ShotResult : "contains >"
+ShotResult "*" -- "1" TargetStation : "atTarget >"
+Official "1" -- "0..*" ScoreCard : "signedBy >"
+
+' =====================================================
+' Results relationships
+' =====================================================
+TournamentResult "1" -- "1" Registration : "summarises >"
+TieBreak "*" -- "2..*" Registration : "resolvesTie >"
+TieBreak "1" -- "1..*" ShotResult : "uses >"
+
+' =====================================================
+' Governance relationships
+' =====================================================
+Official "1" -- "0..*" Range : "assignedToRange >"
+Official "1" -- "0..*" Protest : "decides >"
+Protest "*" -- "1" Registration : "concerns >"
+
+' =====================================================
+' Notes
+' =====================================================
+note right of ShotResult
+  Weak entity, identified
+  by parent ScoreCard +
+  arrowNumber. Point value
+  derived from round type
+  + hit zone + arrow no.
+end note
+
+note bottom of CompetitionCategory
+  Replaces the previously
+  separate Style / Division /
+  Class attributes on
+  Registration (redundancy
+  removed in iteration).
+end note
+
+note top of TargetDistance
+  Association class on
+  (Range, TargetStation):
+  one max distance per
+  category per target.
+end note
+
+note left of Person
+  Generalization: shared
+  attributes (name) lifted
+  from Participant /
+  Official.
+end note
+
+@enduml
