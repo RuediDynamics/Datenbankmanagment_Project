@@ -10,7 +10,7 @@ Fact-Finding and Stakeholder Analysis for Database Development
 
 **Rollenbezeichnung:** Datenbankentwickler
 
-![Alex Rivera](./assets/Alex_Persona.jpg)
+![Alex Rivera](./assets/Alex_Persona.png)
 
 #### Hintergrund
 
