@@ -231,11 +231,5 @@
 | **Tie-Break / Shoot-off** | Entscheidungsrunde zwischen punktgleichen Schützen über eine 3D-Zielgruppe |
 | **Protest** | Formale Regelentscheid-Anfrage gegen eine Entscheidung durch den Turnierdirektor |
 
----
 
-## Dokumenthistorie
-
-| Version | Datum | Autor | Änderung |
-|---|---|---|---|
-| 1.0 | 2026-05-26 | AI Assistant | Initiale Data Dictionary basierend auf Assignment 02 Final Model |
 
