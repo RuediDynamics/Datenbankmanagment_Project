@@ -6,9 +6,9 @@ Fact-Finding and Stakeholder Analysis for Database Development
 
 ## Task 1: Database Developer Persona
 
-Die detaillierte Persona für den Datenbankentwickler finden Sie in dem separaten Dokument:
+Die detaillierte Persona für den Datenbankentwickler:
 
-- **Persona (Alex Rivera):** [developer-persona.md](./assets/personas/developer-persona.md)
+{{< include assignment-01-submission/assets/personas/developer-persona.md >}}
 
 ---
 
@@ -49,21 +49,33 @@ Diese Rolle arbeitet am häufigsten mit dem System. Sie erfasst Anmeldedaten, pr
 
 ## Task 3: Stakeholder Personas
 
-Die detaillierten Steckbriefe der Stakeholder-Personas befinden sich in separaten Dokumenten:
+Die detaillierten Steckbriefe der Stakeholder-Personas befinden sich in separaten Dokumenten und werden hier direkt eingebettet:
 
-- **Persona 1: Turnierdirektor (Klaus Brenner):** [stakeholder-persona-1.md](./assets/personas/stakeholder-persona-1.md)
-- **Persona 2: Bogenschütze / Teilnehmer (Maria Weiss):** [stakeholder-persona-2.md](./assets/personas/stakeholder-persona-2.md)
-- **Persona 3: Ergebnisbeauftragter / Registrierung (Sandra Klein):** [stakeholder-persona-3.md](./assets/personas/stakeholder-persona-3.md)
+{{< include assignment-01-submission/assets/personas/stakeholder-persona-1.md >}}
+
+---
+
+{{< include assignment-01-submission/assets/personas/stakeholder-persona-2.md >}}
+
+---
+
+{{< include assignment-01-submission/assets/personas/stakeholder-persona-3.md >}}
 
 ---
 
 ## Task 4: Stakeholder Interviews
 
-Die Interviewleitfäden (Interview Guides), Datenanforderungen (Data Requirements) sowie die Zusammenfassungen der einzelnen Stakeholder-Interviews finden Sie hier verlinkt:
+Die Interviewleitfäden (Interview Guides), Datenanforderungen (Data Requirements) sowie die Zusammenfassungen der einzelnen Stakeholder-Interviews werden hier eingebettet:
 
-- **Interview 1: Turnierdirektor (Klaus Brenner):** [interview-guide-1.md](./assets/interviews/interview-guide-1.md)
-- **Interview 2: Bogenschütze / Teilnehmer (Maria Weiss):** [interview-guide-2.md](./assets/interviews/interview-guide-2.md)
-- **Interview 3: Ergebnisbeauftragter / Registrierung (Sandra Klein):** [interview-guide-3.md](./assets/interviews/interview-guide-3.md)
+{{< include assignment-01-submission/assets/interviews/interview-guide-1.md >}}
+
+---
+
+{{< include assignment-01-submission/assets/interviews/interview-guide-2.md >}}
+
+---
+
+{{< include assignment-01-submission/assets/interviews/interview-guide-3.md >}}
 
 ---
 

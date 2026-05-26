@@ -4,7 +4,16 @@
 
 Dieses Repository dient als zentrale Ablage für alle Aufgaben und Abgaben unseres Datenbankmanagement-Projekts. Das Hauptdokument für die gesamte Projektdokumentation finden Sie hier:
 
-**[Zentrales Hauptdokument (project-documentation.md)](./project-documentation.md)**
+**[Zentrales Hauptdokument (project-documentation.qmd)](./project-documentation.qmd)**
+
+---
+
+## Voraussetzungen / Requirements
+
+Um die Dokumentation lokal anzuschauen, zu bearbeiten oder zu rendern, wird folgende Komponente benötigt:
+
+1. **Quarto CLI** (Version 1.4+ empfohlen): Ermöglicht das lokale Rendern der `.qmd`-Dateien zu HTML/PDF.
+   * Download: [quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 ---
 
@@ -12,9 +21,9 @@ Dieses Repository dient als zentrale Ablage für alle Aufgaben und Abgaben unser
 
 Hier finden Sie die direkten Verknüpfungen zu den jeweiligen Abgaben und deren Haupt-Dokumenten:
 
-### [Assignment 01: Personas, Stakeholder Interviews, and Reflection](./assignment-01-submission/project-documentation.md)
+### [Assignment 01: Personas, Stakeholder Interviews, and Reflection](./assignment-01-submission/project-documentation.qmd)
 *   **Beschreibung:** Ermittlung von Anforderungen, Definition von Stakeholder-Personas und Durchführung strukturierter Interviews zur Vorbereitung der Datenbankentwicklung (WBHC 2027 in Bad Waldsee).
-*   **Hauptdokument:** [project-documentation.md](./assignment-01-submission/project-documentation.md)
+*   **Hauptdokument:** [project-documentation.qmd](./assignment-01-submission/project-documentation.qmd)
 
 ### [Assignment 02 (Zukünftige Aufgabe)](./assignment-02-submission/)
 *   **Beschreibung:** Platzhalter für das darauffolgende Assignment.
@@ -30,7 +39,7 @@ Die Ordnerstruktur des Projekts ist wie folgt aufgebaut:
 .
 ├── README.md                          # Dieses Haupt-Dokument (Index & Navigation)
 ├── assignment-01-submission/          # Abgabeordner für Assignment 01
-│   ├── project-documentation.md       # Hauptabgabedokument (Aufgabenübersicht)
+│   ├── project-documentation.qmd       # Hauptabgabedokument (Aufgabenübersicht)
 │   └── assets/                        # Ergänzende Ressourcen
 │       ├── personas/                  # Ausgelagerte Personas
 │       │   ├── developer-persona.md

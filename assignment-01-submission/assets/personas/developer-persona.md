@@ -2,7 +2,7 @@
 
 **Rollenbezeichnung:** Datenbankentwickler
 
-![Alex Rivera](../images/developer-avatar.png)
+![Alex Rivera](assignment-01-submission/assets/images/developer-avatar.png)
 
 ## Hintergrund
 

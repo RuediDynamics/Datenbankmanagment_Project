@@ -1,0 +1,11 @@
+# Project Documentation / Projekt-Dokumentation
+
+Dieses Hauptdokument im Root-Verzeichnis bettet die einzelnen Dokumentationen der Projektphasen via Quarto-Includes ein.
+
+---
+
+{{< include assignment-01-submission/project-documentation.qmd >}}
+
+---
+
+<!-- {{< include assignment-02-submission/project-documentation.md >}} -->
