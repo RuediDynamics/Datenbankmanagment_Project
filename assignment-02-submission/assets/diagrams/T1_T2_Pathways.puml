@@ -1,0 +1,41 @@
+@startuml T1_T2_Participant_Registration_Pathways
+!theme plain
+!define DIAGRAM_DIRECTION top to bottom
+skinparam backgroundColor #FAFAFA
+skinparam arrowColor #333333
+skinparam roundcornersize 10
+skinparam classBackgroundColor #E8F4F8
+skinparam classBorderColor #0066CC
+skinparam arrowFontColor #333333
+
+title T1 & T2: Participant Creation and Classification Verification
+
+package "T1: Create Participant + Register for Category" {
+    rectangle "1. INSERT Participant\n(firstName, lastName, birthDate)" as T1_1 #FFE6E6
+    rectangle "2. LOOKUP Nation\nby nationCode" as T1_2 #E6F3FF
+    rectangle "3. OPTIONAL: LOOKUP Club\nby clubName" as T1_3 #E6F3FF
+    rectangle "4. INSERT Registration\n(participantId, eventId,\ncategoryId, entryFeeStatus)" as T1_4 #FFE6E6
+    rectangle "5. VERIFY CompetitionCategory\n(style, division, classLevel)" as T1_5 #E6F3FF
+}
+
+package "T2: Verify Classification & Grant Start Permission" {
+    rectangle "1. LOOKUP Registration\nby participantId, eventId" as T2_1 #E6FFFF
+    rectangle "2. READ Participant data\n(age, prior scores)" as T2_2 #E6F3FF
+    rectangle "3. VERIFY Classification Status\n(2 scores in 12 months)" as T2_3 #FFE6E6
+    rectangle "4. UPDATE Registration\nSET classificationVerified=true ✅ NEW\nSET classificationDate=TODAY ✅ NEW" as T2_4 #FFE6E6
+    rectangle "5. UPDATE Registration\nSET entryFeeStatus, equipmentStatus" as T2_5 #FFE6E6
+}
+
+T1_1 --> T1_2 : representsNation
+T1_2 --> T1_3 : memberOf\n(optional)
+T1_3 --> T1_4 : submits\n+ forEvent\n+ categorisedAs
+T1_4 --> T1_5 : VERIFY
+
+T1_4 -.-> T2_1 : Later: verify\nclassification
+T2_1 --> T2_2 : submits (reverse)\nread Participant
+T2_2 --> T2_3 : EXTERNAL\nData Lookup
+T2_3 --> T2_4 : Valid?
+T2_4 --> T2_5 : Check fees\n& equipment
+
+
+@enduml

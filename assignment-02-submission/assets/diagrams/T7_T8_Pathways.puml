@@ -1,0 +1,57 @@
+@startuml T7_T8_Protest_Export_Pathways
+!theme plain
+skinparam backgroundColor #FAFAFA
+skinparam arrowColor #333333
+skinparam classBackgroundColor #E8F4F8
+skinparam classBorderColor #0066CC
+
+title T7 & T8: Document Protests and Export Official Results
+
+package "T7: Document Protest and Assign Decision Maker" {
+    rectangle "1. INCIDENT: Participant\ncontests a decision" as T7_1 #FFE6E6
+    rectangle "2. IDENTIFY affected\nRegistration (Participant)" as T7_2 #E6F3FF
+    rectangle "3. CREATE Protest record\n(protestId, protestDate,\nprotestDescription)" as T7_3 #FFE6E6
+    rectangle "4. ASSIGN Official\n(Turnierdirektor or TCO)\nvia 'decides' relationship" as T7_4 #FFE6E6
+    rectangle "5. Official REVIEWS\nevidence and rulebook" as T7_5 #FFF9E6
+    rectangle "6. UPDATE Protest\nSET protestDecision\n(formal text resolution)" as T7_6 #FFE6E6
+    rectangle "7. AUDIT trail logged\nin Protest record" as T7_7 #E6F3FF
+}
+
+package "T8: Export Official Results List (IFAA Format)" {
+    rectangle "1. SELECT Event\nto export" as T8_1 #E6F3FF
+    rectangle "2. SELECT Rounds\n(R1, R2, R3, R4 or subset)" as T8_2 #FFE6E6
+    rectangle "3. FOR each CompetitionCategory:" as T8_3 #FFF9E6
+    rectangle "3a. LOOKUP Category\n(style, division, classLevel)" as T8_3a #E6F3FF
+    rectangle "3b. GET TournamentResults\nsorted by rankPosition" as T8_3b #FFE6E6
+    rectangle "3c. FOR each ranked participant:" as T8_3c #FFF9E6
+    rectangle "3c-i. Participant name\n(firstName, lastName)" as T8_3c_i #E6F3FF
+    rectangle "3c-ii. Nation\n(nationCode)" as T8_3c_ii #E6F3FF
+    rectangle "3c-iii. Club affiliation\n(optional)" as T8_3c_iii #E6F3FF
+    rectangle "3c-iv. Per-round scores\n(R1, R2, R3, R4)" as T8_3c_iv #FFE6E6
+    rectangle "3c-v. Total points\nand Tie-break status" as T8_3c_v #FFE6E6
+    rectangle "4. FORMAT: IFAA standard\nPDF or CSV" as T8_4 #FFE6E6
+    rectangle "5. EXPORT file with\ntimestamp and DFBV seal" as T8_5 #FFE6E6
+}
+
+T7_1 --> T7_2 : IDENTIFY
+T7_2 --> T7_3 : concerns\n(Protest→Registration)
+T7_3 --> T7_4 : decides\n(Official→Protest)
+T7_4 --> T7_5 : Manual review\n(off-model)
+T7_5 --> T7_6 : UPDATE
+T7_6 --> T7_7 : AUDIT TRAIL
+
+T8_1 --> T8_2 : consistsOf\n(1..4 rounds)
+T8_2 --> T8_3 : FOR each\nround-category pair
+T8_3 --> T8_3a : SELECT category
+T8_3a --> T8_3b : summarises\n(TournamentResult→Registration)
+T8_3b --> T8_3c : FOR each result\n(ranked)
+T8_3c --> T8_3c_i : submits\n(Registration→Participant)
+T8_3c --> T8_3c_ii : representsNation\n(Participant→Nation)
+T8_3c --> T8_3c_iii : memberOf\n(Participant→Club, optional)
+T8_3c --> T8_3c_iv : recordsFor\n(Registration→ScoreCards)\nAggregate roundTotal
+T8_3c --> T8_3c_v : totalPoints✅DERIVED,\ntieBreakStatus
+T8_3c_v --> T8_4 : CONSTRUCT\nresult rows
+T8_4 --> T8_5 : WRITE file
+
+
+@enduml
