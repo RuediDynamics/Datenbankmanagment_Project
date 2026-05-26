@@ -9,7 +9,7 @@ Fact-Finding and Stakeholder Analysis for Database Development
 
 Die detaillierte Persona für den Datenbankentwickler:
 
-{{< include assignment-01-submission/assets/personas/developer-persona.md >}}
+{{< include /assignment-01-submission/assets/personas/developer-persona.md >}}
 
 ---
 
@@ -52,15 +52,15 @@ Diese Rolle arbeitet am häufigsten mit dem System. Sie erfasst Anmeldedaten, pr
 
 Die detaillierten Steckbriefe der Stakeholder-Personas befinden sich in separaten Dokumenten und werden hier direkt eingebettet:
 
-{{< include assignment-01-submission/assets/personas/stakeholder-persona-1.md >}}
+{{< include /assignment-01-submission/assets/personas/stakeholder-persona-1.md >}}
 
 ---
 
-{{< include assignment-01-submission/assets/personas/stakeholder-persona-2.md >}}
+{{< include /assignment-01-submission/assets/personas/stakeholder-persona-2.md >}}
 
 ---
 
-{{< include assignment-01-submission/assets/personas/stakeholder-persona-3.md >}}
+{{< include /assignment-01-submission/assets/personas/stakeholder-persona-3.md >}}
 
 ---
 
@@ -68,15 +68,15 @@ Die detaillierten Steckbriefe der Stakeholder-Personas befinden sich in separate
 
 Die Interviewleitfäden (Interview Guides), Datenanforderungen (Data Requirements) sowie die Zusammenfassungen der einzelnen Stakeholder-Interviews werden hier eingebettet:
 
-{{< include assignment-01-submission/assets/interviews/interview-guide-1.md >}}
+{{< include /assignment-01-submission/assets/interviews/interview-guide-1.md >}}
 
 ---
 
-{{< include assignment-01-submission/assets/interviews/interview-guide-2.md >}}
+{{< include /assignment-01-submission/assets/interviews/interview-guide-2.md >}}
 
 ---
 
-{{< include assignment-01-submission/assets/interviews/interview-guide-3.md >}}
+{{< include /assignment-01-submission/assets/interviews/interview-guide-3.md >}}
 
 ---
 

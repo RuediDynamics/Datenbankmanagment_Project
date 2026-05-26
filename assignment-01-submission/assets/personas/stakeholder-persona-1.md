@@ -2,7 +2,7 @@
 
 | Element | Beschreibung |
 |---|---|
-| **Name & Foto** | Klaus Brenner <br> <img src="{{< meta assignment1_assets >}}/images/stakeholder-1-avatar.png" alt="Turnierdirektor" width="220"/> |
+| **Name & Foto** | Klaus Brenner <br> ![Turnierdirektor](/assignment-01-submission/assets/images/stakeholder-1-avatar.png){width=220} |
 | **Rolle** | Turnierdirektor WBHC 2027, DFBV |
 | **Kurzprofil** | 53 Jahre, langjähriger Funktionär des DFBV, hat bereits mehrere nationale und internationale IFAA-Turniere geleitet. Kennt die IFAA-Regeln sehr gut und ist verantwortlich für die Einhaltung aller Vorschriften gegenüber der IFAA. |
 | **Aufgaben** | Gesamtkoordination der Veranstaltung, Genehmigung von Schießplänen und Streckenaufbauten, Benennung und Beaufsichtigung aller Turnieroffizielle (TCO, etc.), Entscheidung bei Regelkonflikten, Kommunikation mit der IFAA. |

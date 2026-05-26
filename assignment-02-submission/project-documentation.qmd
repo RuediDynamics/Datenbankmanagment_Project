@@ -320,7 +320,7 @@ Das finale Modell wird den drei Personas aus Aufgabe 1 (Klaus Brenner, Maria Wei
 
 Quelle: [`assets/diagrams/conceptual-model-initial.puml`](assets/diagrams/conceptual-model-initial.puml)
 
-![Initiales konzeptuelles Datenmodell]({{< meta assignment2_assets >}}/diagrams/conceptual-model-initial.svg)
+![Initiales konzeptuelles Datenmodell](/assignment-02-submission/assets/diagrams/conceptual-model-initial.svg)
 
 ---
 
@@ -328,7 +328,7 @@ Quelle: [`assets/diagrams/conceptual-model-initial.puml`](assets/diagrams/concep
 
 Quelle: [`assets/diagrams/conceptual-model-final.puml`](assets/diagrams/conceptual-model-final.puml)
 
-![Finales konzeptuelles Datenmodell]({{< meta assignment2_assets >}}/diagrams/conceptual-model-final.svg)
+![Finales konzeptuelles Datenmodell](/assignment-02-submission/assets/diagrams/conceptual-model-final.svg)
 
 ---
 
@@ -911,16 +911,16 @@ END: Official result list exported
 Vier Diagramme visualisieren die Entity-Traversals für alle 8 Transaktionen:
 
 ### T1 & T2 Pathway Diagram
-![T1 & T2 Pathways]({{< meta assignment2_assets >}}/diagrams/T1_T2_Pathways.svg)
+![T1 & T2 Pathways](/assignment-02-submission/assets/diagrams/T1_T2_Pathways.svg)
 
 ### T3 & T4 Pathway Diagram
-![T3 & T4 Pathways]({{< meta assignment2_assets >}}/diagrams/T3_T4_Pathways.svg)
+![T3 & T4 Pathways](/assignment-02-submission/assets/diagrams/T3_T4_Pathways.svg)
 
 ### T5 & T6 Pathway Diagram
-![T5 & T6 Pathways]({{< meta assignment2_assets >}}/diagrams/T5_T6_Pathways.svg)
+![T5 & T6 Pathways](/assignment-02-submission/assets/diagrams/T5_T6_Pathways.svg)
 
 ### T7 & T8 Pathway Diagram
-![T7 & T8 Pathways]({{< meta assignment2_assets >}}/diagrams/T7_T8_Pathways.svg)
+![T7 & T8 Pathways](/assignment-02-submission/assets/diagrams/T7_T8_Pathways.svg)
 
 
 Vier PlantUML-Diagramme visualisieren die Entity-Traversals für alle 8 Transaktionen:

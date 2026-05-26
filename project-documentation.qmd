@@ -1,11 +1,5 @@
 ---
 title: "Projekt-Dokumentation: IFAA WBHC 2027"
-assignment1_assets: "assignment-01-submission/assets"
-assignment2_assets: "assignment-02-submission/assets"
-resource-path:
-  - "."
-  - "assignment-01-submission"
-  - "assignment-02-submission"
 embed-resources: true
 ---
 
