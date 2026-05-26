@@ -1,0 +1,99 @@
+# Assignment 01: Personas, Stakeholder Interviews, and Reflection
+
+Fact-Finding and Stakeholder Analysis for Database Development
+
+---
+
+## Task 1: Database Developer Persona
+
+Die detaillierte Persona für den Datenbankentwickler finden Sie in dem separaten Dokument:
+
+- **Persona (Alex Rivera):** [developer-persona.md](./assets/personas/developer-persona.md)
+
+---
+
+## Task 2: Stakeholder Role Identification
+
+### Kontext
+
+Das Datenbankprojekt unterstützt die Organisation und Durchführung der IFAA World Bowhunter Championships (WBHC) 2027 in Bad Waldsee, Deutschland. Das System muss Teilnehmer, Nationen, Vereine, Schießrunden, Zielstationen, Ergebnisse, Ausrüstungskategorien und offizielle Funktionsträger verwalten. Die Veranstaltung wird vom Deutschen Feldbogen Sportverband e.V. (DFBV) nach den Regeln der International Field Archery Association (IFAA) ausgerichtet.
+
+### Identifizierte Stakeholder-Rollen
+
+| Rolle | Kurzbeschreibung |
+|---|---|
+| Turnierdirektor | Verantwortet die Gesamtorganisation, genehmigt Schießpläne und trägt die finale Verantwortung für Regelkonformität |
+| Bogenschütze / Teilnehmer | Meldet sich an, schießt in einer festen Stil- und Divisionskombination und benötigt Zugriff auf eigene Ergebnisse und Startinformationen |
+| Ergebnisbeauftragter / Registrierung | Nimmt Anmeldungen entgegen, prüft Klassifizierungskarten, erfasst Schussergebnisse und berechnet Ranglisten |
+
+### Begründung der Rollenwahl
+
+**Turnierdirektor:**
+Der Turnierdirektor hat die höchste Entscheidungsbefugnis. Er genehmigt Rundenpläne, koordiniert alle offiziellen Funktionsträger und ist verantwortlich für die korrekte Anwendung der IFAA-Regeln. Er benötigt deshalb Zugriff auf die meisten Datenbereiche des Systems.
+
+**Bogenschütze / Teilnehmer:**
+Der Schütze ist der zentrale Nutzer der Veranstaltung. Alle Kernfunktionen des Systems – Anmeldung, Startgruppenzuweisung, Ergebniserfassung und Rangliste – drehen sich um seine Daten. Mit rund 1.200 erwarteten Teilnehmern ist diese Rolle die volumenmäßig größte.
+
+**Ergebnisbeauftragter / Registrierung:**
+Diese Rolle arbeitet am häufigsten mit dem System. Sie erfasst Anmeldedaten, prüft Klassifizierungen, trägt Schussergebnisse ein und erstellt Ranglisten. Fehler in dieser Rolle wirken sich direkt auf die Turnierauswertung aus.
+
+### Einordnung der Datenbedürfnisse
+
+**Breiteste Datenbedürfnisse:**
+**Turnierdirektor** – Er braucht Zugriff auf fast alle Bereiche: Teilnehmer, Nationen, Runden, Ergebnisse und Offizielle. Er nutzt die Daten vor allem für Entscheidungen und Gesamtübersichten.
+
+**Meiste tägliche Datenarbeit:**
+**Ergebnisbeauftragter / Registrierung** – Diese Rolle arbeitet am häufigsten mit dem System. Sie führt viele wiederkehrende Aufgaben aus – Anmeldung, Klassifizierungsprüfung, Ergebniserfassung – und braucht schnellen und zuverlässigen Zugriff auf alle Teilnehmerdaten.
+
+---
+
+## Task 3: Stakeholder Personas
+
+Die detaillierten Steckbriefe der Stakeholder-Personas befinden sich in separaten Dokumenten:
+
+- **Persona 1: Turnierdirektor (Klaus Brenner):** [stakeholder-persona-1.md](./assets/personas/stakeholder-persona-1.md)
+- **Persona 2: Bogenschütze / Teilnehmer (Maria Weiss):** [stakeholder-persona-2.md](./assets/personas/stakeholder-persona-2.md)
+- **Persona 3: Ergebnisbeauftragter / Registrierung (Sandra Klein):** [stakeholder-persona-3.md](./assets/personas/stakeholder-persona-3.md)
+
+---
+
+## Task 4: Stakeholder Interviews
+
+Die Interviewleitfäden (Interview Guides), Datenanforderungen (Data Requirements) sowie die Zusammenfassungen der einzelnen Stakeholder-Interviews finden Sie hier verlinkt:
+
+- **Interview 1: Turnierdirektor (Klaus Brenner):** [interview-guide-1.md](./assets/interviews/interview-guide-1.md)
+- **Interview 2: Bogenschütze / Teilnehmer (Maria Weiss):** [interview-guide-2.md](./assets/interviews/interview-guide-2.md)
+- **Interview 3: Ergebnisbeauftragter / Registrierung (Sandra Klein):** [interview-guide-3.md](./assets/interviews/interview-guide-3.md)
+
+---
+
+## Task 5: Team Reflection
+
+### Was war die überraschendste Erkenntnis?
+
+Bei der Einarbeitung in die IFAA-Regeln und die Anforderungen der WBHC 2027 haben wir erkannt, wie komplex das scheinbar einfache Konzept „Schütze schießt auf ein Ziel und bekommt Punkte" tatsächlich ist. Am Anfang dachten wir, es gehe im Wesentlichen um das Speichern von Gesamtergebnissen. Doch schnell wurde klar, dass jeder einzelne Pfeil getrennt erfasst werden muss – mit Pfeilnummer, Trefferzone und rundenspezifischem Punktwert.
+
+Besonders überraschend war die Kombination aus vier verschiedenen Rundentypen mit je eigenem Punktesystem: Im Unmarked Animal Round (3 Pfeile) hängt der Punktwert davon ab, ob der erste, zweite oder dritte Pfeil trifft. Im 3D Standard Round (2 Pfeile) zählen beide Pfeile. Im 3D Hunting Round (1 Pfeil) gibt es drei Zonen (Kill, Vital, Wound). Das bedeutet, dieselbe Trefferzone erzielt je nach Rundentyp und Pfeilreihenfolge einen anderen Punktwert. Das hat erhebliche Auswirkungen auf die Datenbankstruktur, die wir anfangs unterschätzt hatten.
+
+Zusätzlich überraschte uns die Vielzahl an Stil-Divisions-Kombinationen: Neun Schießstile, sieben Altersklassen und zwei Geschlechter ergeben über 100 mögliche Startkategorien (z. B. AFBH-C für Adult Female Bowhunter Compound). Jede davon braucht eine eigene Rangliste und eigene Klassifizierungsklassen (A, B, C).
+
+### Wo erwarten wir die größten Konflikte?
+
+Die größten Konflikte erwarten wir in zwei Bereichen:
+
+**Granularität der Ergebniserfassung vs. Systemkomplexität:**
+Eine akkurate Abbildung der IFAA-Punkteregeln erfordert die Speicherung jedes Pfeils mit Nummer, Zone und rundenspezifischem Punktwert. Das macht die Datenstruktur deutlich komplexer als ein einfaches „Gesamtscore pro Runde". Die Herausforderung besteht darin, diese Tiefe zu implementieren, ohne die Eingabe für die Ergebnisbeauftragte unnötig aufwendig zu machen.
+
+**Klassifizierungslogik vs. Praktikabilität:**
+Die IFAA-Klassifizierungsregeln (zwei Scores im 12-Monatszeitraum, dynamischer Aufstieg) sind sehr detailliert und zeitabhängig. Vollständig im System abzubilden, wäre wünschenswert, setzt aber voraus, dass historische Turnierdaten korrekt vorliegen. In der Praxis werden bei der WBHC wahrscheinlich die Klassifizierungen manuell von den Schützen auf der Klassifizierungskarte mitgebracht und dann nur noch geprüft. Das System muss diese Prüfung unterstützen, ohne die gesamte Klassifizierungshistorie aller 1.200 Teilnehmer selbst zu verwalten.
+
+---
+
+## Team Members and Division of Work
+
+| Full Name | Team Role | Division of Work |
+|---|---|---|
+| Noah M. (Notschge) | Maintainer | Task 1 (Database Developer Persona), Task 5 (Reflection) |
+| Niklas R. (Rüdi) | Maintainer | Task 2 (Stakeholder Role Identification), Task 4 (Interview 1 – Turnierdirektor) |
+| Jan S. (Jan) | Worker | Task 3 (Stakeholder Personas 1–2), Task 4 (Interview 2 – Bogenschütze) |
+| Niklas K. (Katz) | Worker | Task 3 (Stakeholder Persona 3), Task 4 (Interview 3 – Ergebnisbeauftragte) |
