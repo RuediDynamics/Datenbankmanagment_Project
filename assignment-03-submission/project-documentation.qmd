@@ -19,10 +19,3 @@ Alle Mapping-Entscheidungen sind auf die Artefakte aus Assignment 02 rückführb
 ---
 
 {{< include sections/task-1-derive-relations.qmd >}}
-
-<!-- Nachfolgende Tasks werden in eigenen Sektionsdateien ergänzt:
-{{< include sections/task-2-normalization.qmd >}}
-{{< include sections/task-3-transaction-validation.qmd >}}
-{{< include sections/task-4-integrity-constraints.qmd >}}
-{{< include sections/task-5-review-growth.qmd >}}
--->

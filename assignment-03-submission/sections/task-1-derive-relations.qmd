@@ -66,10 +66,6 @@ TargetDistance(rangeId→TargetStation, targetNumber→TargetStation,
                categoryId→CompetitionCategory, maxDistance)
 ```
 
-> **Hinweis:** Fett-/Kursivauszeichnung im obigen Codeblock ist nicht renderbar;
-> die Schlüsselzuordnung ist verbindlich in @tbl-t1-mapping (Spalten *Candidate
-> Key* und *Foreign Keys*) sowie im Diagramm (@fig-logical-initial) dokumentiert.
-
 ### UML-Diagramm: Initiales logisches Datenmodell {#sec-t1-diagram}
 
 ![Initiales logisches (relationales) Datenmodell – IFAA WBHC 2027. PlantUML-Quelle: `assets/diagrams/logical-model-initial.puml`](../assets/diagrams/logical-model-initial.svg){#fig-logical-initial}
@@ -233,10 +229,3 @@ hinter dem konzeptuellen Stand zurückfällt:
 Strukturelle Iterationen, die sich **erst** aus der logischen Transaktionsprüfung
 ergeben (z. B. Bestätigung der Brückenrelationen, Join-Pfade), werden in Task 3
 als „initial → revised" dokumentiert.
-
-### Deliverables (Task 1) {#sec-t1-deliverables}
-
-- **Initiales logisches Datenmodell** als UML-Diagramm: @fig-logical-initial
-- **PlantUML-Quelle:** `assets/diagrams/logical-model-initial.puml`
-- **Gerenderte Diagramme:** `assets/diagrams/logical-model-initial.svg` (+ `.png`)
-- **Mapping-Dokumentation:** @tbl-t1-mapping inkl. Begründungen (@sec-t1-rationale)
