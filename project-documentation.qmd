@@ -1,0 +1,49 @@
+---
+title: "Projekt-Dokumentation: IFAA WBHC 2027"
+embed-resources: true
+assignment-03-path: "assignment-03-submission"
+---
+
+
+# Project Documentation / Projekt-Dokumentation
+
+Dieses Hauptdokument im Root-Verzeichnis bettet die einzelnen Dokumentationen der Projektphasen via Quarto-Includes ein.
+
+---
+
+{{< include assignment-01-submission/project-documentation.qmd >}}
+
+---
+
+{{< include assignment-02-submission/project-documentation.qmd >}}
+
+---
+
+# Assignment 03: Logical Database Design
+
+Translation of the Conceptual Model to the Logical Relational Model and Integrity Constraint Specification.
+
+---
+
+{{< include assignment-03-submission/sections/task-1-derive-relations.md >}}
+
+---
+
+{{< include assignment-03-submission/sections/task-2-normalization.md >}}
+
+---
+
+{{< include assignment-03-submission/sections/task-3-transaction-validation.md >}}
+
+---
+
+{{< include assignment-03-submission/sections/task-4-integrity-constraints.md >}}
+
+---
+
+{{< include assignment-03-submission/sections/task-5-review-growth.md >}}
+
+---
+
+{{< include assignment-03-submission/sections/task-6-team-division.md >}}
+

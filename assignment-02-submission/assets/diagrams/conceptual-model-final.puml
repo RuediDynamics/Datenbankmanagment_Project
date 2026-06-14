@@ -1,0 +1,179 @@
+@startuml conceptual-model-final
+' WBHC 2027 - Conceptual Data Model (Final Iteration)
+
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #FEFEFE
+skinparam classBorderColor #2C3E50
+skinparam shadowing false
+skinparam linetype ortho
+skinparam packageStyle rectangle
+hide circle
+
+title WBHC 2027 - Conceptual Data Model (Final)
+
+package "Event & Venue" #E8F4F8 {
+
+  class Event {
+    <<PK>> eventId
+    name
+    startDate
+    endDate
+    location
+  }
+
+  class Round {
+    <<PK>> roundId
+    roundNumber
+    roundType
+    date
+  }
+
+  class Range {
+    <<PK>> rangeId
+    rangeName
+    /numberOfTargets
+  }
+
+  class TargetStation <<weak>> {
+    <<partial>> targetNumber
+    targetGroup
+    animalFigure
+  }
+
+  class TargetDistance <<assoc>> {
+    maxDistance
+    unit
+  }
+}
+
+package "People" #FDF2E9 {
+
+  class Person <<abstract>> {
+    <<PK>> personId
+    firstName
+    lastName
+  }
+
+  class Participant {
+    birthDate
+    gender
+    /age
+  }
+
+  class Official {
+    function
+    contactEmail
+  }
+
+  class Nation {
+    <<PK>> nationCode
+    nationName
+  }
+
+  class Club {
+    <<PK>> clubId
+    clubName
+  }
+}
+
+package "Registration" #F4ECF7 {
+
+  class Registration {
+    <<PK>> registrationId
+    registrationDate
+    feePaid
+    equipmentChecked
+    classificationVerified
+  }
+
+  class CompetitionCategory {
+    <<PK>> categoryId
+    style
+    division
+    classLevel
+  }
+}
+
+package "Scoring & Results" #EAFAF1 {
+
+  class StartGroup {
+    <<PK>> groupId
+    groupNumber
+    startTargetNumber
+    date
+  }
+
+  class ScoreCard {
+    <<PK>> scoreCardId
+    cardDate
+    signedByCaptain
+    /roundTotal
+  }
+
+  class ShotResult <<weak>> {
+    <<partial>> arrowNumber
+    hitZone
+    /pointValue
+  }
+
+  class TournamentResult {
+    <<PK>> resultId
+    /totalPoints
+    /rankPosition
+    tieFlag
+  }
+
+  class TieBreak {
+    <<PK>> tieBreakId
+    date
+    resolution
+  }
+}
+
+package "Governance" #FDEDEC {
+
+  class Protest {
+    <<PK>> protestId
+    submissionDate
+    description
+    decision
+  }
+}
+
+Person <|-- Participant
+Person <|-- Official
+
+Event "1" *-- "1..4" Round
+Round "1..*" -- "1..*" Range
+Range "1" *-- "28" TargetStation
+
+Range "1" -- "*" TargetDistance
+TargetStation "1" -- "*" TargetDistance
+TargetDistance "*" -- "1" CompetitionCategory
+
+Participant "*" -- "1" Nation
+Participant "0..*" -- "0..1" Club
+
+Participant "1" -- "0..*" Registration
+Registration "*" -- "1" Event
+Registration "*" -- "1" CompetitionCategory
+
+StartGroup "*" -- "1" Round
+StartGroup "*" -- "1" Range
+StartGroup "1" -- "3..6" Registration
+
+ScoreCard "*" -- "1" Registration
+ScoreCard "*" -- "1" Round
+ScoreCard "1" *-- "28..84" ShotResult
+ShotResult "*" -- "1" TargetStation
+ScoreCard "*" -- "1" Official
+
+TournamentResult "1" -- "1" Registration
+TieBreak "*" -- "2..*" Registration
+TieBreak "1" -- "1..*" ShotResult
+
+Official "1" -- "0..*" Range
+Official "1" -- "0..*" Protest
+Protest "*" -- "1" Registration
+
+@enduml
