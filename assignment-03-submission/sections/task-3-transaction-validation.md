@@ -20,21 +20,21 @@
 
 ## Transaction-to-Relation Cross-Reference Matrix
 
-Zusätzlich zur Validierungsmatrix zeigt die folgende Kreuzreferenz-Matrix,
-welche Relationen von welchen Transaktionen verwendet werden (x = benötigt).
+Die folgende Matrix bildet jede Transaktion auf die benötigten Relationen und
+FK-Pfade ab (x = benötigt). Die Spalte *Notes* enthält die entscheidenden
+Attribute, den Support-Status sowie fehlende Modellelemente im initialen Modell.
 
-| Transaction | Event | Round | Range | TargetStation | Participant | Nation | Club | Official | CompCategory | Registration | StartGroup | ScoreCard | ShotResult | TournResult | TieBreak | Protest | RoundRange | StartGroupMember | TieBreakParticipant |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| T1: Teilnehmer anlegen | x | – | – | – | x | x | x | – | x | x | – | – | – | – | – | – | – | – | – |
-| T2: Klassifizierung prüfen | – | – | – | – | x | – | – | – | x | x | – | – | – | – | – | – | – | – | – |
-| T3: Startgruppen erstellen | – | x | x | x | – | – | – | – | – | x | x | – | – | – | – | – | x | x | – |
-| T4: Scorekarte erfassen | – | x | – | x | – | – | – | x | – | x | – | x | x | – | – | – | – | – | – |
-| T5: Rangliste anzeigen | – | – | – | – | x | x | – | – | x | x | – | x | – | x | – | – | – | – | – |
-| T6: Tie-Break erfassen | – | – | – | x | – | – | – | – | – | x | – | – | x | x | x | – | – | – | x |
-| T7: Protest dokumentieren | – | – | – | – | – | – | – | x | – | x | – | – | – | – | – | x | – | – | – |
-| T8: Ergebnisliste export. | x | x | – | – | x | x | – | – | x | x | – | x | – | x | – | – | – | – | – |
+| Transaction | `Event` | `Round` | `Range` | `TargetStation` | `Participant` | `Nation` | `Club` | `Official` | `CompCategory` | `Registration` | `StartGroup` | `ScoreCard` | `ShotResult` | `TournResult` | `TieBreak` | `Protest` | `RoundRange` | `StartGrpMember` | `TieBrkPartic.` | FK: Reg→Partic | FK: Reg→Event | FK: Reg→Cat | FK: Partic→Nation | FK: Partic→Club | FK: SG→Round | FK: SG→Range | FK: SGM→SG | FK: SGM→Reg | FK: SC→Reg | FK: SC→Round | FK: SC→Official | FK: SR→SC | FK: SR→TrgStn | FK: TR→Reg | FK: TB→Reg | FK: TBP→TB | FK: TBP→Reg | FK: Prot→Official | FK: Prot→Reg | FK: RR→Round | FK: RR→Range | Notes |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|---|
+| T1: Teilnehmer anlegen | x | – | – | – | x | x | x | – | x | x | – | – | – | – | – | – | – | – | – | x | x | x | x | x | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | Benötigt: `participantId`, `firstName`, `lastName`, `birthDate`, `nationCode`, `clubId`, `style`, `division`, `classLevel`, `registrationId`, `entryFeeStatus`, `equipmentStatus`. **Fully supported.** |
+| T2: Klassifizierung prüfen | – | – | – | – | x | – | – | – | x | x | – | – | – | – | – | – | – | – | – | x | – | x | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | Benötigt: `registrationId`, `classificationVerified`, `classificationDate`, `entryFeeStatus`, `equipmentStatus`, `style`, `division`, `classLevel`. **Fully supported.** |
+| T3: Startgruppen erstellen | – | x | x | x | – | – | – | – | – | x | x | – | – | – | – | – | x | x | – | – | – | – | – | – | x | x | x | x | – | – | – | – | – | – | – | – | – | – | – | x | x | Benötigt: `groupId`, `groupNumber`, `startTarget`, `roundId`, `roundDate`, `roundType`, `rangeId`, `rangeName`, `targetNumber`. **Fully supported.** |
+| T4: Scorekarte erfassen *(initial)* | – | x | – | x | – | – | – | x | – | x | – | x | x | – | – | – | – | – | – | x | – | – | – | – | – | – | – | – | x | x | x | x | x | – | – | – | – | – | – | – | – | Benötigt: `scoreCardId`, `arrowNumber`, `hitZone`, `targetNumber`, `roundType`, `targetGroup`, `rangeId`. **Partially supported** im initialen Modell: kein direkter FK `ScoreCard → Range`; `rangeId` erfordert 4-fachen Join (`SC→Reg→SGM→SG→Range`). → Iteration erforderlich. |
+| T5: Rangliste anzeigen | – | – | – | – | x | x | – | – | x | x | – | x | – | x | – | – | – | – | – | x | – | x | x | – | – | – | – | – | x | – | – | – | – | x | – | – | – | – | – | – | – | Benötigt: `resultId`, `totalPoints` (derived), `rankPosition` (derived), `tieBreakStatus`, `style`, `division`, `classLevel`, `firstName`, `lastName`, `nationCode`, `nationName`. **Fully supported.** |
+| T6: Tie-Break erfassen | – | – | – | x | – | – | – | – | – | x | – | – | x | x | x | – | – | – | x | – | – | – | – | – | – | – | – | – | – | – | – | x | x | x | x | x | x | – | – | – | – | Benötigt: `tieBreakId`, `tieBreakRound`, `hitZone`, `pointValue` (derived), `targetGroup`, `tieBreakStatus`. **Fully supported.** |
+| T7: Protest dokumentieren | – | – | – | – | – | – | – | x | – | x | – | – | – | – | – | x | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | x | x | – | – | Benötigt: `protestId`, `protestDate`, `protestDescription`, `protestDecision`, `officialId`, `firstName`, `lastName`, `officialFunction`. **Fully supported.** |
+| T8: Ergebnisliste exportieren | x | x | – | – | x | x | – | – | x | x | – | x | – | x | – | – | – | – | – | x | x | x | x | – | – | – | – | – | x | x | – | – | – | x | – | – | – | – | – | – | – | Benötigt: `firstName`, `lastName`, `nationCode`, `nationName`, `style`, `division`, `classLevel`, `totalPoints` (derived), `rankPosition` (derived), `roundTotal` (derived), `roundNumber`, `roundType`, `name`. **Fully supported.** |
 
-*Transaction-to-Relation Cross-Reference Matrix*
 
 ---
 
