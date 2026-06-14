@@ -1,0 +1,239 @@
+@startuml logical-model-initial
+' =====================================================================
+'  IFAA WBHC 2027 - Initiales logisches (relationales) Datenmodell
+'  Assignment 03 - Task 1 (Step 2.1: Derive Relations)
+'  Notation: UML Data Model Profile (logische Relationenebene)
+'  Stereotypen: <<PK>> Primaerschluessel, <<FK>> Fremdschluessel,
+'               <<PFK>> Primaer- UND Fremdschluessel (schwache Entitaet /
+'               Bruecken-/Assoziationsrelation), <<AK>> Alternativschluessel
+'  Abgeleitete Attribute werden als /name gefuehrt (nicht gespeichert).
+' =====================================================================
+hide circle
+hide empty methods
+skinparam linetype ortho
+skinparam shadowing false
+skinparam classBackgroundColor #FDFDFD
+skinparam classBorderColor #2C3E50
+skinparam classArrowColor #34495E
+skinparam classFontSize 12
+skinparam defaultFontName Helvetica
+skinparam nodesep 55
+skinparam ranksep 65
+
+' ---------------------------------------------------------------------
+'  STARKE BASIS-RELATIONEN
+' ---------------------------------------------------------------------
+class Event <<relation>> {
+  <<PK>> eventId : INTEGER
+  --
+  <<AK>> name : VARCHAR(100)
+  <<AK>> startDate : DATE
+  endDate : DATE
+  location : VARCHAR(100)
+  organizer : VARCHAR(100) [NULL]
+  ifaaReference : VARCHAR(20) [NULL]
+}
+
+class Round <<relation>> {
+  <<PK>> roundId : INTEGER
+  --
+  <<FK>> <<AK>> eventId : INTEGER
+  <<AK>> roundNumber : INTEGER [1..4]
+  roundType : ENUM
+  roundDate : DATE
+}
+
+class Range <<relation>> {
+  <<PK>> rangeId : INTEGER
+  --
+  <<FK>> officialId : INTEGER [NULL]
+  <<AK>> rangeName : VARCHAR(50)
+}
+
+class TargetStation <<weak relation>> {
+  <<PFK>> rangeId : INTEGER
+  <<PK>>  targetNumber : INTEGER [1..28]
+  --
+  targetGroup : INTEGER [1..4]
+}
+
+class Nation <<relation>> {
+  <<PK>> nationCode : CHAR(3)
+  --
+  <<AK>> nationName : VARCHAR(100)
+}
+
+class Club <<relation>> {
+  <<PK>> clubId : INTEGER
+  --
+  <<AK>> clubName : VARCHAR(100)
+}
+
+class Participant <<relation>> {
+  <<PK>> participantId : INTEGER
+  --
+  <<FK>> nationCode : CHAR(3)
+  <<FK>> clubId : INTEGER [NULL]
+  firstName : VARCHAR(50)
+  lastName : VARCHAR(50)
+  birthDate : DATE
+  /age : INTEGER
+}
+
+class Official <<relation>> {
+  <<PK>> officialId : INTEGER
+  --
+  firstName : VARCHAR(50)
+  lastName : VARCHAR(50)
+  officialFunction : ENUM
+}
+
+class CompetitionCategory <<relation>> {
+  <<PK>> categoryId : INTEGER
+  --
+  <<AK>> style : ENUM
+  <<AK>> division : ENUM
+  <<AK>> classLevel : ENUM
+}
+
+class Registration <<relation>> {
+  <<PK>> registrationId : INTEGER
+  --
+  <<FK>> <<AK>> participantId : INTEGER
+  <<FK>> <<AK>> eventId : INTEGER
+  <<FK>> categoryId : INTEGER
+  entryFeeStatus : ENUM
+  equipmentStatus : ENUM
+  classificationVerified : BOOLEAN
+  classificationDate : DATE [NULL]
+}
+
+class StartGroup <<relation>> {
+  <<PK>> groupId : INTEGER
+  --
+  <<FK>> <<AK>> roundId : INTEGER
+  <<FK>> rangeId : INTEGER
+  <<AK>> groupNumber : INTEGER
+  startTarget : INTEGER [1..28]
+}
+
+class ScoreCard <<relation>> {
+  <<PK>> scoreCardId : INTEGER
+  --
+  <<FK>> <<AK>> registrationId : INTEGER
+  <<FK>> <<AK>> roundId : INTEGER
+  <<FK>> officialId : INTEGER [NULL]
+  /roundTotal : INTEGER
+}
+
+class ShotResult <<weak relation>> {
+  <<PFK>> scoreCardId : INTEGER
+  <<PK>>  targetNumber : INTEGER [1..28]
+  <<PK>>  arrowNumber : INTEGER [1..3]
+  --
+  <<FK>> rangeId : INTEGER
+  <<FK>> tieBreakId : INTEGER [NULL]
+  hitZone : ENUM
+  /pointValue : INTEGER
+}
+
+class TournamentResult <<relation>> {
+  <<PK>> resultId : INTEGER
+  --
+  <<FK>> <<AK>> registrationId : INTEGER
+  /totalPoints : INTEGER
+  /rankPosition : INTEGER
+  tieBreakStatus : ENUM [NULL]
+}
+
+class TieBreak <<relation>> {
+  <<PK>> tieBreakId : INTEGER
+  --
+  tieBreakRound : INTEGER [1..4]
+}
+
+class Protest <<relation>> {
+  <<PK>> protestId : INTEGER
+  --
+  <<FK>> officialId : INTEGER
+  <<FK>> registrationId : INTEGER
+  protestDate : DATE
+  protestDescription : TEXT
+  protestDecision : TEXT
+}
+
+' ---------------------------------------------------------------------
+'  BRUECKEN-RELATIONEN (aufgeloeste *:* Beziehungen)
+' ---------------------------------------------------------------------
+class RoundRange <<bridge relation>> {
+  <<PFK>> roundId : INTEGER
+  <<PFK>> rangeId : INTEGER
+}
+
+class StartGroupMember <<bridge relation>> {
+  <<PFK>> groupId : INTEGER
+  <<PFK>> registrationId : INTEGER
+}
+
+class TieBreakParticipant <<bridge relation>> {
+  <<PFK>> tieBreakId : INTEGER
+  <<PFK>> registrationId : INTEGER
+}
+
+' ---------------------------------------------------------------------
+'  ASSOZIATIONSRELATION (Assoziationsklasse TargetDistance)
+' ---------------------------------------------------------------------
+class TargetDistance <<assoc relation>> {
+  <<PFK>> rangeId : INTEGER
+  <<PFK>> targetNumber : INTEGER
+  <<PFK>> categoryId : INTEGER
+  --
+  maxDistance : INTEGER
+}
+
+' =====================================================================
+'  FK-ASSOZIATIONEN  (Pfeil zeigt vom Kind/FK auf das Eltern/PK)
+'  Multiplizitaeten am Elternende (1 bzw. 0..1), am Kindende (* bzw. ..)
+' =====================================================================
+Round              "1..4" --> "1"    Event               : consistsOf >
+Range              "0..*" --> "0..1" Official             : assignedToRange >
+TargetStation      "28"   --> "1"    Range               : contains <
+Participant        "0..*" --> "1"    Nation              : representsNation >
+Participant        "0..*" --> "0..1" Club                : memberOf >
+Registration       "0..*" --> "1"    Participant         : submits <
+Registration       "0..*" --> "1"    Event               : forEvent >
+Registration       "0..*" --> "1"    CompetitionCategory : categorisedAs >
+StartGroup         "0..*" --> "1"    Round               : forRound >
+StartGroup         "0..*" --> "1"    Range               : assignedToRange >
+ScoreCard          "0..*" --> "1"    Registration        : recordsFor >
+ScoreCard          "0..*" --> "1"    Round               : forRound >
+ScoreCard          "0..*" --> "0..1" Official            : signedBy >
+ShotResult         "1..*" --> "1"    ScoreCard           : contains <
+ShotResult         "0..*" --> "1"    TargetStation       : atTarget >
+ShotResult         "0..*" --> "0..1" TieBreak            : usesShot <
+TournamentResult   "1"    --> "1"    Registration        : summarises >
+Protest            "0..*" --> "1"    Official            : decides <
+Protest            "0..*" --> "1"    Registration        : concerns >
+
+' Brueckenrelationen
+RoundRange          "1..*" --> "1" Round                 : >
+RoundRange          "1..*" --> "1" Range                 : >
+StartGroupMember    "3..6" --> "1" StartGroup            : >
+StartGroupMember    "0..*" --> "1" Registration          : >
+TieBreakParticipant "2..*" --> "1" TieBreak              : >
+TieBreakParticipant "0..*" --> "1" Registration          : >
+
+' Assoziationsrelation
+TargetDistance      "0..*" --> "1" TargetStation         : >
+TargetDistance      "0..*" --> "1" CompetitionCategory   : >
+
+legend right
+  | Stereotyp | Bedeutung |
+  | <<PK>>  | Primaerschluessel |
+  | <<FK>>  | Fremdschluessel |
+  | <<PFK>> | Primaer- + Fremdschluessel |
+  | <<AK>>  | Alternativschluessel |
+  | /attr   | abgeleitet (nicht gespeichert) |
+endlegend
+
+@enduml
