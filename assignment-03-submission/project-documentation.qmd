@@ -1,28 +1,26 @@
-
-# Assignment 03: Logical Database Design
-
+Assignment 03: Logical Database Design
 Translation of the Conceptual Model to the Logical Relational Model and Integrity Constraint Specification.
 
 ---
 
-{{< include /assignment-03-submission/sections/task-1-derive-relations.md >}}
+{{< include ./sections/task-1-derive-relations.md >}}
 
 ---
 
-{{< include /assignment-03-submission/sections/task-2-normalization.md >}}
+{{< include ./sections/task-2-normalization.md >}}
 
 ---
 
-{{< include /assignment-03-submission/sections/task-3-transaction-validation.md >}}
+{{< include ./sections/task-3-transaction-validation.md >}}
 
 ---
 
-{{< include /assignment-03-submission/sections/task-4-integrity-constraints.md >}}
+{{< include ./sections/task-4-integrity-constraints.md >}}
 
 ---
 
-{{< include /assignment-03-submission/sections/task-5-review-growth.md >}}
+{{< include ./sections/task-5-review-growth.md >}}
 
 ---
 
-{{< include /assignment-03-submission/sections/task-6-team-division.md >}}
+{{< include ./sections/task-6-team-division.md >}}
