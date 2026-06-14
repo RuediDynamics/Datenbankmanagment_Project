@@ -29,6 +29,10 @@ Hier finden Sie die direkten Verknüpfungen zu den jeweiligen Abgaben und deren 
 *   **Beschreibung:** Erstellung eines konzeptuellen Datenmodells (UML in PlantUML), Datenwörterbuch, Transaktionsvalidierung und Reflexion.
 *   **Hauptdokument:** [project-documentation.qmd](./assignment-02-submission/project-documentation.qmd)
 
+### [Assignment 03: Logical Database Design](./assignment-03-submission/project-documentation.qmd)
+*   **Beschreibung:** Ableitung des logischen Relationenschemas aus dem konzeptuellen Modell, Normalisierung bis 3NF/BCNF, Transaktions-Mapping/Validierung und Spezifikation von Integritätsbedingungen.
+*   **Hauptdokument:** [project-documentation.qmd](./assignment-03-submission/project-documentation.qmd)
+
 ---
 
 ## Repository-Struktur
@@ -56,16 +60,23 @@ Die Ordnerstruktur des Projekts ist wie folgt aufgebaut:
 │       │   ├── stakeholder-2-avatar.png
 │       │   └── stakeholder-3-avatar.png
 │       └── readme.md                  # Reviewer-Anleitung für die Assets
-└── assignment-02-submission/          # Abgabeordner für Assignment 02
+├── assignment-02-submission/          # Abgabeordner für Assignment 02
+│   ├── project-documentation.qmd       # Hauptabgabedokument (Aufgabenübersicht)
+│   └── assets/                        # Ergänzende Ressourcen
+│       ├── diagrams/                  # UML-Klassendiagramme (PlantUML)
+│       │   ├── conceptual-model-initial.puml
+│       │   ├── conceptual-model-initial.svg
+│       │   ├── conceptual-model-final.puml
+│       │   ├── conceptual-model-final.svg
+│       │   ├── T1_T2_Pathways.puml
+│       │   ├── T1_T2_Pathways.svg
+│       │   └── ...
+│       └── readme.md                  # Reviewer-Anleitung für die Assets
+└── assignment-03-submission/          # Abgabeordner für Assignment 03
     ├── project-documentation.qmd       # Hauptabgabedokument (Aufgabenübersicht)
+    ├── readme.md                      # Übersichts-Dokument für Assignment 03
+    ├── sections/                      # Einzelne Dokumentationskapitel (Tasks 1-6)
     └── assets/                        # Ergänzende Ressourcen
-        ├── diagrams/                  # UML-Klassendiagramme (PlantUML)
-        │   ├── conceptual-model-initial.puml
-        │   ├── conceptual-model-initial.svg
-        │   ├── conceptual-model-final.puml
-        │   ├── conceptual-model-final.svg
-        │   ├── T1_T2_Pathways.puml
-        │   ├── T1_T2_Pathways.svg
-        │   └── ...
-        └── readme.md                  # Reviewer-Anleitung für die Assets
+        ├── diagrams/                  # UML-Klassendiagramme (PlantUML & SVG)
+        └── constraints/               # Tabellarische Integritätsbedingungen
 ```
