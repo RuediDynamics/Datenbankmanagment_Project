@@ -1,212 +1,40 @@
 # Task 3: Validate Logical Data Model Against Transactions
 
 
-## Transaction-to-Relation Matrix: Initiales Logisches Datenmodell
+## Transaction Validation Matrix – Initiales Logisches Datenmodell
 
-Die folgende Matrix bildet jede Transaktion (Zeilen) auf die im initialen
-logischen Modell vorhandenen Relationen und FK-Pfade (Spalten) ab. Ein **x**
-kennzeichnet, dass die Relation oder der FK-Pfad für die Transaktion benötigt
-wird.
+| Transaction | Relation(s) used | Join path / FK path | Key attributes needed | Support status | Notes / required model update |
+|---|---|---|---|---|---|
+| `T1: Teilnehmer anlegen und Stil/Div/Class zuweisen` | `Participant`, `Registration`, `CompetitionCategory`, `Nation`, `Club`, `Event` | `Registration.participantId → Participant.participantId`, `Registration.eventId → Event.eventId`, `Registration.categoryId → CompetitionCategory.categoryId`, `Participant.nationCode → Nation.nationCode`, `Participant.clubId → Club.clubId` | `participantId`, `firstName`, `lastName`, `birthDate`, `nationCode`, `clubId`, `style`, `division`, `classLevel`, `registrationId`, `entryFeeStatus`, `equipmentStatus` | Full | Fully supported. Alle Relationen, FK-Pfade und Attribute vorhanden. Keine Lücken. |
+| `T2: Klassifizierungskarte prüfen und Startzulassung erteilen` | `Registration`, `Participant`, `CompetitionCategory` | `Registration.participantId → Participant.participantId`, `Registration.categoryId → CompetitionCategory.categoryId` | `registrationId`, `classificationVerified`, `classificationDate`, `entryFeeStatus`, `equipmentStatus`, `style`, `division`, `classLevel` | Full | Fully supported. Attribute `classificationVerified` und `classificationDate` wurden aus Assignment 02 Gap Analysis bereits in das initiale logische Modell übernommen. |
+| `T3: Startgruppen erstellen und Schützen auf Ranges/Targets zuweisen` | `StartGroup`, `StartGroupMember`, `Registration`, `Round`, `Range`, `TargetStation`, `RoundRange` | `StartGroup.roundId → Round.roundId`, `StartGroup.rangeId → Range.rangeId`, `StartGroupMember.groupId → StartGroup.groupId`, `StartGroupMember.registrationId → Registration.registrationId`, `RoundRange.roundId → Round.roundId`, `RoundRange.rangeId → Range.rangeId` | `groupId`, `groupNumber`, `startTarget`, `roundId`, `roundDate`, `roundType`, `rangeId`, `rangeName`, `targetNumber` | Full | Fully supported. Brückenrelation `StartGroupMember` löst *:*-Beziehung korrekt auf. `startTarget` auf `StartGroup` vorhanden. |
+| `T4: Schussergebnisse einer Scorekarte erfassen und Punkte berechnen` | `ScoreCard`, `ShotResult`, `Registration`, `Round`, `TargetStation`, `Official` | `ScoreCard.registrationId → Registration.registrationId`, `ScoreCard.roundId → Round.roundId`, `ScoreCard.officialId → Official.officialId`, `ShotResult.scoreCardId → ScoreCard.scoreCardId`, `ShotResult.(rangeId, targetNumber) → TargetStation.(rangeId, targetNumber)` | `scoreCardId`, `arrowNumber`, `hitZone`, `targetNumber`, `roundType`, `targetGroup`, `rangeId` | **Partial** | **Gap:** Kein direkter FK-Pfad von `ScoreCard` zu `Range`. `ShotResult.rangeId` muss über 4 Joins ermittelt werden: `ScoreCard → Registration → StartGroupMember → StartGroup → Range`. → **Iteration erforderlich: `rangeId` als FK in `ScoreCard` ergänzen.** |
+| `T5: Tagesergebnisse und Gesamtrangliste anzeigen` | `TournamentResult`, `Registration`, `CompetitionCategory`, `Participant`, `Nation`, `ScoreCard` | `TournamentResult.registrationId → Registration.registrationId`, `Registration.categoryId → CompetitionCategory.categoryId`, `Registration.participantId → Participant.participantId`, `Participant.nationCode → Nation.nationCode`, `ScoreCard.registrationId → Registration.registrationId` | `resultId`, `totalPoints` (derived), `rankPosition` (derived), `tieBreakStatus`, `style`, `division`, `classLevel`, `firstName`, `lastName`, `nationCode`, `nationName` | Full | Fully supported. Abgeleitete Attribute (`totalPoints`, `rankPosition`) werden per SUM/RANK-Query berechnet. |
+| `T6: Tie-Break-Shoot-off erfassen und Gewinner bestimmen` | `TieBreak`, `TieBreakParticipant`, `ShotResult`, `TargetStation`, `Registration`, `TournamentResult` | `TieBreakParticipant.tieBreakId → TieBreak.tieBreakId`, `TieBreakParticipant.registrationId → Registration.registrationId`, `ShotResult.tieBreakId → TieBreak.tieBreakId`, `ShotResult.(rangeId, targetNumber) → TargetStation.(rangeId, targetNumber)`, `TournamentResult.registrationId → Registration.registrationId` | `tieBreakId`, `tieBreakRound`, `hitZone`, `pointValue` (derived), `targetGroup`, `tieBreakStatus` | Full | Fully supported. Optionaler FK `ShotResult.tieBreakId` und Brückenrelation `TieBreakParticipant` decken Workflow vollständig ab. |
+| `T7: Protest dokumentieren und Offiziellen zuordnen` | `Protest`, `Official`, `Registration` | `Protest.officialId → Official.officialId`, `Protest.registrationId → Registration.registrationId` | `protestId`, `protestDate`, `protestDescription`, `protestDecision`, `officialId`, `firstName`, `lastName`, `officialFunction` | Full | Fully supported. Keine Lücken. |
+| `T8: Ergebnisliste exportieren (IFAA-Format)` | `TournamentResult`, `Registration`, `CompetitionCategory`, `Participant`, `Nation`, `ScoreCard`, `Round`, `Event` | `TournamentResult.registrationId → Registration.registrationId`, `Registration.participantId → Participant.participantId`, `Registration.categoryId → CompetitionCategory.categoryId`, `Registration.eventId → Event.eventId`, `Participant.nationCode → Nation.nationCode`, `ScoreCard.registrationId → Registration.registrationId`, `ScoreCard.roundId → Round.roundId`, `Round.eventId → Event.eventId` | `firstName`, `lastName`, `nationCode`, `nationName`, `style`, `division`, `classLevel`, `totalPoints` (derived), `rankPosition` (derived), `roundTotal` (derived), `roundNumber`, `roundType`, `name` | Full | Fully supported. Export über TournamentResult mit JOINs über Registration → Participant → Nation und Registration → CompetitionCategory. |
 
-### Legende
-
-| Symbol | Bedeutung |
-|---|---|
-| **x** | Relation / FK-Pfad wird von dieser Transaktion verwendet |
-| – | nicht benötigt |
-| ⚠ | benötigt, aber im initialen Modell nicht / unvollständig vorhanden |
-
----
-
-### Matrix: Transaktionen × Basisrelationen
-
-| Transaction | Event | Round | Range | TargetStation | Participant | Nation | Club | Official | CompCategory | Registration | StartGroup | ScoreCard | ShotResult | TournResult | TieBreak | Protest |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **T1:** Teilnehmer anlegen | x | – | – | – | x | x | x | – | x | x | – | – | – | – | – | – |
-| **T2:** Klassifizierung prüfen | x | – | – | – | x | – | – | – | x | x | – | – | – | – | – | – |
-| **T3:** Startgruppen erstellen | – | x | x | x | – | – | – | – | – | x | x | – | – | – | – | – |
-| **T4:** Scorekarte erfassen | – | x | – | x | – | – | – | x | – | x | – | x | x | – | – | – |
-| **T5:** Rangliste anzeigen | – | – | – | – | x | x | – | – | x | x | – | x | – | x | – | – |
-| **T6:** Tie-Break erfassen | – | – | – | x | – | – | – | – | – | x | – | – | x | x | x | – |
-| **T7:** Protest dokumentieren | – | – | – | – | – | – | – | x | – | x | – | – | – | – | – | x |
-| **T8:** Ergebnisliste export. | x | x | – | – | x | x | – | – | x | x | – | x | – | x | – | – |
-
-*Tabelle 1: Transaction-to-Relation Matrix – Basisrelationen (initiales Modell)*
+*Transaction validation matrix – initiales logisches Datenmodell*
 
 ---
 
-### Matrix: Transaktionen × Brücken-/Assoziationsrelationen
+## Transaction-to-Relation Cross-Reference Matrix
 
-| Transaction | RoundRange | StartGroupMember | TieBreakParticipant | TargetDistance |
-|---|:---:|:---:|:---:|:---:|
-| **T1:** Teilnehmer anlegen | – | – | – | – |
-| **T2:** Klassifizierung prüfen | – | – | – | – |
-| **T3:** Startgruppen erstellen | x | x | – | – |
-| **T4:** Scorekarte erfassen | – | – | – | – |
-| **T5:** Rangliste anzeigen | – | – | – | – |
-| **T6:** Tie-Break erfassen | – | – | x | – |
-| **T7:** Protest dokumentieren | – | – | – | – |
-| **T8:** Ergebnisliste export. | – | – | – | – |
+Zusätzlich zur Validierungsmatrix zeigt die folgende Kreuzreferenz-Matrix,
+welche Relationen von welchen Transaktionen verwendet werden (x = benötigt).
 
-*Tabelle 2: Transaction-to-Relation Matrix – Brücken-/Assoziationsrelationen (initiales Modell)*
+| Transaction | Event | Round | Range | TargetStation | Participant | Nation | Club | Official | CompCategory | Registration | StartGroup | ScoreCard | ShotResult | TournResult | TieBreak | Protest | RoundRange | StartGroupMember | TieBreakParticipant |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| T1: Teilnehmer anlegen | x | – | – | – | x | x | x | – | x | x | – | – | – | – | – | – | – | – | – |
+| T2: Klassifizierung prüfen | – | – | – | – | x | – | – | – | x | x | – | – | – | – | – | – | – | – | – |
+| T3: Startgruppen erstellen | – | x | x | x | – | – | – | – | – | x | x | – | – | – | – | – | x | x | – |
+| T4: Scorekarte erfassen | – | x | – | x | – | – | – | x | – | x | – | x | x | – | – | – | – | – | – |
+| T5: Rangliste anzeigen | – | – | – | – | x | x | – | – | x | x | – | x | – | x | – | – | – | – | – |
+| T6: Tie-Break erfassen | – | – | – | x | – | – | – | – | – | x | – | – | x | x | x | – | – | – | x |
+| T7: Protest dokumentieren | – | – | – | – | – | – | – | x | – | x | – | – | – | – | – | x | – | – | – |
+| T8: Ergebnisliste export. | x | x | – | – | x | x | – | – | x | x | – | x | – | x | – | – | – | – | – |
 
----
-
-### Matrix: Transaktionen × FK-Pfade
-
-| Transaction | Reg→Part | Reg→Event | Reg→CC | Part→Nation | Part→Club | SG→Round | SG→Range | SGM→SG | SGM→Reg | SC→Reg | SC→Round | SC→Off | SR→SC | SR→TS | SR→TB | TR→Reg | TBP→TB | TBP→Reg | Prot→Off | Prot→Reg | Round→Event | RR→Round | RR→Range |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **T1** | x | x | x | x | x | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
-| **T2** | x | – | x | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – |
-| **T3** | – | – | – | – | – | x | x | x | x | – | – | – | – | – | – | – | – | – | – | – | – | x | x |
-| **T4** | – | – | – | – | – | – | – | – | – | x | x | x | x | x | – | – | – | – | – | – | – | – | – |
-| **T5** | x | – | x | x | – | – | – | – | – | x | – | – | – | – | – | x | – | – | – | – | – | – | – |
-| **T6** | – | – | – | – | – | – | – | – | – | – | – | – | x | x | x | x | x | x | – | – | – | – | – |
-| **T7** | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | – | x | x | – | – | – |
-| **T8** | x | x | x | x | – | – | – | – | – | x | x | – | – | – | – | x | – | – | – | – | x | – | – |
-
-*Tabelle 3: Transaction-to-Relation Matrix – FK-Pfade (initiales Modell)*
-
----
-
-## Detailvalidierung je Transaktion
-
-Für jede Transaktion wird der vollständige Join-Pfad, die benötigten Attribute
-und der Unterstützungsstatus dokumentiert.
-
----
-
-### T1: Teilnehmer anlegen und einer Stil/Divisions/Klassen-Kombination zuweisen
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Operational – Create/Update |
-| **Primäre Rolle** | Ergebnisbeauftragte |
-| **Benötigte Relationen** | `Participant`, `Registration`, `CompetitionCategory`, `Nation`, `Club`, `Event` |
-| **Join- / FK-Pfade** | `Registration.participantId → Participant`, `Registration.eventId → Event`, `Registration.categoryId → CompetitionCategory`, `Participant.nationCode → Nation`, `Participant.clubId → Club` |
-| **Benötigte Attribute** | `Participant`: participantId, firstName, lastName, birthDate; `Nation`: nationCode; `Club`: clubId, clubName; `CompetitionCategory`: style, division, classLevel; `Registration`: registrationId, entryFeeStatus, equipmentStatus |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Erforderliche Updates** | Keine |
-
----
-
-### T2: Klassifizierungskarte prüfen und Startzulassung erteilen
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Operational – Read/Update |
-| **Primäre Rolle** | Ergebnisbeauftragte |
-| **Benötigte Relationen** | `Registration`, `Participant`, `CompetitionCategory`, `Event` |
-| **Join- / FK-Pfade** | `Registration.participantId → Participant`, `Registration.categoryId → CompetitionCategory` |
-| **Benötigte Attribute** | `Registration`: registrationId, classificationVerified, classificationDate, entryFeeStatus, equipmentStatus; `CompetitionCategory`: style, division, classLevel |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Erforderliche Updates** | Keine – Attribute `classificationVerified` und `classificationDate` wurden bereits aus Assignment 02 Gap Analysis in das initiale logische Modell übernommen. |
-
----
-
-### T3: Startgruppen für eine Runde erstellen und Schützen auf Ranges/Targets zuweisen
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Operational – Create/Update |
-| **Primäre Rolle** | Turnierdirektor |
-| **Benötigte Relationen** | `StartGroup`, `StartGroupMember`, `Registration`, `Round`, `Range`, `TargetStation`, `RoundRange` |
-| **Join- / FK-Pfade** | `StartGroup.roundId → Round`, `StartGroup.rangeId → Range`, `StartGroupMember.groupId → StartGroup`, `StartGroupMember.registrationId → Registration`, `RoundRange.roundId → Round`, `RoundRange.rangeId → Range` |
-| **Benötigte Attribute** | `StartGroup`: groupId, groupNumber, startTarget; `Round`: roundId, roundDate, roundType; `Range`: rangeId, rangeName; `TargetStation`: targetNumber |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Erforderliche Updates** | Keine – `StartGroupMember` als Brückenrelation löst die *:*-Beziehung korrekt auf. `startTarget` ist auf `StartGroup` vorhanden. |
-
----
-
-### T4: Schussergebnisse einer Scorekarte (28 Ziele × Pfeilanzahl) erfassen und Punkte berechnen
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Operational – Create |
-| **Primäre Rolle** | Ergebnisbeauftragte |
-| **Benötigte Relationen** | `ScoreCard`, `ShotResult`, `Registration`, `Round`, `TargetStation`, `Official` |
-| **Join- / FK-Pfade** | `ScoreCard.registrationId → Registration`, `ScoreCard.roundId → Round`, `ScoreCard.officialId → Official`, `ShotResult.scoreCardId → ScoreCard`, `ShotResult.(rangeId, targetNumber) → TargetStation` |
-| **Benötigte Attribute** | `ScoreCard`: scoreCardId; `ShotResult`: arrowNumber, hitZone, targetNumber; `Round`: roundType (für Punktwertberechnung); `TargetStation`: targetGroup |
-| **Unterstützungsstatus** | ⚠ **Partially supported** |
-| **Erforderliche Updates** | Der **Join-Pfad von `ScoreCard` zur `rangeId`** für die korrekte Befüllung von `ShotResult.rangeId` ist nicht direkt vorhanden. Aktuell muss der Pfad über `ScoreCard → Registration → StartGroupMember → StartGroup → Range` genommen werden (4 Joins). Eine Denormalisierung durch Aufnahme von `rangeId` als redundanten FK in `ScoreCard` würde den Insert-Workflow deutlich vereinfachen. → **Iteration erforderlich.** |
-
----
-
-### T5: Tagesergebnisse und Gesamtrangliste je Stil/Division/Klasse anzeigen
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Managerial – Read (calculated) |
-| **Primäre Rolle** | Alle drei Rollen |
-| **Benötigte Relationen** | `TournamentResult`, `Registration`, `CompetitionCategory`, `Participant`, `Nation`, `ScoreCard` |
-| **Join- / FK-Pfade** | `TournamentResult.registrationId → Registration`, `Registration.categoryId → CompetitionCategory`, `Registration.participantId → Participant`, `Participant.nationCode → Nation`, `ScoreCard.registrationId → Registration` |
-| **Benötigte Attribute** | `TournamentResult`: resultId, totalPoints (derived), rankPosition (derived), tieBreakStatus; `CompetitionCategory`: style, division, classLevel; `Participant`: firstName, lastName; `Nation`: nationCode, nationName |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Erforderliche Updates** | Keine – abgeleitete Attribute (`totalPoints`, `rankPosition`) werden per Query berechnet (SUM/RANK). |
-
----
-
-### T6: Tie-Break-Shoot-off erfassen und Gewinner bestimmen
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Operational – Create/Read |
-| **Primäre Rolle** | Ergebnisbeauftragte |
-| **Benötigte Relationen** | `TieBreak`, `TieBreakParticipant`, `ShotResult`, `TargetStation`, `Registration`, `TournamentResult` |
-| **Join- / FK-Pfade** | `TieBreakParticipant.tieBreakId → TieBreak`, `TieBreakParticipant.registrationId → Registration`, `ShotResult.tieBreakId → TieBreak`, `ShotResult.(rangeId, targetNumber) → TargetStation`, `TournamentResult.registrationId → Registration` |
-| **Benötigte Attribute** | `TieBreak`: tieBreakId, tieBreakRound; `ShotResult`: hitZone, pointValue (derived); `TargetStation`: targetGroup; `TournamentResult`: tieBreakStatus |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Erforderliche Updates** | Keine – der optionale FK `ShotResult.tieBreakId → TieBreak` und die Brückenrelation `TieBreakParticipant` decken den Workflow vollständig ab. |
-
----
-
-### T7: Protest / Regelentscheid dokumentieren und einem Offiziellen zuordnen
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Operational – Create |
-| **Primäre Rolle** | Turnierdirektor |
-| **Benötigte Relationen** | `Protest`, `Official`, `Registration` |
-| **Join- / FK-Pfade** | `Protest.officialId → Official`, `Protest.registrationId → Registration` |
-| **Benötigte Attribute** | `Protest`: protestId, protestDate, protestDescription, protestDecision; `Official`: officialId, firstName, lastName, officialFunction |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Erforderliche Updates** | Keine |
-
----
-
-### T8: Offizielle Ergebnisliste (nach IFAA-Format) für eine Runde oder das Gesamtturnier exportieren
-
-| Kriterium | Details |
-|---|---|
-| **Typ** | Managerial – Read/Report |
-| **Primäre Rolle** | Turnierdirektor + Ergebnisbeauftragte |
-| **Benötigte Relationen** | `TournamentResult`, `Registration`, `CompetitionCategory`, `Participant`, `Nation`, `ScoreCard`, `Round`, `Event` |
-| **Join- / FK-Pfade** | `TournamentResult.registrationId → Registration`, `Registration.participantId → Participant`, `Registration.categoryId → CompetitionCategory`, `Registration.eventId → Event`, `Participant.nationCode → Nation`, `ScoreCard.registrationId → Registration`, `ScoreCard.roundId → Round`, `Round.eventId → Event` |
-| **Benötigte Attribute** | `Participant`: firstName, lastName; `Nation`: nationCode, nationName; `CompetitionCategory`: style, division, classLevel; `TournamentResult`: totalPoints (derived), rankPosition (derived); `ScoreCard`: roundTotal (derived); `Round`: roundNumber, roundType; `Event`: name |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Erforderliche Updates** | Keine |
-
----
-
-## Zusammenfassung: Unterstützungsstatus (Initiales Modell)
-
-| Transaction | Status | Anmerkung |
-|---|---|---|
-| T1: Teilnehmer anlegen | ✅ Fully supported | – |
-| T2: Klassifizierung prüfen | ✅ Fully supported | Gaps aus A02 bereits übernommen |
-| T3: Startgruppen erstellen | ✅ Fully supported | Brückenrelation `StartGroupMember` bestätigt |
-| T4: Scorekarte erfassen | ⚠ **Partially supported** | `rangeId`-Pfad für ShotResult-Insert erfordert 4 Joins; Denormalisierung empfohlen |
-| T5: Rangliste anzeigen | ✅ Fully supported | Derived attributes per Query |
-| T6: Tie-Break erfassen | ✅ Fully supported | – |
-| T7: Protest dokumentieren | ✅ Fully supported | – |
-| T8: Ergebnisliste exportieren | ✅ Fully supported | – |
-
-*Tabelle 4: Unterstützungsstatus – Initiales logisches Datenmodell*
-
-**Ergebnis:** 7 von 8 Transaktionen sind **fully supported**. Transaktion T4
-ist **partially supported** – der Insert-Workflow für `ShotResult` erfordert
-einen indirekten 4-Join-Pfad zur Bestimmung der `rangeId`. Eine gezielte
-Denormalisierung behebt dieses Problem.
+*Transaction-to-Relation Cross-Reference Matrix*
 
 ---
 
@@ -216,88 +44,11 @@ Denormalisierung behebt dieses Problem.
 
 | # | Lücke | Transaktion | Betroffene Relation | Schweregrad |
 |---|---|---|---|---|
-| 1 | `ScoreCard` enthält keinen direkten FK auf `Range` – der `rangeId`-Wert für `ShotResult`-Inserts muss über 4 Joins (`ScoreCard → Registration → StartGroupMember → StartGroup → Range`) ermittelt werden | T4 | `ScoreCard`, `ShotResult` | Medium |
-
-*Tabelle 5: Identifizierte Lücke im initialen logischen Datenmodell*
+| 1 | `ScoreCard` enthält keinen direkten FK auf `Range` – `rangeId` für `ShotResult`-Inserts muss über 4 Joins ermittelt werden (`ScoreCard → Registration → StartGroupMember → StartGroup → Range`) | T4 | `ScoreCard`, `ShotResult` | Medium |
 
 ### Modell-Update: `ScoreCard` um `rangeId` erweitern
 
-**Revision:** Das Attribut `rangeId` (FK → `Range`) wird als **redundanter
-Fremdschlüssel** in die Relation `ScoreCard` aufgenommen.
-
-**Revidiertes Schema für `ScoreCard`:**
-
-```text
-ScoreCard(scoreCardId, registrationId→Registration, roundId→Round,
-          officialId→Official [NULL], rangeId→Range)
-```
-
-**Begründung:**
-
-- T4 (Scorekarte erfassen) ist die **volumenintensivste** Transaktion
-  (~4.800 ScoreCards mit je 28–84 ShotResults → bis zu 201.600 Inserts).
-- Bei jedem `ShotResult`-Insert muss `rangeId` befüllt werden, um den FK
-  `(rangeId, targetNumber) → TargetStation` zu erfüllen.
-- Ohne den redundanten FK auf `ScoreCard` wäre ein 4-facher Join nötig
-  (ScoreCard → Registration → StartGroupMember → StartGroup → Range), um
-  die Range zu bestimmen. Das ist für die Massenerfassung unpraktisch.
-- Die Denormalisierung ist **kontrolliert**: `rangeId` in `ScoreCard` kann aus
-  dem eindeutigen Pfad `Registration → StartGroupMember → StartGroup.rangeId`
-  zur Insert-Zeit abgeleitet und danach nicht mehr geändert werden (Write-once).
-- **Normalisierungsverlust:** minimal – die funktionale Abhängigkeit
-  `scoreCardId → rangeId` gilt de facto, da jede ScoreCard genau einer
-  Startgruppe (und damit einer Range) zugeordnet ist.
-
-**Trade-off:** Redundanz von `rangeId` über `ScoreCard` und `StartGroup`
-vs. signifikante Performance- und Usability-Verbesserung beim Insert-Workflow.
-
----
-
-## Re-Validierung: Revidiertes Logisches Datenmodell
-
-Nach Aufnahme von `rangeId` in `ScoreCard` wird T4 erneut validiert:
-
-### T4 (revidiert): Schussergebnisse erfassen
-
-| Kriterium | Details |
-|---|---|
-| **Benötigte Relationen** | `ScoreCard`, `ShotResult`, `Registration`, `Round`, `TargetStation`, `Official` |
-| **Join- / FK-Pfade (NEU)** | `ScoreCard.registrationId → Registration`, `ScoreCard.roundId → Round`, `ScoreCard.officialId → Official`, `ScoreCard.rangeId → Range` **(NEU)**, `ShotResult.scoreCardId → ScoreCard`, `ShotResult.(rangeId, targetNumber) → TargetStation` |
-| **Benötigte Attribute** | `ScoreCard`: scoreCardId, **rangeId (NEU)**; `ShotResult`: arrowNumber, hitZone, targetNumber; `Round`: roundType |
-| **Unterstützungsstatus** | ✅ **Fully supported** |
-| **Verbesserung** | `rangeId` wird direkt aus `ScoreCard` übernommen – kein Multi-Join mehr nötig. |
-
----
-
-## Revidierte Gesamtmatrix (nach Iteration)
-
-| Transaction | Status (Initial) | Status (Revidiert) | Änderung |
-|---|---|---|---|
-| T1: Teilnehmer anlegen | ✅ Fully supported | ✅ Fully supported | – |
-| T2: Klassifizierung prüfen | ✅ Fully supported | ✅ Fully supported | – |
-| T3: Startgruppen erstellen | ✅ Fully supported | ✅ Fully supported | – |
-| T4: Scorekarte erfassen | ⚠ Partially supported | ✅ **Fully supported** | `rangeId` in `ScoreCard` ergänzt |
-| T5: Rangliste anzeigen | ✅ Fully supported | ✅ Fully supported | – |
-| T6: Tie-Break erfassen | ✅ Fully supported | ✅ Fully supported | – |
-| T7: Protest dokumentieren | ✅ Fully supported | ✅ Fully supported | – |
-| T8: Ergebnisliste exportieren | ✅ Fully supported | ✅ Fully supported | – |
-
-*Tabelle 6: Vergleich Unterstützungsstatus: initiales vs. revidiertes logisches Datenmodell*
-
-**Ergebnis nach Iteration:** Alle 8 Transaktionen werden durch das
-**revidierte logische Datenmodell** vollständig unterstützt (✅ Fully supported).
-
----
-
-## Änderungsprotokoll: Initial → Revidiert
-
-| # | Relation | Änderung | Begründung | Auslöser |
-|---|---|---|---|---|
-| 1 | `ScoreCard` | `rangeId → Range` als FK ergänzt | Direkter Zugriff auf `rangeId` für ShotResult-Inserts; vermeidet 4-fachen Join | T4 (partially supported) |
-
-*Tabelle 7: Änderungsprotokoll – logisches Datenmodell Iteration 1*
-
-**Revidiertes Gesamtschema (nur Änderung):**
+**Revision:** `rangeId` (FK → `Range`) wird als redundanter Fremdschlüssel in `ScoreCard` aufgenommen.
 
 ```text
 -- VORHER (initiales Modell):
@@ -309,6 +60,54 @@ ScoreCard(scoreCardId, registrationId→Registration, roundId→Round,
           officialId→Official [NULL], rangeId→Range)
 ```
 
+**Begründung:**
+
+- T4 ist die **volumenintensivste** Transaktion (~4.800 ScoreCards × 28–84 ShotResults → bis zu 201.600 Inserts).
+- `ShotResult.rangeId` muss bei jedem Insert befüllt werden (FK auf `TargetStation`).
+- Ohne `ScoreCard.rangeId` wäre ein 4-facher Join nötig – unpraktisch für Massenerfassung.
+- **Kontrollierte Denormalisierung:** `rangeId` in `ScoreCard` wird bei Insert einmalig abgeleitet (Write-once).
+- **Normalisierungsverlust:** minimal – `scoreCardId → rangeId` gilt de facto, da jede ScoreCard einer Startgruppe (und damit einer Range) zugeordnet ist.
+
 ---
 
+## Transaction Validation Matrix – Revidiertes Logisches Datenmodell
 
+| Transaction | Relation(s) used | Join path / FK path | Key attributes needed | Support status | Notes / required model update |
+|---|---|---|---|---|---|
+| `T1: Teilnehmer anlegen und Stil/Div/Class zuweisen` | `Participant`, `Registration`, `CompetitionCategory`, `Nation`, `Club`, `Event` | `Registration.participantId → Participant.participantId`, `Registration.eventId → Event.eventId`, `Registration.categoryId → CompetitionCategory.categoryId`, `Participant.nationCode → Nation.nationCode`, `Participant.clubId → Club.clubId` | `participantId`, `firstName`, `lastName`, `birthDate`, `nationCode`, `clubId`, `style`, `division`, `classLevel`, `registrationId`, `entryFeeStatus`, `equipmentStatus` | Full | Keine Änderung. |
+| `T2: Klassifizierungskarte prüfen und Startzulassung erteilen` | `Registration`, `Participant`, `CompetitionCategory` | `Registration.participantId → Participant.participantId`, `Registration.categoryId → CompetitionCategory.categoryId` | `registrationId`, `classificationVerified`, `classificationDate`, `entryFeeStatus`, `equipmentStatus`, `style`, `division`, `classLevel` | Full | Keine Änderung. |
+| `T3: Startgruppen erstellen und Schützen auf Ranges/Targets zuweisen` | `StartGroup`, `StartGroupMember`, `Registration`, `Round`, `Range`, `TargetStation`, `RoundRange` | `StartGroup.roundId → Round.roundId`, `StartGroup.rangeId → Range.rangeId`, `StartGroupMember.groupId → StartGroup.groupId`, `StartGroupMember.registrationId → Registration.registrationId`, `RoundRange.roundId → Round.roundId`, `RoundRange.rangeId → Range.rangeId` | `groupId`, `groupNumber`, `startTarget`, `roundId`, `roundDate`, `roundType`, `rangeId`, `rangeName`, `targetNumber` | Full | Keine Änderung. |
+| `T4: Schussergebnisse einer Scorekarte erfassen und Punkte berechnen` | `ScoreCard`, `ShotResult`, `Registration`, `Round`, `TargetStation`, `Official` | `ScoreCard.registrationId → Registration.registrationId`, `ScoreCard.roundId → Round.roundId`, `ScoreCard.officialId → Official.officialId`, **`ScoreCard.rangeId → Range.rangeId` (NEU)**, `ShotResult.scoreCardId → ScoreCard.scoreCardId`, `ShotResult.(rangeId, targetNumber) → TargetStation.(rangeId, targetNumber)` | `scoreCardId`, `rangeId` **(NEU)**, `arrowNumber`, `hitZone`, `targetNumber`, `roundType`, `targetGroup` | **Full** | **Zuvor Partial → jetzt Full.** `rangeId` wird direkt aus `ScoreCard` übernommen, kein 4-facher Join mehr nötig. |
+| `T5: Tagesergebnisse und Gesamtrangliste anzeigen` | `TournamentResult`, `Registration`, `CompetitionCategory`, `Participant`, `Nation`, `ScoreCard` | `TournamentResult.registrationId → Registration.registrationId`, `Registration.categoryId → CompetitionCategory.categoryId`, `Registration.participantId → Participant.participantId`, `Participant.nationCode → Nation.nationCode`, `ScoreCard.registrationId → Registration.registrationId` | `resultId`, `totalPoints` (derived), `rankPosition` (derived), `tieBreakStatus`, `style`, `division`, `classLevel`, `firstName`, `lastName`, `nationCode`, `nationName` | Full | Keine Änderung. |
+| `T6: Tie-Break-Shoot-off erfassen und Gewinner bestimmen` | `TieBreak`, `TieBreakParticipant`, `ShotResult`, `TargetStation`, `Registration`, `TournamentResult` | `TieBreakParticipant.tieBreakId → TieBreak.tieBreakId`, `TieBreakParticipant.registrationId → Registration.registrationId`, `ShotResult.tieBreakId → TieBreak.tieBreakId`, `ShotResult.(rangeId, targetNumber) → TargetStation.(rangeId, targetNumber)`, `TournamentResult.registrationId → Registration.registrationId` | `tieBreakId`, `tieBreakRound`, `hitZone`, `pointValue` (derived), `targetGroup`, `tieBreakStatus` | Full | Keine Änderung. |
+| `T7: Protest dokumentieren und Offiziellen zuordnen` | `Protest`, `Official`, `Registration` | `Protest.officialId → Official.officialId`, `Protest.registrationId → Registration.registrationId` | `protestId`, `protestDate`, `protestDescription`, `protestDecision`, `officialId`, `firstName`, `lastName`, `officialFunction` | Full | Keine Änderung. |
+| `T8: Ergebnisliste exportieren (IFAA-Format)` | `TournamentResult`, `Registration`, `CompetitionCategory`, `Participant`, `Nation`, `ScoreCard`, `Round`, `Event` | `TournamentResult.registrationId → Registration.registrationId`, `Registration.participantId → Participant.participantId`, `Registration.categoryId → CompetitionCategory.categoryId`, `Registration.eventId → Event.eventId`, `Participant.nationCode → Nation.nationCode`, `ScoreCard.registrationId → Registration.registrationId`, `ScoreCard.roundId → Round.roundId`, `Round.eventId → Event.eventId` | `firstName`, `lastName`, `nationCode`, `nationName`, `style`, `division`, `classLevel`, `totalPoints` (derived), `rankPosition` (derived), `roundTotal` (derived), `roundNumber`, `roundType`, `name` | Full | Keine Änderung. |
+
+*Transaction validation matrix – revidiertes logisches Datenmodell*
+
+---
+
+## Vergleich: Initiales vs. Revidiertes Modell
+
+| Transaction | Status (Initial) | Status (Revidiert) | Änderung |
+|---|---|---|---|
+| T1: Teilnehmer anlegen | Full | Full | – |
+| T2: Klassifizierung prüfen | Full | Full | – |
+| T3: Startgruppen erstellen | Full | Full | – |
+| T4: Scorekarte erfassen | **Partial** | **Full** | `rangeId` in `ScoreCard` ergänzt |
+| T5: Rangliste anzeigen | Full | Full | – |
+| T6: Tie-Break erfassen | Full | Full | – |
+| T7: Protest dokumentieren | Full | Full | – |
+| T8: Ergebnisliste exportieren | Full | Full | – |
+
+**Ergebnis:** Nach einer Iteration (Hinzufügen von `rangeId → Range` als FK in `ScoreCard`) werden alle 8 Transaktionen durch das revidierte logische Datenmodell **vollständig unterstützt** (Full).
+
+---
+
+## Änderungsprotokoll: Initial → Revidiert
+
+| # | Relation | Änderung | Begründung | Auslöser |
+|---|---|---|---|---|
+| 1 | `ScoreCard` | `rangeId → Range` als FK ergänzt | Direkter Zugriff auf `rangeId` für ShotResult-Inserts; vermeidet 4-fachen Join | T4 (Partial → Full) |
+
+*Änderungsprotokoll – logisches Datenmodell Iteration 1*
