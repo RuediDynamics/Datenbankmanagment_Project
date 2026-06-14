@@ -1,7 +1,7 @@
-# Task 3: Validate Logical Data Model Against Transactions
+## Task 3: Validate Logical Data Model Against Transactions {#sec-task3-transaction-validation}
 
 
-## Transaction Validation Matrix – Initiales Logisches Datenmodell
+### Transaction Validation Matrix – Initiales Logisches Datenmodell
 
 | Transaction | Relation(s) used | Join path / FK path | Key attributes needed | Support status | Notes / required model update |
 |---|---|---|---|---|---|
@@ -18,7 +18,7 @@
 
 ---
 
-## Transaction-to-Relation Cross-Reference Matrix
+### Transaction-to-Relation Cross-Reference Matrix
 
 Die folgende Matrix bildet jede Transaktion auf die benötigten Relationen und
 FK-Pfade ab (x = benötigt). Die Spalte *Notes* enthält die entscheidenden
@@ -38,7 +38,7 @@ Attribute, den Support-Status sowie fehlende Modellelemente im initialen Modell.
 
 ---
 
-## Iteration: Initiales → Revidiertes Logisches Datenmodell
+### Iteration: Initiales → Revidiertes Logisches Datenmodell
 
 ### Identifizierte Lücke
 
@@ -70,7 +70,7 @@ ScoreCard(scoreCardId, registrationId→Registration, roundId→Round,
 
 ---
 
-## Transaction Validation Matrix – Revidiertes Logisches Datenmodell
+### Transaction Validation Matrix – Revidiertes Logisches Datenmodell
 
 | Transaction | Relation(s) used | Join path / FK path | Key attributes needed | Support status | Notes / required model update |
 |---|---|---|---|---|---|
@@ -87,7 +87,7 @@ ScoreCard(scoreCardId, registrationId→Registration, roundId→Round,
 
 ---
 
-## Vergleich: Initiales vs. Revidiertes Modell
+### Vergleich: Initiales vs. Revidiertes Modell
 
 | Transaction | Status (Initial) | Status (Revidiert) | Änderung |
 |---|---|---|---|
@@ -104,7 +104,7 @@ ScoreCard(scoreCardId, registrationId→Registration, roundId→Round,
 
 ---
 
-## Änderungsprotokoll: Initial → Revidiert
+### Änderungsprotokoll: Initial → Revidiert
 
 | # | Relation | Änderung | Begründung | Auslöser |
 |---|---|---|---|---|

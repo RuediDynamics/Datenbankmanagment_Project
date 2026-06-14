@@ -143,7 +143,7 @@ Wiederaufnahme von `rangeId` in `ShotResult` als **bewusste, dokumentierte
 Denormalisierung** (kontrollierte Redundanz) zu behandeln – nicht als Normalform.
 Das revidierte Modell ist @fig-logical-normalized.
 
-![Normalisiertes logisches Datenmodell (≥ 3NF). Änderung ggü. Task 1: `rangeId` aus `ShotResult` entfernt, `atTarget` kontextuell aufgelöst (gestrichelt). PlantUML-Quelle: `assets/diagrams/logical-model-normalized.puml`](../assets/diagrams/logical-model-normalized.svg){#fig-logical-normalized}
+![Normalisiertes logisches Datenmodell (≥ 3NF). Änderung ggü. Task 1: `rangeId` aus `ShotResult` entfernt, `atTarget` kontextuell aufgelöst (gestrichelt). PlantUML-Quelle: `assets/diagrams/logical-model-normalized.puml`](/assignment-03-submission/assets/diagrams/logical-model-normalized.svg){#fig-logical-normalized}
 
 ### Grenzfälle mit Modellierungsannahme {#sec-t2-borderline}
 

@@ -1,4 +1,4 @@
-# Task 4: Specify Integrity Constraints
+## Task 4: Specify Integrity Constraints {#sec-task4-integrity-constraints}
 
 **Step 2.4 – Check and Document Integrity Constraints** (Connolly & Begg, Kap. 3, 4)
 
@@ -6,7 +6,7 @@ Diese Sektion dokumentiert alle Integritätsbedingungen des revidierten logische
 
 ---
 
-## Integritätsbedingungen: Übersicht
+### Integritätsbedingungen: Übersicht
 
 Die folgenden Kategorien werden dokumentiert:
 
@@ -18,7 +18,7 @@ Die folgenden Kategorien werden dokumentiert:
 
 ---
 
-## Struktur der Constraint-Dokumentation
+### Struktur der Constraint-Dokumentation
 
 Die detaillierte Constraint-Spezifikation ist in folgende Artefakte aufgeteilt (analog zu Task 3 Matrices):
 
@@ -29,7 +29,7 @@ Die detaillierte Constraint-Spezifikation ist in folgende Artefakte aufgeteilt (
 
 ---
 
-## Zusammenfassung der Integritätsbedingungen
+### Zusammenfassung der Integritätsbedingungen
 
 ### Nach Constraint-Typ
 
@@ -55,7 +55,7 @@ Die detaillierte Constraint-Spezifikation ist in folgende Artefakte aufgeteilt (
 
 ---
 
-## Geschäftliche Validierung
+### Geschäftliche Validierung
 
 Die dokumentierten Constraints sind **direkt validierbar gegen die Stakeholder-Anforderungen** (Task 3 Transaktions-Matrix):
 
@@ -70,7 +70,7 @@ Die dokumentierten Constraints sind **direkt validierbar gegen die Stakeholder-A
 
 ---
 
-## Integritätsbedingungen und Datenmodell-Iterationen
+### Integritätsbedingungen und Datenmodell-Iterationen
 
 ### Constraints aus Task 3 Iteration
 
@@ -82,7 +82,7 @@ Die in Task 3 dokumentierte Modell-Iteration (ScoreCard + rangeId) wird durch fo
 
 ---
 
-## Nächste Schritte (Exercise 5)
+### Nächste Schritte (Exercise 5)
 
 Diese Constraint-Spezifikation wird in Exercise 5 verwendet für:
 
@@ -92,7 +92,7 @@ Diese Constraint-Spezifikation wird in Exercise 5 verwendet für:
 
 ---
 
-## Dokumentation: Vollständige Dateien
+### Dokumentation: Vollständige Dateien
 
 - **Constraint Specification**: [`assets/constraints/constraint-specification-table.md`](../assets/constraints/constraint-specification-table.md)
 - **Referential Actions**: [`assets/constraints/referential-actions-table.md`](../assets/constraints/referential-actions-table.md)
