@@ -1,15 +1,5 @@
 ## Task 2: Validate Relations Using Normalization {#sec-task2-normalization}
 
-**Step 2.2 – Validate Relations Using Normalization** (Connolly & Begg, Kap. 17)
-
-Diese Sektion validiert jede in Task 1 abgeleitete Relation bis mindestens zur
-**dritten Normalform (3NF)**. Vorgehen je Relation: Candidate Keys bestimmen,
-relevante funktionale Abhängigkeiten (FDs) auflisten, aktuelle Normalform
-feststellen und – falls < 3NF – verlustfrei und abhängigkeitserhaltend
-dekomponieren. Abgeleitete Attribute (`/age`, `/pointValue`, `/roundTotal`,
-`/totalPoints`, `/rankPosition`) werden gemäß Assignment 02 **nicht gespeichert**
-und erscheinen daher nicht in den FD-Mengen der Basisrelationen.
-
 ### Durchgearbeitetes Beispiel: von 1NF zu 3NF {#sec-t2-worked}
 
 Als Worked Example dient eine **naive, flache** Erfassung der Schussergebnisse,
@@ -188,11 +178,3 @@ Attribut `distanceClass` auf `TargetStation` nahelegen (Future Growth, Task 5).
   ist Candidate Key). Die drei verbleibenden (`TargetStation`, `TargetDistance`
   unter Annahme; `ShotResult` nach Revision) sind in 3NF, was der
   Assignment-Vorgabe genügt.
-
-### Deliverables (Task 2) {#sec-t2-deliverables}
-
-- **Normalisierungsbericht:** @tbl-normalization-analysis (alle 20 Relationen)
-- **Durchgearbeitetes Beispiel:** 1NF→2NF→3NF (@sec-t2-worked)
-- **Revidiertes logisches Datenmodell:** @fig-logical-normalized
-  (`assets/diagrams/logical-model-normalized.puml` + `.svg`/`.png`) infolge der
-  `ShotResult`-Dekomposition (@sec-t2-revision)
