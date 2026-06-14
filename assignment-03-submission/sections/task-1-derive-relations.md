@@ -68,7 +68,7 @@ TargetDistance(rangeId→TargetStation, targetNumber→TargetStation,
 
 ### UML-Diagramm: Initiales logisches Datenmodell {#sec-t1-diagram}
 
-![Initiales logisches (relationales) Datenmodell – IFAA WBHC 2027. PlantUML-Quelle: `assets/diagrams/logical-model-initial.puml`](/assignment-03-submission/assets/diagrams/logical-model-initial.svg){#fig-logical-initial}
+![Initiales logisches (relationales) Datenmodell – IFAA WBHC 2027. PlantUML-Quelle: `assets/diagrams/logical-model-initial.puml`]({{< meta assignment-03-path >}}/assets/diagrams/logical-model-initial.svg){#fig-logical-initial}
 
 ### Mapping-Strategie je Mapping-Fall {#sec-t1-cases}
 
