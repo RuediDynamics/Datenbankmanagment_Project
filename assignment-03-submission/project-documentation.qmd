@@ -19,3 +19,7 @@ Alle Mapping-Entscheidungen sind auf die Artefakte aus Assignment 02 rückführb
 ---
 
 {{< include sections/task-1-derive-relations.qmd >}}
+
+---
+
+{{< include sections/task-2-normalization.qmd >}}
