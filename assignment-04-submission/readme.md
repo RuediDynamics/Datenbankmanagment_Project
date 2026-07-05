@@ -58,16 +58,16 @@ psql -d wbhc2027 -v ON_ERROR_STOP=1 -f sql/R__test_cases.sql   # 14/14 PASS erwa
 ```
 
 Diagramme rendern (PlantUML) — erzeugt die von `project-documentation.qmd`
-referenzierten `.svg`-Dateien:
+referenzierten `.png`-Dateien:
 
 ```bash
-plantuml -tsvg assets/diagrams/physical-model-initial.puml \
+plantuml -tpng assets/diagrams/physical-model-initial.puml \
                 assets/diagrams/physical-model-revised.puml
 ```
 
-> **Build-Hinweis:** Committet werden die `.puml`-Quellen (wie in Assignment 03).
-> Die `.svg`-Dateien sind vor dem Quarto-Render einmalig zu generieren (Befehl
-> oben); erst dann lösen die `![…](…svg)`-Referenzen im Hauptdokument korrekt auf.
+> **Build-Hinweis:** Committet werden die `.puml`-Quellen und die daraus
+> generierten `.png`-Dateien. Bei Änderungen an den `.puml`-Dateien müssen die
+> `.png`-Dateien mit dem Befehl oben neu generiert werden.
 
 ## Highlights der Abgabe
 
