@@ -1,0 +1,212 @@
+@startuml physical-model-revised
+' =====================================================================
+'  IFAA WBHC 2027 - Revised Physical Data Model (PostgreSQL 16)
+'  Assignment 04 - Exercise 6 iteration (V0.6_revised_physical_model.sql)
+'  DIFF vs. initial:
+'   (A) score_card.round_total is now a STORED column, maintained
+'       incrementally by trigger trg_shot_result_total (was a view).
+'   (B) atTarget referential integrity is now DBMS-enforced by trigger
+'       trg_shot_result_target_check (was application-level).
+'  Changed elements are marked << *** REVISED *** >>.
+' =====================================================================
+hide circle
+hide empty methods
+skinparam linetype ortho
+skinparam shadowing false
+skinparam classBackgroundColor #FDFDFD
+skinparam classBorderColor #2C3E50
+skinparam classArrowColor #34495E
+skinparam classFontSize 12
+skinparam defaultFontName Helvetica
+skinparam nodesep 55
+skinparam ranksep 65
+
+class event <<table>> {
+  <<PK>> event_id : BIGINT (identity)
+  --
+  <<AK>> name : VARCHAR(100) NOT NULL
+  <<AK>> start_date : DATE NOT NULL
+  end_date : DATE NOT NULL
+  location : VARCHAR(100)
+  organizer : VARCHAR(100)
+  ifaa_reference : VARCHAR(20)
+}
+class round <<table>> {
+  <<PK>> round_id : BIGINT (identity)
+  --
+  <<FK>> <<AK>> event_id : BIGINT NOT NULL
+  <<AK>> round_number : SMALLINT NOT NULL [1..4]
+  round_type : VARCHAR(20) NOT NULL
+  round_date : DATE NOT NULL
+}
+class shooting_range <<table>> {
+  <<PK>> range_id : BIGINT (identity)
+  --
+  <<FK>> official_id : BIGINT NULL
+  <<AK>> range_name : VARCHAR(50) NOT NULL
+}
+class target_station <<weak table>> {
+  <<PFK>> range_id : BIGINT NOT NULL
+  <<PK>>  target_number : SMALLINT NOT NULL [1..28]
+  --
+  target_group : SMALLINT NOT NULL [1..4]
+}
+class nation <<table>> {
+  <<PK>> nation_code : CHAR(3)
+  --
+  <<AK>> nation_name : VARCHAR(100) NOT NULL
+}
+class club <<table>> {
+  <<PK>> club_id : BIGINT (identity)
+  --
+  <<AK>> club_name : VARCHAR(100) NOT NULL
+}
+class participant <<table>> {
+  <<PK>> participant_id : BIGINT (identity)
+  --
+  <<FK>> nation_code : CHAR(3) NOT NULL
+  <<FK>> club_id : BIGINT NULL
+  first_name : VARCHAR(50) NOT NULL
+  last_name : VARCHAR(50) NOT NULL
+  birth_date : DATE NOT NULL
+  /age : INTEGER (view v_participant)
+}
+class official <<table>> {
+  <<PK>> official_id : BIGINT (identity)
+  --
+  first_name : VARCHAR(50) NOT NULL
+  last_name : VARCHAR(50) NOT NULL
+  official_function : VARCHAR(30) NOT NULL
+}
+class competition_category <<table>> {
+  <<PK>> category_id : BIGINT (identity)
+  --
+  <<AK>> style : VARCHAR(20) NOT NULL
+  <<AK>> division : VARCHAR(20) NOT NULL
+  <<AK>> class_level : VARCHAR(20) NOT NULL
+}
+class registration <<table>> {
+  <<PK>> registration_id : BIGINT (identity)
+  --
+  <<FK>> <<AK>> participant_id : BIGINT NOT NULL
+  <<FK>> <<AK>> event_id : BIGINT NOT NULL
+  <<FK>> category_id : BIGINT NOT NULL
+  entry_fee_status : VARCHAR(15) NOT NULL
+  equipment_status : VARCHAR(15) NOT NULL
+  classification_verified : BOOLEAN NOT NULL
+  classification_date : TIMESTAMPTZ NULL
+}
+class start_group <<table>> {
+  <<PK>> group_id : BIGINT (identity)
+  --
+  <<FK>> <<AK>> round_id : BIGINT NOT NULL
+  <<FK>> range_id : BIGINT NOT NULL
+  <<AK>> group_number : SMALLINT NOT NULL
+  start_target : SMALLINT NOT NULL [1..28]
+}
+class score_card <<table>> {
+  <<PK>> score_card_id : BIGINT (identity)
+  --
+  <<FK>> <<AK>> registration_id : BIGINT NOT NULL
+  <<FK>> <<AK>> round_id : BIGINT NOT NULL
+  <<FK>> official_id : BIGINT NULL
+  <<FK>> range_id : BIGINT NOT NULL
+  round_total : INTEGER NOT NULL  << *** REVISED: stored+trigger *** >>
+}
+class shot_result <<weak table>> {
+  <<PFK>> score_card_id : BIGINT NOT NULL
+  <<PK>>  target_number : SMALLINT NOT NULL [1..28]
+  <<PK>>  arrow_number : SMALLINT NOT NULL [1..6]
+  --
+  <<FK>> tie_break_id : BIGINT NULL
+  hit_zone : VARCHAR(2) NOT NULL
+  /point_value : INTEGER (view v_shot_score)
+}
+class tournament_result <<table>> {
+  <<PK>> result_id : BIGINT (identity)
+  --
+  <<FK>> <<AK>> registration_id : BIGINT NOT NULL
+  tie_break_status : VARCHAR(15) NULL
+  /total_points : INTEGER (mv_tournament_ranking)
+  /rank_position : INTEGER (mv_tournament_ranking)
+}
+class tie_break <<table>> {
+  <<PK>> tie_break_id : BIGINT (identity)
+  --
+  tie_break_round : SMALLINT NOT NULL [1..4]
+}
+class protest <<table>> {
+  <<PK>> protest_id : BIGINT (identity)
+  --
+  <<FK>> official_id : BIGINT NOT NULL
+  <<FK>> registration_id : BIGINT NOT NULL
+  protest_date : TIMESTAMPTZ NOT NULL
+  protest_description : TEXT NOT NULL
+  protest_decision : VARCHAR(15) NOT NULL
+}
+class round_range <<bridge table>> {
+  <<PFK>> round_id : BIGINT NOT NULL
+  <<PFK>> range_id : BIGINT NOT NULL
+}
+class start_group_member <<bridge table>> {
+  <<PFK>> group_id : BIGINT NOT NULL
+  <<PFK>> registration_id : BIGINT NOT NULL
+}
+class tie_break_participant <<bridge table>> {
+  <<PFK>> tie_break_id : BIGINT NOT NULL
+  <<PFK>> registration_id : BIGINT NOT NULL
+}
+class target_distance <<assoc table>> {
+  <<PFK>> range_id : BIGINT NOT NULL
+  <<PFK>> target_number : SMALLINT NOT NULL
+  <<PFK>> category_id : BIGINT NOT NULL
+  --
+  max_distance : SMALLINT NOT NULL
+}
+class scoring_rule <<lookup table>> {
+  <<PK>> round_type : VARCHAR(20)
+  <<PK>> hit_zone : VARCHAR(2)
+  --
+  point_value : SMALLINT NOT NULL
+}
+
+round              --> event               : fk_round_event >
+shooting_range     --> official            : fk_range_official >
+target_station     --> shooting_range      : fk_target_station_range >
+participant        --> nation              : fk_participant_nation >
+participant        --> club                : fk_participant_club >
+registration       --> participant         : fk_registration_participant >
+registration       --> event               : fk_registration_event >
+registration       --> competition_category: fk_registration_category >
+start_group        --> round               : fk_start_group_round >
+start_group        --> shooting_range      : fk_start_group_range >
+score_card         --> registration        : fk_score_card_registration >
+score_card         --> round               : fk_score_card_round >
+score_card         --> official            : fk_score_card_official >
+score_card         --> shooting_range      : fk_score_card_range >
+shot_result        --> score_card          : fk_shot_result_score_card >
+shot_result        --> target_station      : atTarget (trigger-enforced) >
+shot_result        --> tie_break           : fk_shot_result_tie_break >
+tournament_result  --> registration        : fk_tournament_result_registration >
+protest            --> official            : fk_protest_official >
+protest            --> registration        : fk_protest_registration >
+round_range        --> round
+round_range        --> shooting_range
+start_group_member --> start_group
+start_group_member --> registration
+tie_break_participant --> tie_break
+tie_break_participant --> registration
+target_distance    --> target_station
+target_distance    --> competition_category
+
+legend right
+  | Stereotype | Meaning |
+  | <<PK>>  | primary key |
+  | <<FK>>  | foreign key |
+  | <<PFK>> | primary + foreign key |
+  | <<AK>>  | alternate key (UNIQUE) |
+  | /attr   | derived (view / matview) |
+  | *REVISED* | changed vs. initial physical model |
+endlegend
+
+@enduml

@@ -1,0 +1,72 @@
+---
+title: "Assignment 04: Physical Database Design & Implementation"
+subtitle: "IFAA WBHC 2027 – PostgreSQL 16"
+assignment-04-path: "."
+embed-resources: true
+toc: true
+number-sections: true
+---
+
+# Assignment 04: Physical Database Design {#sec-a04-intro}
+
+Translation of the validated logical relational model (Assignment 03) into a
+DBMS-specific **physical design**, its executable implementation on **PostgreSQL 16**,
+and validation through functional, constraint, and basic performance tests based on
+the stakeholder transactions T1–T8.
+
+Diese Abgabe setzt **direkt auf Assignment 03** auf (revidiertes logisches Modell mit
+20 Relationen inkl. `ScoreCard.rangeId`-Iteration, 112 Integritätsbedingungen,
+28 FK-Strategien) und überführt es methodisch nach Connolly & Begg, Kap. 18
+(Step 3.1–3.3, Step 4.1–4.4).
+
+**Rückverfolgbarkeit (Kurzübersicht):**
+
+| Assignment | Wiederverwendetes Artefakt | Verwendung in A04 |
+|---|---|---|
+| A01 | Stakeholder-Rollen/Personas | Nebenläufigkeit/Zugriffsmuster (Exercise 1) |
+| A02 | Transaktionsset T1–T8, Volumina | Transaktionsanalyse (Ex. 3), Kapazität (Ex. 4) |
+| A03 | Logisches Schema, Keys/FKs | Basisrelationen (Ex. 2, Step 3.1) |
+| A03 | Normalisierung ≥ 3NF | Typwahl, Denormalisierungs-Trade-offs |
+| A03 | Constraints C1–C112, FK-Aktionen | CHECK/UNIQUE/FK & General Constraints (Step 3.3) |
+| A03 | Transaction Validation Matrix | Zugriffspfade & Indexwahl (Step 4.1–4.3) |
+
+**Artefakt-Landkarte:**
+
+- Ausführbare SQL-Skripte: [`sql/`](./sql/) (Flyway `V0.1`–`V0.6`, `R__test_cases`)
+- Physische Diagramme: [`assets/diagrams/`](./assets/diagrams/)
+- Detailberichte: [`assets/reports/`](./assets/reports/)
+- Query-Plan-Evidenz: [`assets/plans/query-plan-evidence/`](./assets/plans/query-plan-evidence/)
+
+---
+
+{{< include sections/task-1-physical-context.md >}}
+
+---
+
+{{< include sections/task-2-physical-schema.md >}}
+
+---
+
+![Revidiertes physisches Datenmodell (nach Test-Iterationen A & B). Quelle: `assets/diagrams/physical-model-revised.puml`](./assets/diagrams/physical-model-revised.svg){#fig-physical-revised}
+
+{{< include sections/task-3-access-paths.md >}}
+
+---
+
+{{< include sections/task-4-capacity.md >}}
+
+---
+
+{{< include sections/task-5-implementation.md >}}
+
+---
+
+{{< include sections/task-6-test-report.md >}}
+
+---
+
+{{< include sections/task-7-reflection.md >}}
+
+---
+
+{{< include sections/task-8-team.md >}}
