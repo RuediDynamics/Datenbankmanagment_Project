@@ -42,7 +42,7 @@ Diese Abgabe setzt **direkt auf Assignment 03** auf (revidiertes logisches Model
 
 ---
 
-![Revidiertes physisches Datenmodell (nach Test-Iterationen A & B). Quelle: `assets/diagrams/physical-model-revised.puml`](./assets/diagrams/physical-model-revised.svg){#fig-physical-revised}
+![Revidiertes physisches Datenmodell (nach Test-Iterationen A & B). Quelle: `assets/diagrams/physical-model-revised.puml`](./assets/diagrams/physical-model-revised.png){#fig-physical-revised}
 
 {{< include sections/task-3-access-paths.md >}}
 

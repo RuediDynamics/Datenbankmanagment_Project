@@ -1,0 +1,10 @@
+Sort  (cost=1.61..1.61 rows=1 width=270) (actual time=0.027..0.027 rows=8 loops=1)
+  Sort Key: rank_position
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=1
+  ->  Seq Scan on mv_tournament_ranking  (cost=0.00..1.60 rows=1 width=270) (actual time=0.011..0.013 rows=8 loops=1)
+        Filter: ((event_id = 1) AND (category_id = 1))
+        Rows Removed by Filter: 33
+        Buffers: shared hit=1
+Planning Time: 0.084 ms
+Execution Time: 0.057 ms

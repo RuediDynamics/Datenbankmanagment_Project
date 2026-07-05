@@ -1,0 +1,5 @@
+Index Scan using idx_registration_unverified on registration  (cost=0.14..8.16 rows=1 width=8) (actual time=0.076..0.078 rows=13 loops=1)
+  Index Cond: (event_id = 1)
+  Buffers: shared hit=4 read=1
+Planning Time: 0.059 ms
+Execution Time: 0.092 ms

@@ -1,0 +1,18 @@
+HashAggregate  (cost=22.20..27.10 rows=490 width=16) (actual time=0.082..0.087 rows=41 loops=1)
+  Group Key: reg.registration_id
+  Batches: 1  Memory Usage: 49kB
+  Buffers: shared read=2
+  ->  Hash Left Join  (cost=1.97..19.75 rows=490 width=12) (actual time=0.067..0.074 rows=44 loops=1)
+        Hash Cond: (reg.registration_id = sc.registration_id)
+        Buffers: shared read=2
+        ->  Seq Scan on registration reg  (cost=0.00..14.90 rows=490 width=8) (actual time=0.027..0.029 rows=41 loops=1)
+              Buffers: shared read=1
+        ->  Hash  (cost=1.43..1.43 rows=43 width=12) (actual time=0.026..0.026 rows=43 loops=1)
+              Buckets: 1024  Batches: 1  Memory Usage: 11kB
+              Buffers: shared read=1
+              ->  Seq Scan on score_card sc  (cost=0.00..1.43 rows=43 width=12) (actual time=0.012..0.014 rows=43 loops=1)
+                    Buffers: shared read=1
+Planning:
+  Buffers: shared hit=213 read=17
+Planning Time: 1.655 ms
+Execution Time: 0.169 ms

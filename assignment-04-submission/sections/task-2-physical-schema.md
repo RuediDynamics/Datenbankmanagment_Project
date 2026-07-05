@@ -13,7 +13,7 @@ physisches Schema. Die Umsetzung liegt in
 Das initiale physische Modell ist @fig-physical-initial, das revidierte (nach den
 Test-Iterationen in @sec-task6-test-report) ist @fig-physical-revised.
 
-![Initiales physisches Datenmodell (PostgreSQL 16). Quelle: `assets/diagrams/physical-model-initial.puml`](../assets/diagrams/physical-model-initial.png){#fig-physical-initial}
+![Initiales physisches Datenmodell (PostgreSQL 16). Quelle: `assets/diagrams/physical-model-initial.puml`](./assets/diagrams/physical-model-initial.png){#fig-physical-initial}
 
 ### Step 3.1 – Design Base Relations {#sec-t2p-step31}
 
