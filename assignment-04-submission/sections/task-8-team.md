@@ -11,7 +11,3 @@
 
 : Team & division of work (Assignment 04) {#tbl-team-division}
 
-**Konsistenz zu Assignment 03.** Die Rollen- und Verantwortungszuordnung setzt die
-Aufteilung aus Assignment 03 fort (Diagramme & abgeleitete/aggregierte Objekte bei
-Rüdi, Constraints & Koordination bei Katz, Analyse-/Matrix-Arbeit bei Jan,
-Mapping/Basisrelationen bei Notschge).

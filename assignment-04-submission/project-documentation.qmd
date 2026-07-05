@@ -9,11 +9,6 @@ number-sections: true
 
 # Assignment 04: Physical Database Design {#sec-a04-intro}
 
-Translation of the validated logical relational model (Assignment 03) into a
-DBMS-specific **physical design**, its executable implementation on **PostgreSQL 16**,
-and validation through functional, constraint, and basic performance tests based on
-the stakeholder transactions T1–T8.
-
 Diese Abgabe setzt **direkt auf Assignment 03** auf (revidiertes logisches Modell mit
 20 Relationen inkl. `ScoreCard.rangeId`-Iteration, 112 Integritätsbedingungen,
 28 FK-Strategien) und überführt es methodisch nach Connolly & Begg, Kap. 18
